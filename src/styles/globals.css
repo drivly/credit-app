@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --dark: rgb(22, 22, 22);
+    --white: rgb(255, 255, 255);
+    --gray-400: rgb(203, 203, 203);
+    --color-text-base: 6, 6, 17;
+    --color-text-label: 102, 111, 117;
+    --color-text-placeholder: 160, 166, 172;
+    --color-text-warning: 225, 55, 86;
+    --color-text-inverted: 255, 255, 255;
+    --color-bg-base: 249, 249, 251;
+    --color-bg-card: 255, 255, 255;
+    --color-button-primary: 255, 255, 255;
+    --color-button-inverted: 6, 6, 17;
+    --color-accent-primary: 0, 202, 185;
+  }
+  /* Define a new theme with different colors */
+}

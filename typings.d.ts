@@ -1,0 +1,87 @@
+export interface VehicleOfInterest {
+  ModelYear: string
+  Make: string
+  Model: string
+  Price: string
+  Mileage: string
+  Vin: string
+}
+export interface PrimaryApplicant {
+  employedPrimary: string
+  firstName: string
+  middleInitial: string
+  lastName: string
+  phone: string
+  email: string
+  dateOfBirth: string
+  ssn: string
+  addressLine1: string
+  city: string
+  state: string
+  zipCode: string
+  addressYears: string
+  addressMonths: string
+  rentMortgagePaymentAmount: string
+  licenseNumber: string
+  licenseState: string
+  licenseExp: string
+  employerName: string
+  employerPhone: string
+  employmentTitle: string
+  timeOnJobYears: string
+  timeOnJobMonths: string
+  monthlyIncome: string
+  prev_employerName: string
+  prev_employerPhone: string
+  prev_employmentTitle: string
+  prev_timeOnJobYears: string
+  prev_timeOnJobMonths: string
+  prev_monthlyIncome: string
+  prev_addressLine1: string
+  prev_city: string
+  prev_state: string
+  prev_zipCode: string
+  prev_addressYears: string
+  prev_addressMonths: string
+  prev_rentMortgagePaymentAmount: string
+}
+
+export interface CoApplicant {
+  employedJoint: string
+  coFirstName: string
+  coMiddleInitial: string
+  coLastName: string
+  coPhone: string
+  coEmail: string
+  coDateOfBirth: string
+  coSsn: string
+  coAddressLine1: string
+  coCity: string
+  coState: string
+  coZipCode: string
+  coAddressYears: string
+  coAddressMonths: string
+  coRentMortgagePaymentAmount: string
+  coLicenseNumber: string
+  coLicenseState: string
+  coLicenseExp: string
+  coEmployerName: string
+  coEmployerPhone: string
+  coEmploymentTitle: string
+  coTimeOnJobYears: string
+  coTimeOnJobMonths: string
+  coMonthlyIncome: string
+  prev_coEmployerName: string
+  prev_coEmployerPhone: string
+  prev_coEmploymentTitle: string
+  prev_coTimeOnJobYears: string
+  prev_coTimeOnJobMonths: string
+  prev_coMonthlyIncome: string
+  prev_coAddressLine1: string
+  prev_coCity: string
+  prev_coState: string
+  prev_coZipCode: string
+  prev_coAddressYears: string
+  prev_coAddressMonths: string
+  prev_coRentMortgagePaymentAmount: string
+}
