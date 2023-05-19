@@ -30,9 +30,9 @@ export const formatPrimaryApp = (data: any) => {
     middleName: primary?.middleInitial,
     county: pCounty?.county,
     countryCode: 'US',
-    residenceTypeCode: '1',
+    // residenceTypeCode: '1', added 1 own 2 rent 3 others
     educationLevelCode: '1',
-    incomeIntervalCode: 'MO',
+    incomeIntervalCode: 'MO', // form asks for monthly income
     phoneType: 'MOBILE',
     incomeAmount: Number(primary?.incomeAmount?.replaceAll(/\$|,/g, '')),
     phone: primary?.phone?.slice(2),
