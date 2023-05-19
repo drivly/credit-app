@@ -114,14 +114,9 @@ export const creditApps = [
         fields: [
           {
             component: 'InputField',
-            name: 'countryCode',
-            type: 'hidden',
-          },
-          {
-            component: 'InputField',
             name: 'addressLine1',
             label: 'Street Address*',
-            placeholder: '123 Main St',            
+            placeholder: '123 Main St',
             maxLength: { value: 200, message: 'Max 200 chars' },
             type: 'text',
             rules: {
@@ -401,11 +396,6 @@ export const creditApps = [
             onChange: (e: any) => {
               e.target.value = formatMoney(e.target.value)
             },
-          },
-          {
-            component: 'InputField',
-            name: 'incomeIntervalCode',
-            type: 'hidden',
           },
           {
             component: 'InputField',
@@ -806,7 +796,6 @@ export const creditApps = [
         title: 'Employment History',
         description: "Information about the joint applicant's employment history",
         fields: [
-          
           {
             component: 'InputField',
             name: 'coEmployerName',
@@ -950,4 +939,3 @@ export const creditApps = [
     ],
   },
 ]
-

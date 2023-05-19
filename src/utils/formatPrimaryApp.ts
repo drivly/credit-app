@@ -32,6 +32,7 @@ export const formatPrimaryApp = (data: any) => {
     countryCode: 'US',
     residenceTypeCode: '1',
     educationLevelCode: '1',
+    incomeIntervalCode: 'MO',
     phoneType: 'MOBILE',
     incomeAmount: Number(primary?.incomeAmount?.replaceAll(/\$|,/g, '')),
     phone: primary?.phone?.slice(2),

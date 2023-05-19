@@ -12,8 +12,6 @@ import { toast } from 'sonner'
 import { IVDP } from '@/utils/getVehicleDetails'
 
 const defaultValues = {
-  countryCode: 'US',
-  incomeIntervalCode: 'MO',
   employedPrimary: 'YES',
   coEmployedJoint: 'YES',
   joint: false,
