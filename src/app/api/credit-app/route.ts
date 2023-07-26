@@ -1,4 +1,5 @@
 import { formatApplicant } from '@/utils/formatApplicant'
+import { slackMsgRequest } from '@/utils/slackMsg'
 import { NextResponse } from 'next/server'
 
 const slackUrl = process.env.SLACK_WEBHOOK_URL
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    // await slackMsgRequest({ url: slackUrl, data })
+    await slackMsgRequest({ url: slackUrl, data })
     const response = await fetch('https://credit.api.driv.ly/applications', {
       method: 'POST',
       body: JSON.stringify({ primaryBuyer: primaryRequest.app, vehicles: primaryRequest.vin }),
