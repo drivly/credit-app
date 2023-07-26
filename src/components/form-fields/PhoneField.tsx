@@ -23,7 +23,7 @@ export default function PhoneField({
   message,
 }: PhoneFieldProps) {
   return (
-    <div className={cn('relative flex w-full flex-col col-span-6', variant)}>
+    <div className={cn('relative col-span-6 sm:col-span-3 flex w-full flex-col', variant)}>
       <label
         className={cn('block text-sm font-medium leading-6 text-gray-900', {
           'text-red-400': errormsg,
@@ -35,7 +35,7 @@ export default function PhoneField({
         className={cn(
           'mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm sm:leading-6',
           {
-            'text-red-400 outline-none ring-1 ring-inset ring-red-400 focus:ring-2 focus:ring-inset focus:ring-red-400':
+            'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
               errormsg,
           }
         )}

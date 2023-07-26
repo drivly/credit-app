@@ -1,46 +1,40 @@
-import React from 'react'
-import InputField from '../form-fields/InputField'
-import PhoneField from '../form-fields/PhoneField'
-import DateField from '../form-fields/DateField'
-import { useFormContext } from 'react-hook-form'
-import { formatSSN } from '@/utils'
+import DateField from '@/components/form-fields/DateField'
+import InputField from '@/components/form-fields/InputField'
+import PhoneField from '@/components/form-fields/PhoneField'
 import { emailReg } from '@/lib/patterns'
+import { formatSSN } from '@/utils'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
 
-export default function ApplicantInfo(props: any) {
+const JointApp = (props: any) => {
   const { type } = props
-    const methods = useFormContext()
-    const {
-      control,
-      register,
-      watch,
-      formState: { errors },
-    } = methods
-    
+  const methods = useFormContext()
+  const {
+    control,
+    register,
+    watch,
+    formState: { errors },
+  } = methods
   return (
-    <div className='grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3'>
+    <>
       <div className='px-4 sm:px-0'>
         <h2 className='font-mont text-base font-semibold leading-7 text-gray-900'>
           {type} Applicant
         </h2>
-        <p className='mt-1 text-sm leading-6 text-gray-600'>
-          Please fill out the following information for the {type} applicant.
-        </p>
       </div>
 
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-4 py-6 sm:p-8'>
-          <div className='grid max-w-3xl grid-cols-1 gap-y-8 sm:grid-cols-7 sm:gap-x-6'>
+          <div className='grid max-w-3xl grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6'>
             <InputField
-              {...register('firstName', { required: 'First name required' })}
+              {...register('coFirstName', { required: 'First name required' })}
               errormsg={errors?.firstName?.message!}
-              variant='sm:col-span-3'
+              variant='sm:col-span-2'
               placeholder='John'
               label='First Name *'
-              name='firstName'
-              type='text'
             />
             <InputField
-              {...register('middleInitial', {
+              {...register('coMiddleInitial', {
                 maxLength: { value: 3, message: 'Must be less than 3' },
                 onChange: (e) => {
                   e.target.value = e.target.value.toUpperCase()
@@ -49,19 +43,33 @@ export default function ApplicantInfo(props: any) {
               errormsg={errors?.middleInitial?.message!}
               variant='sm:col-span-1'
               placeholder='W'
-              name='middleInitial'
               label='MI'
-              type='text'
             />
             <InputField
-              {...register('lastName', { required: 'Last name required' })}
+              {...register('coLastName', { required: 'Last name required' })}
               errormsg={errors?.lastName?.message!}
               variant='sm:col-span-3'
               placeholder='Wick'
               label='Last Name *'
-              name='lastName'
-              type='text'
             />
+              <PhoneField
+                label='Phone *'
+                name='coPhone'
+                errormsg={errors?.phone?.message!}
+                placeholder='561-975-6432'
+                control={control}
+                variant='sm:col-span-3'
+              />
+              <InputField
+                {...register('coEmail', {
+                  required: 'Email required',
+                  pattern: { value: emailReg, message: 'Invalid Email' },
+                })}
+                errormsg={errors?.email?.message!}
+                placeholder='johnwsmith@gmail.com'
+                variant='sm:col-span-3'
+                label='Email *'
+              />
 
             <DateField
               rules={{ required: 'DOB required' }}
@@ -69,10 +77,11 @@ export default function ApplicantInfo(props: any) {
               variant='col-span-1 sm:col-span-2'
               label='Date of Birth *'
               control={control}
-              name='dob'
+              name='coDateOfBirth'
+              placeholder='05/15/1980'
             />
             <InputField
-              {...register('ssn', {
+              {...register('coSsn', {
                 required: 'SSN required',
                 validate: (value) => {
                   const length = value.replace(/\D/g, '').length
@@ -85,33 +94,14 @@ export default function ApplicantInfo(props: any) {
               })}
               errormsg={errors?.ssn?.message!}
               variant='sm:col-span-2'
+              placeholder='123-45-6789'
               label='SSN *'
-              name='ssn'
-              type='text'
-            />
-            <PhoneField
-              label='Phone *'
-              name='phone'
-              errormsg={errors?.phone?.message!}
-              placeholder='561-975-6432'
-              control={control}
-              variant='sm:col-span-3'
-            />
-            <InputField
-              {...register('email', {
-                required: 'Email required',
-                pattern: { value: emailReg, message: 'Invalid Email' },
-              })}
-              errormsg={errors?.email?.message!}
-              placeholder='johnwsmith@gmail.com'
-              variant='sm:col-span-3'
-              label='Email *'
-              type='text'
-              name='email'
             />
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
+
+export default JointApp

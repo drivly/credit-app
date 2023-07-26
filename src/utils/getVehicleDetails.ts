@@ -5,14 +5,12 @@ export interface IVDP {
   make: string
   model: string
   vin: string
-  price: number
+  price: string
   miles: number
 }
 
 export async function getVehicleDetails(vin: string) {
   const data = await fetch(`https://listing.vin/${vin}`, {
-    cache: 'default',
-    next: { revalidate: 60 },
     headers: { Authorization: betaKey! },
   }).then((res) => res.json())
 

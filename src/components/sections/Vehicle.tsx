@@ -2,9 +2,11 @@ import React from 'react'
 import InputField from '../form-fields/InputField'
 import { formatMiles, formatMoney } from '@/utils'
 import { useFormContext } from 'react-hook-form'
+import { useParams } from 'next/navigation'
 
 export default function Vehicle(props: any) {
   const { errors, watchJoint } = props
+  const params = useParams()
 
   const { register } = useFormContext()
   return (
@@ -18,9 +20,11 @@ export default function Vehicle(props: any) {
 
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-4 py-6 sm:p-8'>
-          <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+          <fieldset
+            disabled={params?.vin ? true : false}
+            className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <InputField
-              {...register('vehicleModelYear', {
+              {...register('year', {
                 onChange: (event) =>
                   (event.target.value = event.target.value.replace(/\D/g, '').slice(0, 4)),
                 minLength: { value: 4, message: 'Invalid Year' },
@@ -31,28 +35,21 @@ export default function Vehicle(props: any) {
               placeholder='2016'
               label='Model Year'
               maxLength={4}
-              name='vehicleModelYear'
-              type='text'
             />
             <InputField
-              {...register('vehicleMake')}
+              {...register('make')}
               variant='sm:col-span-4'
               placeholder='Ford'
-              name='vehicleMake'
               label='Make'
-              type='text'
             />
             <InputField
-              {...register('vehicleModel')}
+              {...register('model')}
               variant='sm:col-span-4'
               placeholder='F-150 Raptor'
               label='Model'
-              name='vehicleModel'
-              type='text'
             />
-
             <InputField
-              {...register('vehiclePrice', {
+              {...register('price', {
                 maxLength: { value: 8, message: 'Invalid Price' },
                 onChange(event) {
                   event.target.value = formatMoney(event.target.value)
@@ -61,12 +58,9 @@ export default function Vehicle(props: any) {
               placeholder='$56,370'
               variant='sm:col-span-2'
               label='Price'
-              name='vehiclePrice'
-              type='text'
             />
-
             <InputField
-              {...register('vehicleMileage', {
+              {...register('miles', {
                 onChange(event) {
                   event.target.value = formatMiles(event.target.value)
                 },
@@ -74,18 +68,14 @@ export default function Vehicle(props: any) {
               placeholder='28,052'
               variant='sm:col-span-2'
               label='Mileage'
-              type='text'
-              name='vehicleMileage'
             />
             <InputField
-              {...register('vehicleVin')}
+              {...register('vin')}
               placeholder='WBAGV2C04LCD51052'
               variant='sm:col-span-4'
               label='VIN'
-              type='text'
-              name='vehicleVin'
             />
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>

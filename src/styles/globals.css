@@ -17,6 +17,15 @@
     --color-button-primary: 255, 255, 255;
     --color-button-inverted: 6, 6, 17;
     --color-accent-primary: 0, 202, 185;
+
+    --normal-border: hsl(0, 0%, 95.1%);
+    --normal-text: hsl(0, 0%, 9%);
+    --success-bg: hsl(143, 85%, 96%);
+    --success-border: hsl(145, 92%, 91%);
+    --success-text: hsl(140, 100%, 27%);
+    --error-bg: hsl(359, 100%, 97%);
+    --error-border: hsl(359, 100%, 94%);
+    --error-text: hsl(360, 100%, 45%);
   }
   /* Define a new theme with different colors */
 }

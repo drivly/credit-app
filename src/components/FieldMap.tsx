@@ -35,11 +35,9 @@ const FieldMap = ({ field, methods, errors }: FieldMapProps) => {
             )}
             errormsg={errors[field.name]?.message!}
             message={field?.message}
-            variant={field.variant}
+            variant={field?.variant}
             placeholder={field.placeholder}
             label={field.label}
-            name={field.name}
-            type={field.type}
           />
         )
       }

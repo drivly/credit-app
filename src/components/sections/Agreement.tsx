@@ -1,7 +1,12 @@
 import { useFormContext } from 'react-hook-form'
 import RadioButton from '../form-fields/RadioButton'
 
-export default function Agreement() {
+interface AgreementProps {
+  isError: boolean
+  onClick: () => void
+}
+
+export default function Agreement({ isError, onClick }: AgreementProps) {
   const methods = useFormContext()
 
   return (
@@ -29,10 +34,12 @@ export default function Agreement() {
       <div className='col-span-3 col-start-2 flex w-full'>
         <div className='flex w-full'>
           <RadioButton
-            {...methods.register('agree', { required: 'Required' })}
+            {...methods.register('agree')}
             label='I confirm that I have read and agree to the terms of this application, and that all information provided is accurate and truthful.'
-            id='agree'
+            errormsg={isError ? 'Required' : ''}
+            onClick={onClick}
             value='YES'
+            id='agree'
           />
         </div>
       </div>

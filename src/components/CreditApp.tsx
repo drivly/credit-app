@@ -1,6 +1,7 @@
 'use client'
 
 import FormCard from './FormCard'
+import Applicant from './sections/Applicant'
 import Employment from './sections/Employment'
 import Residence from './sections/Residence'
 
@@ -26,6 +27,8 @@ export default function CreditApp({ type, app, vin }: CreditAppProps) {
 
       {app.sections.map((section: any, index: number) => {
         switch (section.title) {
+          case 'Personal Information':
+            return <Applicant key={index} type={type} section={section} />
           case 'Employment History':
             return <Employment key={index} type={type} section={section} />
           case 'Residence':

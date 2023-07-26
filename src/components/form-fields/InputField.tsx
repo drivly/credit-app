@@ -8,10 +8,9 @@ type InputProps = React.DetailedHTMLProps<
 >
 
 interface IProps {
-  name: string
   label: string
   errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>
-  variant: string
+  variant?: string
   message?: string
 }
 
@@ -33,11 +32,10 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((prop
           className={cn(
             'block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm sm:leading-6',
             {
-              'text-red-400 outline-none ring-1 ring-inset ring-red-400 focus:ring-2 focus:ring-inset focus:ring-red-400':
+              'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
                 errormsg,
             }
           )}
-          type={type}
           autoComplete='on'
           placeholder={placeholder}
           {...props}
@@ -45,7 +43,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((prop
       </div>
       {errormsg && (
         <span className='absolute right-0 top-[1px] text-xs font-medium leading-6 text-red-400'>
-          {errormsg.toString()}
+          {!name?.includes('rentMortgagePaymentAmount') && errormsg.toString()}
         </span>
       )}
       {message && (

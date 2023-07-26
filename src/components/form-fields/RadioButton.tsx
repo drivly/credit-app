@@ -2,6 +2,7 @@ import React from 'react'
 
 interface RadioProps {
   label: string
+  errormsg?: string
 }
 
 type InputProps = React.DetailedHTMLProps<
@@ -10,9 +11,9 @@ type InputProps = React.DetailedHTMLProps<
 >
 
 const RadioButton = React.forwardRef<HTMLInputElement, InputProps & RadioProps>((props, ref) => {
-  const { label, id } = props
+  const { errormsg, label, id } = props
   return (
-    <div className='flex items-center'>
+    <div className='relative flex items-center'>
       <label
         htmlFor={id}
         className='flex cursor-pointer items-center text-sm font-medium leading-6 text-gray-900'>
@@ -25,6 +26,13 @@ const RadioButton = React.forwardRef<HTMLInputElement, InputProps & RadioProps>(
         />
         {label}
       </label>
+      {errormsg && (
+        <p
+          className='absolute left-0 mt-20 text-sm text-red-400'
+          id={errormsg ? `${id}-error` : id}>
+          {errormsg.toString()}
+        </p>
+      )}
     </div>
   )
 })

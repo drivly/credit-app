@@ -1,4 +1,4 @@
-export async function formatRequest(data: any) {
+export function formatRequest(data: any) {
   const { joint } = data
 
   delete data.joint

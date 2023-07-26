@@ -1,5 +1,6 @@
-import ToastWrapper from '@/components/ToastWrapper'
+import { Toaster } from 'react-hot-toast'
 import '@/styles/globals.css'
+import { toastOptions } from '@drivly/ui'
 
 export const metadata = {
   title: 'Credit App',
@@ -10,10 +11,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body>
-        <div>
+        <main>
           {children}
-          <ToastWrapper />
-        </div>
+          <Toaster
+            position='top-right'
+            containerClassName='toast-container'
+            toastOptions={toastOptions}
+          />
+        </main>
       </body>
     </html>
   )
