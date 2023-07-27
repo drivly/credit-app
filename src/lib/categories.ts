@@ -3,6 +3,8 @@ export interface CategoryType {
   optionName: string
 }
 
+const defaultCats = ['Select', 'Years', 'Months']
+
 export const states: CategoryType[] = [
   {
     value: '',
@@ -10,203 +12,203 @@ export const states: CategoryType[] = [
   },
   {
     value: 'AK',
-    optionName: 'Alaska',
+    optionName: 'AK',
   },
   {
     value: 'AZ',
-    optionName: 'Arizona',
+    optionName: 'AZ',
   },
   {
     value: 'AR',
-    optionName: 'Arkansas',
+    optionName: 'AR',
   },
   {
     value: 'CA',
-    optionName: 'California',
+    optionName: 'CA',
   },
   {
     value: 'CO',
-    optionName: 'Colorado',
+    optionName: 'CO',
   },
   {
     value: 'CT',
-    optionName: 'Connecticut',
+    optionName: 'CT',
   },
   {
     value: 'DE',
-    optionName: 'Delaware',
+    optionName: 'DE',
   },
   {
     value: 'DC',
-    optionName: 'D. C.',
+    optionName: 'DC',
   },
   {
     value: 'FL',
-    optionName: 'Florida',
+    optionName: 'FL',
   },
   {
     value: 'GA',
-    optionName: 'Georgia',
+    optionName: 'GA',
   },
   {
     value: 'HI',
-    optionName: 'Hawaii',
+    optionName: 'HI',
   },
   {
     value: 'ID',
-    optionName: 'Idaho',
+    optionName: 'ID',
   },
   {
     value: 'IL',
-    optionName: 'Illinois',
+    optionName: 'IL',
   },
   {
     value: 'IN',
-    optionName: 'Indiana',
+    optionName: 'IN',
   },
   {
     value: 'IA',
-    optionName: 'Iowa',
+    optionName: 'IA',
   },
   {
     value: 'KS',
-    optionName: 'Kansas',
+    optionName: 'KS',
   },
   {
     value: 'KY',
-    optionName: 'Kentucky',
+    optionName: 'KY',
   },
   {
     value: 'LA',
-    optionName: 'Louisiana',
+    optionName: 'LA',
   },
   {
     value: 'ME',
-    optionName: 'Maine',
+    optionName: 'ME',
   },
   {
     value: 'MD',
-    optionName: 'Maryland',
+    optionName: 'MD',
   },
   {
     value: 'MA',
-    optionName: 'Massachusetts',
+    optionName: 'MA',
   },
   {
     value: 'MI',
-    optionName: 'Michigan',
+    optionName: 'MI',
   },
   {
     value: 'MN',
-    optionName: 'Minnesota',
+    optionName: 'MN',
   },
   {
     value: 'MS',
-    optionName: 'Mississippi',
+    optionName: 'MS',
   },
   {
     value: 'MO',
-    optionName: 'Missouri',
+    optionName: 'MO',
   },
   {
     value: 'MT',
-    optionName: 'Montana',
+    optionName: 'MT',
   },
   {
     value: 'NE',
-    optionName: 'Nebraska',
+    optionName: 'NE',
   },
   {
     value: 'NV',
-    optionName: 'Nevada',
+    optionName: 'NV',
   },
   {
     value: 'NH',
-    optionName: 'New Hampshire',
+    optionName: 'NH',
   },
   {
     value: 'NJ',
-    optionName: 'New Jersey',
+    optionName: 'NJ',
   },
   {
     value: 'NM',
-    optionName: 'New Mexico',
+    optionName: 'NM',
   },
   {
     value: 'NY',
-    optionName: 'New York',
+    optionName: 'NY',
   },
   {
     value: 'NC',
-    optionName: 'North Carolina',
+    optionName: 'NC',
   },
   {
     value: 'ND',
-    optionName: 'North Dakota',
+    optionName: 'ND',
   },
   {
     value: 'OH',
-    optionName: 'Ohio',
+    optionName: 'OH',
   },
   {
     value: 'OK',
-    optionName: 'Oklahoma',
+    optionName: 'OK',
   },
   {
     value: 'OR',
-    optionName: 'Oregon',
+    optionName: 'OR',
   },
   {
     value: 'PA',
-    optionName: 'Pennsylvania',
+    optionName: 'PA',
   },
   {
     value: 'RI',
-    optionName: 'Rhode Island',
+    optionName: 'RI',
   },
   {
     value: 'SC',
-    optionName: 'South Carolina',
+    optionName: 'SC',
   },
   {
     value: 'SD',
-    optionName: 'South Dakota',
+    optionName: 'SD',
   },
   {
     value: 'TN',
-    optionName: 'Tennessee',
+    optionName: 'TN',
   },
   {
     value: 'TX',
-    optionName: 'Texas',
+    optionName: 'TX',
   },
   {
     value: 'UT',
-    optionName: 'Utah',
+    optionName: 'UT',
   },
   {
     value: 'VT',
-    optionName: 'Vermont',
+    optionName: 'VT',
   },
   {
     value: 'VA',
-    optionName: 'Virginia',
+    optionName: 'VA',
   },
   {
     value: 'WA',
-    optionName: 'Washington',
+    optionName: 'WA',
   },
   {
     value: 'WV',
-    optionName: 'West Virginia',
+    optionName: 'WV',
   },
   {
     value: 'WI',
-    optionName: 'Wisconsin',
+    optionName: 'WI',
   },
   {
     value: 'WY',
-    optionName: 'Wyoming',
+    optionName: 'WY',
   },
 ]
 
@@ -246,3 +248,87 @@ export const timeMonths: CategoryType[] = [
   { optionName: '10 months', value: '10' },
   { optionName: '11 months', value: '11' },
 ]
+
+export const jobStatus: CategoryType[] = [
+  {
+    value: '',
+    optionName: 'Select',
+  },
+  { optionName: 'Full Time', value: 'Full Time' },
+  { optionName: 'Military', value: 'Military' },
+  { optionName: 'Contract', value: 'Contract' },
+  { optionName: 'Part Time', value: 'Part Time' },
+  { optionName: 'Temporary', value: 'Temporary' },
+  { optionName: 'Seasonal', value: 'Seasonal' },
+  { optionName: 'Self Employed', value: 'Self Employed' },
+  { optionName: 'Retired', value: 'Retired' },
+  { optionName: 'Not Applicable', value: 'Not Applicable' },
+]
+
+export const otherIncomeSources: CategoryType[] = [
+  {
+    value: '',
+    optionName: 'Select',
+  },
+  {
+    value: 'AIDDEPCHILD',
+    optionName: 'Aid for Dependent Children',
+  },
+  {
+    value: 'CHILDSUPPORT',
+    optionName: 'Child Support',
+  },
+  {
+    value: 'COLA',
+    optionName: 'Cost of Living Allowance (COLA)',
+  },
+  {
+    value: 'DISABILITY',
+    optionName: 'Disability',
+  },
+  {
+    value: 'FSSA',
+    optionName: 'Family Subsistence Supplemental Allowance (FSSA)',
+  },
+  {
+    value: 'HOUSINGALLOW',
+    optionName: 'Housing Allowances',
+  },
+  {
+    value: 'MILITARYBAS',
+    optionName: 'Military Basic Allowance for Subsistence (BAS)',
+  },
+  {
+    value: 'MUNBONDINT',
+    optionName: 'Municipal Bond Interest',
+  },
+  {
+    value: 'NONTAXINCOME',
+    optionName: 'Other Non-Taxable Sources of Income',
+  },
+  {
+    value: 'OTHCSTM',
+    optionName: 'Other',
+  },
+  {
+    value: 'PUBLICASST',
+    optionName: 'Public Assistance',
+  },
+  {
+    value: 'RAILPENSION',
+    optionName: 'Railroad Pension',
+  },
+  {
+    value: '2NDEMPLOYER',
+    optionName: 'Second Employer',
+  },
+  {
+    value: 'SOCSECBEN',
+    optionName: 'Social Security Benefits',
+  },
+  {
+    value: 'WORKMANCOMP',
+    optionName: "Workman's Compensation",
+  },
+]
+let con = 'Customer Other Income Source'

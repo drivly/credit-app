@@ -12,8 +12,8 @@ export default function JointAddr({ section }: any) {
     watch,
     formState: { errors },
   } = methods
-  const jointAddrYrs = watch('coAddressYears')
-  const liveWithOthers = watch('coResidenceTypeCode')
+  const jointAddrYrs = watch('co_addressYears')
+  const liveWithOthers = watch('co_residenceTypeCode')
   console.log('liveWithOthers', liveWithOthers)
 
   return (
@@ -23,22 +23,22 @@ export default function JointAddr({ section }: any) {
           <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>
             <div className='flex w-full items-center justify-start gap-x-8'>
               <RadioButton
-                {...register('coResidenceTypeCode', { required: 'Required' })}
-                name='coResidenceTypeCode'
+                {...register('co_residenceTypeCode', { required: 'Required' })}
+                name='co_residenceTypeCode'
                 label='Own'
                 id='coOwn'
                 value='1'
               />
               <RadioButton
-                {...register('coResidenceTypeCode', { required: 'Required' })}
-                name='coResidenceTypeCode'
+                {...register('co_residenceTypeCode', { required: 'Required' })}
+                name='co_residenceTypeCode'
                 label='Rent'
                 id='coRent'
                 value='2'
               />
               <RadioButton
-                {...register('coResidenceTypeCode', { required: 'Required' })}
-                name='coResidenceTypeCode'
+                {...register('co_residenceTypeCode', { required: 'Required' })}
+                name='co_residenceTypeCode'
                 label='Live with Others'
                 id='coLiveWithOthers'
                 value='3'

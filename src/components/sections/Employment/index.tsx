@@ -6,9 +6,9 @@ export default function Employment(props: any) {
 
   return (
     <div className='grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3'>
-      <div className='px-4 sm:px-0'>
-        <h2 className='text-base font-semibold leading-7 text-gray-900'>{section.title}</h2>
-      </div>
+      <h2 className='font-mont px-4 text-lg font-semibold leading-7 text-gray-900 sm:px-0 sm:text-base'>
+        {section.title}
+      </h2>
 
       {type === 'Primary' ? <PrimaryEmployee section={section} /> : null}
 

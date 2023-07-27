@@ -3,6 +3,7 @@
 import FormCard from './FormCard'
 import Applicant from './sections/Applicant'
 import Employment from './sections/Employment'
+import OtherIncome from './sections/OtherIncome'
 import Residence from './sections/Residence'
 
 type ApplicantType = 'Primary' | 'Joint'
@@ -33,6 +34,8 @@ export default function CreditApp({ type, app, vin }: CreditAppProps) {
             return <Employment key={index} type={type} section={section} />
           case 'Residence':
             return <Residence key={index} type={type} section={section} />
+          case 'Other Income Source':
+            return <OtherIncome key={index} type={type} section={section} />
           default: {
             return <FormCard key={index + type} section={section} type={type} />
           }

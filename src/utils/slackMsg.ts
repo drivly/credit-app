@@ -5,7 +5,7 @@ interface SlackMsgRequest {
   url: string | undefined
   data: {
     primary: PrimaryApplicant
-    secondary: CoApplicant
+    secondary: PrimaryApplicant
     vehicle: VehicleOfInterest
   }
 }
@@ -32,10 +32,12 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         text: {
           type: 'mrkdwn',
           text: `*Primary Applicant:*\n*Full name:* ${data.primary.firstName} ${
-            data.primary?.middleInitial || ''
-          } ${data.primary.lastName}\n*Phone:* ${data.primary.phone}\n*Email:* ${
-            data.primary.email
-          }\n*Date of Birth:* ${data.primary.dateOfBirth}\n*SSN:* ${data.primary.ssn}`,
+            data.primary?.middleName || ''
+          } ${data.primary.lastName}\n*Phone:* ${data.primary.phone} ${
+            data.primary.phoneType
+          }\n*Email:* ${data.primary.email}\n*Date of Birth:* ${data.primary.dateOfBirth}\n*SSN:* ${
+            data.primary.ssn
+          }`,
         },
       })
       blocks.push({
@@ -56,13 +58,13 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `*Previous Residence*\n*Address:* ${data.primary.prev_addressLine1} \n*City:* ${
-              data.primary.prev_city
-            }\n*State:* ${data.primary.prev_state}\n*Zip Code:* ${
+            text: `*Previous Residence*\n*Address:* ${data.primary.prevAddressLine1} \n*City:* ${
+              data.primary.prevCity
+            }\n*State:* ${data.primary.prevState}\n*Zip Code:* ${
               data.primary.zipCode
-            }\n*Time at address:* ${data.primary.prev_addressYears} yrs ${
-              data.primary.prev_addressMonths ? data.primary.prev_addressMonths + 'mo' : ''
-            }\n*Monthly payment/rent:* ${data.primary.prev_rentMortgagePaymentAmount}`,
+            }\n*Time at address:* ${data.primary.prevAddressYears} yrs ${
+              data.primary.prevAddressMonths ? data.primary.prevAddressMonths + 'mo' : ''
+            }\n*Monthly payment/rent:* ${data.primary.prevRentMortgagePaymentAmount}`,
           },
         })
       blocks.push({
@@ -78,11 +80,13 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           type: 'mrkdwn',
           text: `*Employment History*\n*Employer name:* ${
             data.primary.employerName
-          }\n*Employer phone:* ${data.primary.employerPhone}\n*Occupation:* ${
-            data.primary.employmentTitle
-          }\n*Time on job:* ${data.primary.timeOnJobYears} yrs ${
+          }\n*Employment Status:* ${data.primary.employmentStatusCode}\n*Employer phone:* ${
+            data.primary.employerPhone
+          }\n*Occupation:* ${data.primary.employmentTitle}\n*Time on job:* ${
+            data.primary.timeOnJobYears
+          } yrs ${
             data.primary.timeOnJobMonths ? data.primary.timeOnJobMonths + 'mo' : ''
-          }\n*Monthly income:* ${data.primary.monthlyIncome}`,
+          }\n*Monthly income:* ${data.primary.incomeAmount}`,
         },
       })
       Number(data.primary.timeOnJobYears) < 2 &&
@@ -91,14 +95,21 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           text: {
             type: 'mrkdwn',
             text: `*Previous Employment*\n*Employer name:* ${
-              data.primary.prev_employerName
-            }\n*Employer phone:* ${data.primary.prev_employerPhone}\n*Occupation:* ${
-              data.primary.prev_employmentTitle
-            }\n*Time on job:* ${data.primary.prev_timeOnJobYears} yrs ${
-              data.primary.prev_timeOnJobMonths ? data.primary.prev_timeOnJobMonths + 'mo' : ''
-            }\n*Monthly income:* ${data.primary.prev_monthlyIncome}`,
+              data.primary.previousEmployerName
+            }\n*Employer phone:* ${data.primary.prevEmployerPhone}\n*Occupation:* ${
+              data.primary.prevEmploymentTitle
+            }\n*Time on job:* ${data.primary.prevTimeOnJobYears} yrs ${
+              data.primary.prevTimeOnJobMonths ? data.primary.prevTimeOnJobMonths + 'mo' : ''
+            }\n*Monthly income:* ${data.primary.prevIncomeAmount}`,
           },
         })
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Other Incomet*\n*Description:* ${data.primary?.otherIncomeSourceDescription}\n*Monthly Amount:* ${data.primary?.otherIncomeAmount}\n`,
+        },
+      })
     } else if (key === 'secondary') {
       blocks.push({
         type: 'divider',
@@ -107,43 +118,41 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Joint Applicant:*\n*Full name:* ${data.secondary.coFirstName} ${data.secondary?.coMiddleInitial} ${data.secondary.coLastName}\n*Phone:* ${data.secondary.coPhone}\n*Email:* ${data.secondary.coEmail}\n*Date of birth:* ${data.secondary.coDateOfBirth} \n*SSN:* ${data.secondary.coSsn}`,
+          text: `*Joint Applicant:*\n*Full name:* ${data.secondary.firstName} ${data.secondary?.middleName} ${data.secondary.lastName}\n*Phone:* ${data.secondary.phone} ${data.secondary.phoneType}\n*Email:* ${data.secondary.email}\n*Date of birth:* ${data.secondary.dateOfBirth} \n*SSN:* ${data.secondary.ssn}`,
         },
       })
       blocks.push({
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Residence*\n*Address:* ${data.secondary.coAddressLine1} \n*City:* ${
-            data.secondary.coCity
-          }\n*State:* ${data.secondary.coState}*Zip Code:* ${
-            data.secondary.coZipCode
-          }\n*Time at address:* ${data.secondary.coAddressYears} yrs ${
-            data.secondary.coAddressMonths ? data.secondary.coAddressMonths + 'mo' : ''
-          }\n*Monthly payment/rent:* ${data.secondary.coRentMortgagePaymentAmount}`,
+          text: `*Residence*\n*Address:* ${data.secondary.addressLine1} \n*City:* ${
+            data.secondary.city
+          }\n*State:* ${data.secondary.state}*Zip Code:* ${
+            data.secondary.zipCode
+          }\n*Time at address:* ${data.secondary.addressYears} yrs ${
+            data.secondary.addressMonths ? data.secondary.addressMonths + 'mo' : ''
+          }\n*Monthly payment/rent:* ${data.secondary.rentMortgagePaymentAmount}`,
         },
       })
-      Number(data.secondary.coAddressYears) < 2 &&
+      Number(data.secondary.addressYears) < 2 &&
         blocks.push({
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `*Previous Residence*\n*Address:* ${
-              data.secondary.prev_coAddressLine1
-            } \n*City:* ${data.secondary.prev_coCity}\n*State:* ${
-              data.secondary.prev_coState
-            }\n*Zip Code:* ${data.secondary.prev_coZipCode}\n*Time at address:* ${
-              data.secondary.prev_coAddressYears
-            } yrs ${
-              data.secondary.prev_coAddressMonths ? data.secondary.prev_coAddressMonths + 'mo' : ''
-            }\n*Monthly payment/rent:* ${data.secondary.prev_coRentMortgagePaymentAmount}`,
+            text: `*Previous Residence*\n*Address:* ${data.secondary.prevAddressLine1} \n*City:* ${
+              data.secondary.prevCity
+            }\n*State:* ${data.secondary.prevState}\n*Zip Code:* ${
+              data.secondary.prevZipCode
+            }\n*Time at address:* ${data.secondary.prevAddressYears} yrs ${
+              data.secondary.prevAddressMonths ? data.secondary.prevAddressMonths + 'mo' : ''
+            }\n*Monthly payment/rent:* ${data.secondary.prevRentMortgagePaymentAmount}`,
           },
         })
       blocks.push({
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Drivers License*\n*License number:* ${data.secondary.coLicenseNumber} \n*State:* ${data.secondary.coLicenseState}\n*Expiration:* ${data.secondary.coLicenseExp}`,
+          text: `*Drivers License*\n*License number:* ${data.secondary.licenseNumber} \n*State:* ${data.secondary.licenseState}\n*Expiration:* ${data.secondary.licenseExp}`,
         },
       })
       blocks.push({
@@ -151,30 +160,37 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         text: {
           type: 'mrkdwn',
           text: `*Employment History*\n*Employer name:* ${
-            data.secondary.coEmployerName
-          }\n*Employer phone:* ${data.secondary.coEmployerPhone}\n*Occupation:* ${
-            data.secondary.coEmploymentTitle
-          }\n*Time on job:* ${data.secondary.coTimeOnJobYears} yrs ${
-            data.secondary.coTimeOnJobMonths ? data.secondary.coTimeOnJobMonths + 'mo' : ''
-          }\n*Monthly income:* ${data.secondary.coMonthlyIncome}`,
+            data.secondary.employerName
+          }\n*Employment Status:* ${data.secondary.employmentStatusCode}\n*Employer phone:* ${
+            data.secondary.employerPhone
+          }\n*Occupation:* ${data.secondary.employmentTitle}\n*Time on job:* ${
+            data.secondary.timeOnJobYears
+          } yrs ${
+            data.secondary.timeOnJobMonths ? data.secondary.timeOnJobMonths + 'mo' : ''
+          }\n*Monthly income:* ${data.secondary.incomeAmount}`,
         },
       })
-      Number(data.secondary.coTimeOnJobYears) < 2 &&
+      Number(data.secondary.timeOnJobYears) < 2 &&
         blocks.push({
           type: 'section',
           text: {
             type: 'mrkdwn',
             text: `*Previous Employment*\n*Employer name:* ${
-              data.secondary.prev_coEmployerName
-            }\n*Employer phone:* ${data.secondary.prev_coEmployerPhone}\n*Occupation:* ${
-              data.secondary.prev_coEmploymentTitle
-            }\n*Time on job:* ${data.secondary.prev_coTimeOnJobYears} yrs ${
-              data.secondary.prev_coTimeOnJobMonths
-                ? data.secondary.prev_coTimeOnJobMonths + 'mo'
-                : ''
-            }\n*Monthly income:* ${data.secondary.prev_coMonthlyIncome}`,
+              data.secondary.previousEmployerName
+            }\n*Employer phone:* ${data.secondary.prevEmployerPhone}\n*Occupation:* ${
+              data.secondary.prevEmploymentTitle
+            }\n*Time on job:* ${data.secondary.prevTimeOnJobYears} yrs ${
+              data.secondary.prevTimeOnJobMonths ? data.secondary.prevTimeOnJobMonths + 'mo' : ''
+            }\n*Monthly income:* ${data.secondary.prevIncomeAmount}`,
           },
         })
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Other Incomet*\n*Description:* ${data.secondary?.otherIncomeSourceDescription}\n*Monthly Amount:* ${data.secondary?.otherIncomeAmount}\n`,
+        },
+      })
     } else if (key === 'vehicle') {
       blocks.push({
         type: 'divider',

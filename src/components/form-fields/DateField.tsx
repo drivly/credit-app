@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FieldError, FieldErrorsImpl, Merge, useController } from 'react-hook-form'
+import { AlertCircle } from 'lucide-react'
 
 interface DateFieldProps {
   name: string
@@ -35,35 +36,40 @@ export default function DateField(props: any) {
   return (
     <div className={cn('relative col-span-6 min-w-full', variant)}>
       <label
-        className={cn('block text-sm font-medium leading-6 text-gray-900', {
-          'text-red-400': errormsg,
-        })}
+        className={cn('block text-base font-medium leading-6 text-gray-900 sm:text-sm')}
         htmlFor={label}>
         {label}
       </label>
-      <DatePicker
-        {...method.field}
-        className={cn(
-          'mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY  sm:text-sm sm:leading-6',
-          {
-            'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
-              errormsg,
-          }
-        )}
-        name={name}
-        onChange={onChange}
-        isClearable
-        showYearDropdown
-        scrollableYearDropdown
-        yearDropdownItemNumber={100}
-        selected={date}
-        placeholderText={placeholder}
-      />
-      {errormsg && (
-        <span className='absolute right-0 top-[1px] text-xs font-medium leading-6 text-red-400'>
-          {errormsg.toString()}
-        </span>
-      )}
+      <div className='relative mt-2'>
+        <DatePicker
+          {...method.field}
+          className={cn(
+            'block w-full rounded-md border-0 px-3  text-base text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm ',
+            {
+              'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
+                errormsg,
+            }
+          )}
+          name={name}
+          onChange={onChange}
+          showYearDropdown
+          scrollableYearDropdown
+          yearDropdownItemNumber={100}
+          selected={date}
+          placeholderText={placeholder}
+        />
+        <div className='pointer-events-none absolute inset-y-0 right-0 z-50 flex items-center pr-3'>
+          {errormsg && <AlertCircle className='z-50 h-5 w-5 text-red-500' aria-hidden='true' />}
+        </div>
+      </div>
     </div>
   )
+}
+
+{
+  /* {errormsg && (
+  <p className='absolute mt-2 text-sm text-red-600' id={errormsg ? `${name}-error` : name}>
+    {errormsg.toString()}
+  </p>
+)} */
 }

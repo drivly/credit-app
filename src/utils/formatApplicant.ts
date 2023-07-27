@@ -3,10 +3,14 @@ import * as zcta from 'us-zcta-counties'
 export const formatApplicant = (vehicle: any, applicant: Record<string, any>) => {
   const addressMonths = Number(applicant.addressMonths) || 0
   const addressYears = Number(applicant.addressYears) || 0
+
+  const prevAddressMonths = Number(applicant?.prevAddressMonths) || 0
+  const prevAddressYears = Number(applicant?.prevAddressYears) || 0
+
   const timeOnJobMonths = Number(applicant.timeOnJobMonths) || 0
   const timeOnJobYears = Number(applicant.timeOnJobYears) || 0
-  const prevTimeJobYears = Number(applicant.prev_timeOnJobYears) || 0
-  const prevTimeJobMonths = Number(applicant.prev_timeOnJobMonths) || 0
+  const prevTimeJobYears = Number(applicant.prevTimeOnJobYears) || 0
+  const prevTimeJobMonths = Number(applicant.prevTimeOnJobMonths) || 0
 
   applicant.rentMortgagePaymentAmount = Number(
     applicant?.rentMortgagePaymentAmount?.replaceAll(/\$|,/g, '')
@@ -14,23 +18,26 @@ export const formatApplicant = (vehicle: any, applicant: Record<string, any>) =>
 
   const pCounty = zcta.find({ zip: applicant.zipCode })
 
-  const pAddressMonths = addressYears * 12 + addressMonths
-  const pJobMonths = timeOnJobYears * 12 + timeOnJobMonths
+  const currentAddressMonths = addressYears * 12 + addressMonths
+  const previousAddressMonths = prevAddressYears * 12 + prevAddressMonths
+  const currentJobMonths = timeOnJobYears * 12 + timeOnJobMonths
   const prevJobMonths = prevTimeJobYears * 12 + prevTimeJobMonths
 
   const formattedApp: Record<string, any> = {
     ...applicant,
-    employmentStatusCode: 'Full Time',
     employmentTypeCode: applicant.employmentTitle,
-    monthsAtAddress: pAddressMonths,
-    monthsOnJob: pJobMonths,
+    monthsAtAddress: currentAddressMonths,
+    monthsOnJob: currentJobMonths,
     previousMonthsOnJob: prevJobMonths,
+    prevMonthsAtAddress: previousAddressMonths,
     middleName: applicant?.middleInitial,
     county: pCounty?.county,
     countryCode: 'US',
     // residenceTypeCode: '1', added 1 own 2 rent 3 others
     educationLevelCode: '1',
-    incomeIntervalCode: 'MO', // form asks for monthly income
+    incomeIntervalCode: 'MO',
+    // otherIncomeSourceCode: otherIncome,
+    // form asks for monthly income
     phoneType: 'MOBILE',
     incomeAmount: Number(applicant?.incomeAmount?.replaceAll(/\$|,/g, '')),
     phone: applicant?.phone?.slice(2),
@@ -54,6 +61,11 @@ export const formatApplicant = (vehicle: any, applicant: Record<string, any>) =>
     'prev_employerPhone',
     'prev_employmentTitle',
     'prev_monthlyIncome',
+    'year',
+    'make',
+    'model',
+    'price',
+    'vin',
   ]
 
   fieldsToDelete.forEach((field) => delete formattedApp[field])

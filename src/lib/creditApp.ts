@@ -1,6 +1,6 @@
-import { formatMoney, formatSSN, isAtLeast18 } from '@/utils'
-import { emailReg, zipReg } from './patterns'
+import { formatMoney } from '@/utils'
 import { states, timeMonths, timeYears } from './categories'
+import { zipReg } from './patterns'
 
 export const creditApps = [
   {
@@ -9,104 +9,104 @@ export const creditApps = [
       {
         title: 'Personal Information',
         description: 'Personal information about the primary applicant',
-        fields: [
-          {
-            component: 'InputField',
-            name: 'firstName',
-            label: 'First Name*',
-            placeholder: 'John',
-            variant: 'sm:col-span-2',
-            type: 'text',
-            maxLength: { value: 30, message: 'Max 30 chars' },
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-          },
-          {
-            component: 'InputField',
-            name: 'middleInitial', // middleName
-            label: 'MI',
-            variant: 'sm:col-span-1',
-            placeholder: 'A',
-            onChange: (e: any) => {
-              e.target.value = e.target.value.toUpperCase()
-            },
-            maxLength: { value: 3, message: 'Max 3 chars' },
-            rules: {
-              value: false,
-            },
-            type: 'text',
-          },
-          {
-            component: 'InputField',
-            name: 'lastName',
-            label: 'Last Name*',
-            placeholder: 'Doe',
-            variant: 'sm:col-span-3',
-            maxLength: { value: 30, message: 'Max 30 chars' },
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-          },
-          {
-            component: 'PhoneField',
-            name: 'phone',
-            label: 'Phone*',
-            placeholder: '555-555-5555',
-            variant: 'sm:col-span-3',
-            control: true,
-            errors: true,
-          },
-          {
-            component: 'InputField',
-            name: 'email',
-            label: 'Email*',
-            placeholder: 'johnwsmith@gmail.com',
-            variant: 'sm:col-span-3',
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            pattern: { value: emailReg, message: 'Invalid Email' },
-          },
-          {
-            component: 'DateField',
-            name: 'dateOfBirth',
-            label: 'Date of Birth*',
-            variant: 'sm:col-span-2',
-            placeholder: '05/15/1980',
-            control: true,
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            validate: (value: any) => isAtLeast18(value) || '18yo or older',
-          },
-          {
-            component: 'InputField',
-            name: 'ssn',
-            label: 'SSN*',
-            placeholder: '111-22-3333',
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            variant: 'sm:col-span-2',
-            validate: (value: any) => {
-              const length = value?.replace(/\D/g, '').length
-              if (length < 9) return 'Must be 9 digits'
-              return true
-            },
-            onChange(event: any) {
-              event.target.value = formatSSN(event.target.value)
-            },
-          },
-        ],
+        // fields: [
+        //   {
+        //     component: 'InputField',
+        //     name: 'firstName',
+        //     label: 'First Name*',
+        //     placeholder: 'John',
+        //     variant: 'sm:col-span-2',
+        //     type: 'text',
+        //     maxLength: { value: 30, message: 'Max 30 chars' },
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'middleInitial', // middleName
+        //     label: 'MI',
+        //     variant: 'sm:col-span-1',
+        //     placeholder: 'A',
+        //     onChange: (e: any) => {
+        //       e.target.value = e.target.value.toUpperCase()
+        //     },
+        //     maxLength: { value: 3, message: 'Max 3 chars' },
+        //     rules: {
+        //       value: false,
+        //     },
+        //     type: 'text',
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'lastName',
+        //     label: 'Last Name*',
+        //     placeholder: 'Doe',
+        //     variant: 'sm:col-span-3',
+        //     maxLength: { value: 30, message: 'Max 30 chars' },
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //   },
+        //   {
+        //     component: 'PhoneField',
+        //     name: 'phone',
+        //     label: 'Phone*',
+        //     placeholder: '555-555-5555',
+        //     variant: 'sm:col-span-3',
+        //     control: true,
+        //     errors: true,
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'email',
+        //     label: 'Email*',
+        //     placeholder: 'johnwsmith@gmail.com',
+        //     variant: 'sm:col-span-3',
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     pattern: { value: emailReg, message: 'Invalid Email' },
+        //   },
+        //   {
+        //     component: 'DateField',
+        //     name: 'dateOfBirth',
+        //     label: 'Date of Birth*',
+        //     variant: 'sm:col-span-2',
+        //     placeholder: '05/15/1980',
+        //     control: true,
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     validate: (value: any) => isAtLeast18(value) || '18yo or older',
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'ssn',
+        //     label: 'SSN*',
+        //     placeholder: '111-22-3333',
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     variant: 'sm:col-span-2',
+        //     validate: (value: any) => {
+        //       const length = value?.replace(/\D/g, '').length
+        //       if (length < 9) return 'Must be 9 digits'
+        //       return true
+        //     },
+        //     onChange(event: any) {
+        //       event.target.value = formatSSN(event.target.value)
+        //     },
+        //   },
+        // ],
       },
       {
         title: 'Residence',
@@ -198,7 +198,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_addressLine1',
+            name: 'prevAddressLine1',
             label: 'Street Address*',
             placeholder: '123 Main St',
             maxLength: { value: 200, message: 'Max 200 chars' },
@@ -210,7 +210,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_city',
+            name: 'prevCity',
             label: 'City*',
             placeholder: 'New York',
             variant: 'sm:col-span-2',
@@ -223,7 +223,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_state',
+            name: 'prevState',
             label: 'State*',
             variant: 'sm:col-span-2',
             rules: {
@@ -235,7 +235,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_zipCode',
+            name: 'prevZipCode',
             label: 'Zipcode*',
             placeholder: '12345',
             variant: 'sm:col-span-2',
@@ -248,7 +248,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_addressYears',
+            name: 'prevAddressYears',
             label: 'Time at Address*',
             variant: 'whitespace-nowrap sm:col-span-2',
             rules: {
@@ -260,14 +260,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_addressMonths',
+            name: 'prevAddressMonths',
             control: true,
             variant: 'sm:col-span-2 whitespace-nowrap',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'prev_rentMortgagePaymentAmount',
+            name: 'prevRentMortgagePaymentAmount',
             label: 'Monthly Pmt / Rent*',
             placeholder: 'Enter $0, if no Pmt/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -334,6 +334,7 @@ export const creditApps = [
             label: 'Employer Name*',
             placeholder: 'ABC Company',
             maxLength: { value: 50, message: 'Max 50 chars' },
+            variant: 'sm:col-span-6 whitespace-nowrap',
             type: 'text',
             rules: {
               value: true,
@@ -344,10 +345,10 @@ export const creditApps = [
             component: 'PhoneField',
             name: 'employerPhone',
             label: 'Employer Phone*',
-            placeholder: '713-555-2541',
+            placeholder: 'If unemployed, use your phone.',
             control: true,
             variant: 'sm:col-span-3',
-            message: 'If unemployed, use your phone.',
+            // message: 'If unemployed, use your phone.',
             errors: true,
           },
           {
@@ -411,7 +412,7 @@ export const creditApps = [
           },
           {
             component: 'PhoneField',
-            name: 'prev_employerPhone',
+            name: 'prevEmployerPhone',
             label: 'Employer Phone*',
             placeholder: '713-555-2541',
             control: true,
@@ -421,7 +422,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_employmentTitle',
+            name: 'prevEmploymentTitle',
             label: 'Occupation*',
             placeholder: 'Sales Manager',
             variant: 'sm:col-span-3',
@@ -434,7 +435,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_timeOnJobYears',
+            name: 'prevTimeOnJobYears',
             label: 'Time on job*',
             variant: 'sm:col-span-2',
             control: true,
@@ -446,14 +447,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_timeOnJobMonths',
+            name: 'prevTimeOnJobMonths',
             control: true,
             variant: 'sm:col-span-2',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'prev_incomeAmount',
+            name: 'prevIncomeAmount',
             label: 'Monthly Income*',
             placeholder: 'Gross Pay, Before Taxes',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -468,112 +469,138 @@ export const creditApps = [
           },
         ],
       },
+      {
+        title: 'Other Income Source',
+        description: 'Is there any other income you would like to be considered?',
+        fields: [
+          {
+            component: 'InputField',
+            name: 'otherIncomeAmount',
+            label: 'Monthly Amount',
+            variant: 'sm:col-span-2 whitespace-nowrap',
+            placeholder: '$2000',
+            type: 'text',
+            onChange: (e: any) => {
+              e.target.value = formatMoney(e.target.value)
+            },
+          },
+          {
+            component: 'InputField',
+            name: 'otherIncomeSourceDescription',
+            label: 'Description',
+            placeholder: 'I move furniture on the weekends',
+            variant: 'sm:col-span-4 whitespace-nowrap',
+            type: 'text',
+          },
+        ],
+      },
     ],
   },
+
   {
     main: 'Joint',
     sections: [
       {
         title: 'Personal Information',
         description: 'Personal information about the joint applicant',
-        fields: [
-          {
-            component: 'InputField',
-            name: 'coFirstName',
-            label: 'First Name*',
-            placeholder: 'Harry',
-            variant: 'sm:col-span-2',
-            maxLength: { value: 30, message: 'Max 30 chars' },
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-          },
-          {
-            component: 'InputField',
-            name: 'coMiddleInitial',
-            label: 'MI',
-            variant: 'sm:col-span-1',
-            placeholder: 'A',
-            onChange: (e: any) => {
-              e.target.value = e.target.value.toUpperCase()
-            },
-            maxLength: { value: 3, message: 'Max 3 chars' },
-            type: 'text',
-            rules: {
-              value: false,
-            },
-          },
-          {
-            component: 'InputField',
-            name: 'coLastName',
-            label: 'Last Name*',
-            placeholder: 'Johnson',
-            variant: 'sm:col-span-3',
-            maxLength: { value: 30, message: 'Max 30 chars' },
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-          },
-          {
-            component: 'PhoneField',
-            name: 'coPhone',
-            label: 'Phone*',
-            placeholder: '555-555-5555',
-            variant: 'sm:col-span-3',
-            control: true,
-            errors: true,
-          },
-          {
-            component: 'InputField',
-            name: 'coEmail',
-            label: 'Email*',
-            placeholder: 'harryson@gmail.com',
-            variant: 'sm:col-span-3',
-            type: 'text',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            pattern: { value: emailReg, message: 'Invalid Email' },
-          },
-          {
-            component: 'DateField',
-            name: 'coDateOfBirth',
-            label: 'Date of Birth*',
-            placeholder: '04/01/1970',
-            variant: 'sm:col-span-2',
-            control: true,
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            validate: (value: any) => isAtLeast18(value) || '18yo or older',
-          },
-          {
-            component: 'InputField',
-            name: 'coSsn',
-            label: 'SSN*',
-            placeholder: '333-11-3333',
-            rules: {
-              value: true,
-              message: 'Required',
-            },
-            type: 'text',
-            variant: 'sm:col-span-2',
-            validate: (value: any) => {
-              const length = value?.replace(/\D/g, '').length
-              if (length < 9) return 'Must be 9 digits'
-              return true
-            },
-            onChange(event: any) {
-              event.target.value = formatSSN(event.target.value)
-            },
-          },
-        ],
+        // fields: [
+        //   {
+        //     component: 'InputField',
+        //     name: 'coFirstName',
+        //     label: 'First Name*',
+        //     placeholder: 'Harry',
+        //     variant: 'sm:col-span-2',
+        //     maxLength: { value: 30, message: 'Max 30 chars' },
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'coMiddleInitial',
+        //     label: 'MI',
+        //     variant: 'sm:col-span-1',
+        //     placeholder: 'A',
+        //     onChange: (e: any) => {
+        //       e.target.value = e.target.value.toUpperCase()
+        //     },
+        //     maxLength: { value: 3, message: 'Max 3 chars' },
+        //     type: 'text',
+        //     rules: {
+        //       value: false,
+        //     },
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'coLastName',
+        //     label: 'Last Name*',
+        //     placeholder: 'Johnson',
+        //     variant: 'sm:col-span-3',
+        //     maxLength: { value: 30, message: 'Max 30 chars' },
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //   },
+        //   {
+        //     component: 'PhoneField',
+        //     name: 'coPhone',
+        //     label: 'Phone*',
+        //     placeholder: '555-555-5555',
+        //     variant: 'sm:col-span-3',
+        //     control: true,
+        //     errors: true,
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'coEmail',
+        //     label: 'Email*',
+        //     placeholder: 'harryson@gmail.com',
+        //     variant: 'sm:col-span-3',
+        //     type: 'text',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     pattern: { value: emailReg, message: 'Invalid Email' },
+        //   },
+        //   {
+        //     component: 'DateField',
+        //     name: 'coDateOfBirth',
+        //     label: 'Date of Birth*',
+        //     placeholder: '04/01/1970',
+        //     variant: 'sm:col-span-2',
+        //     control: true,
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     validate: (value: any) => isAtLeast18(value) || '18yo or older',
+        //   },
+        //   {
+        //     component: 'InputField',
+        //     name: 'coSsn',
+        //     label: 'SSN*',
+        //     placeholder: '333-11-3333',
+        //     rules: {
+        //       value: true,
+        //       message: 'Required',
+        //     },
+        //     type: 'text',
+        //     variant: 'sm:col-span-2',
+        //     validate: (value: any) => {
+        //       const length = value?.replace(/\D/g, '').length
+        //       if (length < 9) return 'Must be 9 digits'
+        //       return true
+        //     },
+        //     onChange(event: any) {
+        //       event.target.value = formatSSN(event.target.value)
+        //     },
+        //   },
+        // ],
       },
       {
         title: 'Residence',
@@ -581,7 +608,7 @@ export const creditApps = [
         fields: [
           {
             component: 'InputField',
-            name: 'coAddressLine1',
+            name: 'co_addressLine1',
             label: 'Street Address*',
             placeholder: '321 Main Ave',
             maxLength: { value: 200, message: 'Max 200 chars' },
@@ -593,7 +620,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'coCity',
+            name: 'co_city',
             label: 'City*',
             placeholder: 'Miami',
             variant: 'sm:col-span-2',
@@ -606,7 +633,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coState',
+            name: 'co_state',
             label: 'State*',
             variant: 'sm:col-span-2',
             type: 'text',
@@ -619,7 +646,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'coZipCode',
+            name: 'co_zipCode',
             label: 'Zipcode*',
             placeholder: '54321',
             variant: 'sm:col-span-2',
@@ -632,7 +659,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coAddressYears',
+            name: 'co_addressYears',
             label: 'Time at Address*',
             variant: 'whitespace-nowrap sm:col-span-2',
             rules: {
@@ -644,14 +671,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coAddressMonths',
+            name: 'co_addressMonths',
             control: true,
             variant: 'sm:col-span-2 whitespace-nowrap',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'coRentMortgagePaymentAmount',
+            name: 'co_rentMortgagePaymentAmount',
             label: 'Monthly Pmt / Rent*',
             placeholder: 'Enter $0, if no Pmt/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -666,7 +693,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_coAddressLine1',
+            name: 'co_prevAddressLine1',
             label: 'Street Address*',
             placeholder: '321 Main Ave',
             maxLength: { value: 200, message: 'Max 200 chars' },
@@ -678,7 +705,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_coCity',
+            name: 'co_prevCity',
             label: 'City*',
             placeholder: 'Miami',
             variant: 'sm:col-span-2',
@@ -691,7 +718,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_coState',
+            name: 'co_prevState',
             label: 'State*',
             variant: 'sm:col-span-2',
             rules: {
@@ -703,7 +730,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_coZipCode',
+            name: 'co_prevZipCode',
             label: 'Zipcode*',
             placeholder: '54321',
             variant: 'sm:col-span-2',
@@ -716,7 +743,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_coAddressYears',
+            name: 'co_prevAddressYears',
             label: 'Time at Address*',
             variant: 'whitespace-nowrap sm:col-span-2',
             rules: {
@@ -728,14 +755,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_coAddressMonths',
+            name: 'co_prevAddressMonths',
             control: true,
             variant: 'sm:col-span-2 whitespace-nowrap',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'prev_coRentMortgagePaymentAmount',
+            name: 'co_prevRentMortgagePaymentAmount',
             label: 'Monthly Pmt / Rent*',
             placeholder: 'Enter $0, if no Pmt/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -756,7 +783,7 @@ export const creditApps = [
         fields: [
           {
             component: 'InputField',
-            name: 'coLicenseNumber',
+            name: 'co_licenseNumber',
             label: 'License Number*',
             placeholder: '123456789',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -768,7 +795,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coLicenseState',
+            name: 'co_licenseState',
             label: 'License State*',
             variant: 'sm:col-span-2 whitespace-nowrap',
             control: true,
@@ -780,7 +807,7 @@ export const creditApps = [
           },
           {
             component: 'DateField',
-            name: 'coLicenseExp',
+            name: 'co_licenseExp',
             label: 'License Exp*',
             placeholder: '09/30/2026',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -798,7 +825,7 @@ export const creditApps = [
         fields: [
           {
             component: 'InputField',
-            name: 'coEmployerName',
+            name: 'co_employerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
             maxLength: { value: 50, message: 'Max 50 chars' },
@@ -810,7 +837,7 @@ export const creditApps = [
           },
           {
             component: 'PhoneField',
-            name: 'coEmployerPhone',
+            name: 'co_employerPhone',
             label: 'Employer Phone*',
             placeholder: '713-555-2541',
             control: true,
@@ -820,7 +847,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'coEmploymentTitle',
+            name: 'co_employmentTitle',
             label: 'Occupation*',
             placeholder: 'Sales Associate',
             variant: 'sm:col-span-3',
@@ -833,7 +860,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coTimeOnJobYears',
+            name: 'co_timeOnJobYears',
             label: 'Time on job*',
             variant: 'sm:col-span-2',
             control: true,
@@ -845,14 +872,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'coTimeOnJobMonths',
+            name: 'co_timeOnJobMonths',
             control: true,
             variant: 'sm:col-span-2',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'coIncomeAmount',
+            name: 'co_incomeAmount',
             label: 'Monthly Income*',
             placeholder: 'Gross Pay, Before Taxes',
             variant: 'sm:col-span-2',
@@ -867,7 +894,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_coEmployerName',
+            name: 'co_previousEmployerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
             maxLength: { value: 50, message: 'Max 50 chars' },
@@ -879,7 +906,7 @@ export const creditApps = [
           },
           {
             component: 'PhoneField',
-            name: 'prev_coEmployerPhone',
+            name: 'co_prevEmployerPhone',
             label: 'Employer Phone*',
             placeholder: '713-555-2541',
             control: true,
@@ -889,7 +916,7 @@ export const creditApps = [
           },
           {
             component: 'InputField',
-            name: 'prev_coEmploymentTitle',
+            name: 'co_prevEmploymentTitle',
             label: 'Occupation*',
             placeholder: 'Sales Associate',
             variant: 'sm:col-span-3',
@@ -902,7 +929,7 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_coTimeOnJobYears',
+            name: 'co_prevTimeOnJobYears',
             label: 'Time on job*',
             variant: 'sm:col-span-2',
             control: true,
@@ -914,14 +941,14 @@ export const creditApps = [
           },
           {
             component: 'SelectField',
-            name: 'prev_coTimeOnJobMonths',
+            name: 'co_prevTimeOnJobMonths',
             control: true,
             variant: 'sm:col-span-2',
             cats: timeMonths,
           },
           {
             component: 'InputField',
-            name: 'prev_coIncomeAmount',
+            name: 'co_prevIncomeAmount',
             label: 'Monthly Income*',
             placeholder: 'Gross Pay, Before Taxes',
             variant: 'sm:col-span-2 whitespace-nowrap',
@@ -933,6 +960,31 @@ export const creditApps = [
             onChange: (e: any) => {
               e.target.value = formatMoney(e.target.value)
             },
+          },
+        ],
+      },
+      {
+        title: 'Other Income Source',
+        description: 'Is there any other income you would like to be considered?',
+        fields: [
+          {
+            component: 'InputField',
+            name: 'co_otherIncomeAmount',
+            label: 'Monthly Amount',
+            variant: 'sm:col-span-2 whitespace-nowrap',
+            placeholder: '$2000',
+            type: 'text',
+            onChange: (e: any) => {
+              e.target.value = formatMoney(e.target.value)
+            },
+          },
+          {
+            component: 'InputField',
+            name: 'co_otherIncomeSourceDescription',
+            label: 'Description',
+            placeholder: 'I move furniture on the weekends',
+            variant: 'sm:col-span-4 whitespace-nowrap',
+            type: 'text',
           },
         ],
       },

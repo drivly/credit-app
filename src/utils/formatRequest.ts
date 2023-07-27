@@ -10,10 +10,11 @@ export function formatRequest(data: any) {
   let vehicle: Record<string, any> | null = {}
 
   for (const key in data) {
-    if (!key.includes('vehicle') && !key.startsWith('co')) {
+    if (!key.includes('vehicle') && !key.startsWith('co_')) {
       primary[key] = data[key]
-    } else if (joint && key.startsWith('co')) {
-      secondary[key] = data[key]
+    } else if (joint && key.startsWith('co_')) {
+      let newKey = key.replace('co_', '')
+      secondary[newKey] = data[key]
     } else if (key.includes('vehicle') && data[key].length > 0) {
       vehicle[key.replace('vehicle', '')] = data[key]
     }
@@ -33,6 +34,6 @@ export function formatRequest(data: any) {
   } else if (!vehicle) {
     return { primary, secondary }
   }
-
+  console.log('vehcile', vehicle)
   return { primary, secondary, vehicle }
 }
