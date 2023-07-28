@@ -17,7 +17,7 @@ const PrimaryApp = () => {
 
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
-      <div className='px-4 py-6 sm:p-8'>
+      <div className='px-5 py-6 sm:p-8'>
         <div className='grid max-w-3xl grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6'>
           <InputField
             {...register('firstName', { required: 'Required' })}

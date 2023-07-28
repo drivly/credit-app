@@ -18,11 +18,11 @@ export default function CreditApp({ type, app, vin }: CreditAppProps) {
   return (
     <div className='space-y-10'>
       {type === 'Primary' ? (
-        <header className='px-4  sm:px-0 md:mt-0'>
-          <h1 className='text-2xl font-semibold leading-7 tracking-[0.02em] text-gray-900'>
-            Primary Credit Applicant
+        <header className='px-5 sm:px-0 md:mt-0'>
+          <h1 className='mt-10 text-[28px] font-bold tracking-[0.02em] sm:text-2xl'>
+            Primary Applicant
           </h1>
-          {vin && <p className='extralight pt-2 text-lg text-gray-600'>{vin}</p>}
+          {vin && <p className='extralight pt-2 text-xl sm:text-lg text-gray-600 tracking-wide'>{vin}</p>}
         </header>
       ) : null}
 

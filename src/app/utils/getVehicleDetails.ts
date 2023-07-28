@@ -1,6 +1,9 @@
 'use server'
 
 import z from 'zod'
+import getListing from '@drivly/ui/dist/lib/getListing'
+import { fetchPrice } from './fetchPrice'
+import { formatDigits } from '@drivly/ui'
 
 const betaKey = process.env.DRIVLY_BETA_KEY
 
@@ -13,35 +16,30 @@ const vehicleSchema = z.object({
   miles: z.coerce.string(),
 })
 
-export interface IVDP {
-  year: string
-  make: string
-  model: string
-  vin: string
-  price: string
-  miles: string
-}
+export type IVDP = z.infer<typeof vehicleSchema>
 
-export async function getVehicleDetails(vin: string) {
-  const res = await fetch(`https://listing.vin/${vin}`, {
-    headers: { Authorization: betaKey! },
-  }).then((res) => res.json())
+export async function getVehicleDetails(id: string) {
+  if (id?.length !== 17) return
 
-  if (res) {
-    const vehicle = res?.vehicle
-    const wholesale = res?.wholesaleListing
-    const retail = res?.retailListing
+  const [listing, fetchedPrice] = await Promise.all([getListing(id), fetchPrice(id)])
+  const { vehicle } = listing
+  const { year, make, model } = vehicle
 
-    const { year, make, model, vin } = vehicle
-    const price = wholesale ? wholesale?.buyNowPrice : retail?.price
-    const miles = wholesale ? wholesale?.miles : retail?.miles
-    const vehicleDetails = { year, make, model, vin, price, miles } as const
+  const wholesale = listing?.wholesaleListing
+  const retail = listing?.retailListing
 
-    const data = vehicleSchema.parse(vehicleDetails)
+  const wholesalePrice =
+    wholesale?.buyNowPrice &&
+    Number(wholesale?.buyNowPrice) * 0.01 + 2000 + Number(wholesale?.buyNowPrice)
+  let price = fetchedPrice ? fetchedPrice : wholesalePrice || retail?.price
+  let miles = wholesale ? wholesale?.miles : retail?.miles
 
-    console.log('vehicleSchema data', data)
+  if (price) price = formatDigits(price, true)
+  if (miles) miles = formatDigits(miles)
 
-    return { ...data } as IVDP
-  }
-  return null
+  if (price?.endsWith('.00')) price = price.replace('.00', '')
+
+  const data = vehicleSchema.parse({ year, make, model, vin: id, price, miles })
+
+  return { ...data }
 }

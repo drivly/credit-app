@@ -21,11 +21,11 @@ const Checkbox = React.forwardRef<HTMLInputElement, InputProps & CheckboxProps>(
           ref={ref}
           id={label}
           type='checkbox'
-          className='h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-DRIVLY'
+          className='h-5 sm:h-4 w-5 sm:w-4 rounded border-gray-300 text-gray-900 focus:ring-DRIVLY'
           {...props}
         />
       </div>
-      <div className={cn('text-sm leading-6', variant)}>
+      <div className={cn('text-base sm:text-sm leading-6', variant)}>
         <span className='font-medium text-gray-900'>{label}</span>
       </div>
     </label>

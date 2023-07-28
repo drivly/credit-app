@@ -11,11 +11,10 @@ export async function POST(request: Request) {
 
   const primaryRequest = formatApplicant(vehicle, primary)
 
-  
   if (secondary !== undefined) {
     secondaryRequest = formatApplicant(vehicle, secondary)
   }
-  
+
   const payload = {
     primaryBuyer: primaryRequest.app,
     vehicles: primaryRequest.vin,

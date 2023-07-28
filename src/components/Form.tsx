@@ -2,7 +2,7 @@
 
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
-import { IVDP } from '@/app/utils/getVehicleDetails'
+import { getVehicleDetails, IVDP } from '@/app/utils/getVehicleDetails'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef } from 'react'
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -11,7 +11,6 @@ import CreditApp from './CreditApp'
 import CheckBox from './form-fields/Checkbox'
 import Agreement from './sections/Agreement'
 import Vehicle from './sections/Vehicle'
-import { handleVin } from '@/app/utils/handleVin'
 import useCustomer from '@/app/store'
 
 const defaultValues = {
@@ -49,6 +48,7 @@ export default function Form({ vdp }: Props) {
       vehicleVin: vdp?.vin,
     },
   })
+  console.log(vdp)
 
   const {
     register,
@@ -65,7 +65,7 @@ export default function Form({ vdp }: Props) {
     if (customer?.vin?.length === 17) {
       const fetchVehicle = async () => {
         isLoading.current = true
-        const data = await handleVin(customer?.vin)
+        const data = await getVehicleDetails(customer?.vin)
         if (data) {
           setValue('vehicleYear', data?.year)
           setValue('vehicleMake', data?.make)
@@ -77,7 +77,7 @@ export default function Form({ vdp }: Props) {
         }
       }
       fetchVehicle()
-    } else {
+    } else if (!vdp?.vin) {
       reset({
         vehicleYear: '',
         vehicleMake: '',
@@ -87,7 +87,7 @@ export default function Form({ vdp }: Props) {
       })
     }
     isLoading.current = false
-  }, [reset, setValue, customer?.vin])
+  }, [reset, setValue, customer?.vin, vdp?.vin])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     if (!data?.agree) {
@@ -145,7 +145,7 @@ export default function Form({ vdp }: Props) {
                   <div
                     className={`${
                       watchJoint ? 'border-t pt-20' : 'border-y py-20'
-                    } mb-10 mt-20 flex flex-col justify-between  border-DRIVLY/10 transition-all duration-200 ease-out`}>
+                    } px-5 mb-10 mt-20 flex flex-col justify-between  border-DRIVLY/10 transition-all duration-200 ease-out`}>
                     <CheckBox
                       onClick={() => setJoint((prev) => !prev)}
                       {...register('joint')}
@@ -153,7 +153,7 @@ export default function Form({ vdp }: Props) {
                       label='Joint Credit Applicant'
                     />
                     {watchJoint && (
-                      <h1 className='mt-10 text-2xl font-bold tracking-[0.02em]'>
+                      <h1 className='mt-10 text-[28px] font-bold tracking-[0.02em] sm:text-2xl'>
                         Joint Applicant
                       </h1>
                     )}
@@ -170,10 +170,10 @@ export default function Form({ vdp }: Props) {
           })}
           <Vehicle errors={errors} watchJoint={watchJoint} />
           <Agreement isError={isError} onClick={() => setError(false)} />
-          <div className='mt-8 grid grid-cols-1 pt-10 md:ml-3 md:grid-cols-3'>
+          <div className='mt-8 grid grid-cols-1 pt-10 md:ml-3 md:grid-cols-3 px-5'>
             <button
               disabled={isSubmitting}
-              className='flex h-[50px] w-full items-center justify-center rounded-[5px] bg-DRIVLY text-white md:col-span-2 md:col-start-2'
+              className='flex w-full items-center justify-center rounded-[5px] bg-DRIVLY py-4 text-lg font-medium tracking-wide text-white sm:text-base md:col-span-2 md:col-start-2 md:h-[52px]'
               type='submit'>
               Submit
             </button>

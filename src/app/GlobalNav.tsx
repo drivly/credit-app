@@ -11,7 +11,7 @@ const GlobalNav = () => {
       <div className='mx-auto block h-full w-screen max-w-[1200px]'>
         <div className='flex h-full items-center justify-between px-0 md:px-10'>
           <Link
-            href='/get-started'
+            href='/'
             className='focus-visible:ring-primary ml-4 w-fit cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-100 md:ml-0'>
             <motion.div
               initial={{ opacity: 0 }}

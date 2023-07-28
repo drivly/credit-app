@@ -16,7 +16,7 @@ const JointOther = ({ section }: { section: any }) => {
 
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
-      <div className='px-4 py-6 sm:p-8'>
+      <div className='px-5 py-6 sm:p-8'>
         <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>
           <p className='mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
             {section.description}

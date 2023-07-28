@@ -10,9 +10,9 @@ export default function Agreement({ isError, onClick }: AgreementProps) {
   const methods = useFormContext()
 
   return (
-    <div className='col-span-3 grid grid-cols-1 gap-y-8 pt-10 md:ml-3 md:grid-cols-3'>
+    <div className='px-5 col-span-3 grid grid-cols-1 gap-y-8 pt-10 md:ml-3 md:grid-cols-3'>
       <div className='col-span-3 col-start-2'>
-        <h4 className='rounded-[4px] bg-LIGHT_GRAY p-2 text-center text-base font-medium text-txtPrimaryColor'>
+        <h4 className='rounded-[4px] bg-LIGHT_GRAY p-2 text-center text-lg sm:text-base font-medium text-txtPrimaryColor'>
           Please read this section before in its entirety before submitting this application!
         </h4>
       </div>
