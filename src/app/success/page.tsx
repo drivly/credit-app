@@ -6,7 +6,7 @@ import useCustomer from '../store'
 const SuccessPage = () => {
   const customer = useCustomer((s) => s.customer)
   return (
-    <div className='mx-auto flex justify-center min-h-full h-svh -mt-[65px] flex-1 max-w-2xl w-full flex-col items-center rounded-md px-8 py-4'>
+    <div className='mx-auto flex justify-center min-h-full h-svh -mt-[65px] flex-1 max-w-2xl w-full flex-col items-center rounded-md px-4 sm:px-8 py-4'>
       <svg
         width='51'
         height='50'
@@ -39,10 +39,10 @@ const SuccessPage = () => {
         </defs>
       </svg>
       <header className='mb-8 mt-6 text-gray-900'>
-        <h2 className='flex flex-col items-center space-x-1 text-[32px] font-semibold leading-[42px] sm:text-[28px]'>
+        <h2 className='flex flex-col items-center space-x-1 font-semibold leading-[42px] text-[28px]'>
           Thanks, {customer?.name}!
         </h2>
-        <p className='text-xl font-medium leading-7 sm:text-lg'>
+        <p className='font-medium leading-7 text-lg text-center'>
           Your Credit Application has been successfully submitted.
         </p>
       </header>
