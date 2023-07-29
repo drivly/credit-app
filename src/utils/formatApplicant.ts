@@ -1,6 +1,6 @@
 import * as zcta from 'us-zcta-counties'
 
-export const formatApplicant = (vehicle: any, applicant: Record<string, any>) => {
+export const formatApplicant = (applicant: Record<string, any>) => {
   const addressMonths = Number(applicant.addressMonths) || 0
   const addressYears = Number(applicant.addressYears) || 0
 
@@ -70,5 +70,5 @@ export const formatApplicant = (vehicle: any, applicant: Record<string, any>) =>
 
   fieldsToDelete.forEach((field) => delete formattedApp[field])
 
-  return { app: formattedApp, vin: [vehicle?.Vin] }
+  return { app: formattedApp }
 }

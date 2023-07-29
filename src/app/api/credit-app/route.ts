@@ -9,15 +9,15 @@ export async function POST(request: Request) {
   const data = await request.json()
   const { primary, secondary, vehicle } = data
 
-  const primaryRequest = formatApplicant(vehicle, primary)
+  const primaryRequest = formatApplicant(primary)
 
   if (secondary !== undefined) {
-    secondaryRequest = formatApplicant(vehicle, secondary)
+    secondaryRequest = formatApplicant(secondary)
   }
 
   const payload = {
     primaryBuyer: primaryRequest.app,
-    vehicles: primaryRequest.vin,
+    vehicles: [vehicle],
     coBuyer: secondaryRequest?.app,
   }
   console.log('payload', payload)

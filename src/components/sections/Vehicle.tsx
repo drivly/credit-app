@@ -7,7 +7,7 @@ import useCustomer from '@/app/store'
 
 export default function Vehicle(props: any) {
   const { errors, watchJoint } = props
-  const setCustomer = useCustomer((s) => s.setCustomer)
+  const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const params = useParams()
   const methods = useFormContext()
   const { register } = methods
@@ -21,14 +21,23 @@ export default function Vehicle(props: any) {
         }
       )}>
       <h2 className='font-mont px-5 text-lg font-semibold leading-7 text-gray-900 sm:px-0 sm:text-base'>
-        Vehcile of Interest
+        Vehicle of Interest
       </h2>
 
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-5 py-6 sm:p-8'>
-          <fieldset
-            disabled={params?.vin ? true : false}
-            className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
+          <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
+            <InputField
+              {...register('vehicleCashDown', {
+                onChange: (e: any) => {
+                  e.target.value = formatMoney(e.target.value)
+                },
+              })}
+              errormsg={errors.cashDown?.message!}
+              placeholder='Enter $0, if no Cash Down'
+              variant='sm:col-span-5'
+              label='Cash Down*'
+            />
             <InputField
               {...register('vehicleVin', {
                 validate: (value: string) => vinChecksum(value) || 'Invalid VIN',
@@ -37,12 +46,11 @@ export default function Vehicle(props: any) {
                   setCustomer({ vin: e.target.value })
                 },
               })}
+              disabled={params.vin ? true : false}
               errormsg={errors.vehicleVin?.message!}
               placeholder='WBAGV2C04LCD51052'
-              variant='sm:col-span-full'
-              label='VIN'
-              type='text'
-              name='vehicleVin'
+              variant='sm:col-span-5'
+              label='VIN*'
             />
             <InputField
               {...register('vehicleYear', {
@@ -51,58 +59,57 @@ export default function Vehicle(props: any) {
                 minLength: { value: 4, message: 'Invalid Year' },
                 pattern: { value: /\d/g, message: 'Invalid Year' },
               })}
+              disabled={customer?.vehicleYear ? true : false}
               errormsg={errors.vehicleModelYear?.message!}
               variant='whitespace-nowrap sm:col-span-2 flex-shrink-0'
               placeholder='2016'
-              label='Year'
+              label='Year*'
               maxLength={4}
-              name='vehicleYear'
-              type='text'
             />
             <InputField
               {...register('vehicleMake')}
               variant='sm:col-span-3'
               placeholder='Ford'
-              name='vehicleMake'
-              label='Make'
-              type='text'
+              label='Make*'
+              disabled={customer?.vehicleMake ? true : false}
             />
             <InputField
               {...register('vehicleModel')}
               variant='sm:col-span-5'
               placeholder='F-150 Raptor'
-              label='Model'
-              name='vehicleModel'
-              type='text'
+              label='Model*'
+              disabled={customer?.vehicleModel ? true : false}
             />
 
             <InputField
               {...register('vehiclePrice', {
+                required: 'Required',
                 maxLength: { value: 8, message: 'Invalid Price' },
                 onChange(event) {
                   event.target.value = formatMoney(event.target.value)
                 },
               })}
+              disabled={customer?.vehiclePrice ? true : false}
+              errormsg={errors.vehiclePrice?.message!}
               placeholder='$56,370'
               variant='sm:col-span-5'
-              label='Price'
-              name='vehiclePrice'
-              type='text'
+              label='Price*'
             />
 
             <InputField
               {...register('vehicleMileage', {
+                required: 'Required',
                 onChange(event) {
                   event.target.value = formatMiles(event.target.value)
                 },
               })}
+              disabled={customer?.vehicleMileage ? true : false}
+              errormsg={errors.vehicleMileage?.message!}
               placeholder='28,052'
               variant='sm:col-span-5'
-              label='Mileage'
-              type='text'
-              name='vehicleMileage'
+              label='Mileage*'
             />
-          </fieldset>
+          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,9 @@ export function formatRequest(data: any) {
       let newKey = key.replace('co_', '')
       secondary[newKey] = data[key]
     } else if (key.includes('vehicle') && data[key].length > 0) {
-      vehicle[key.replace('vehicle', '')] = data[key]
+      let newKey = key.replace('vehicle', '')
+      newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
+      vehicle[newKey] = data[key]
     }
   }
 
@@ -34,6 +36,5 @@ export function formatRequest(data: any) {
   } else if (!vehicle) {
     return { primary, secondary }
   }
-  console.log('vehcile', vehicle)
   return { primary, secondary, vehicle }
 }

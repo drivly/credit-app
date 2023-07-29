@@ -1,4 +1,5 @@
 import { formatDigits } from '@drivly/ui'
+import { IVDP } from './getVehicleDetails'
 
 const AT_KEY = process.env.AIRTABLE_KEY
 const conciergeBase = 'app0ha03ugcl45qM1'
@@ -14,8 +15,8 @@ export async function getAirtableVehicle(id: string) {
     model: fields?.model,
     vin: fields?.vin,
     price,
-    miles: fields?.miles,
-  }
+    miles: fields?.miles || '0',
+  } as IVDP
 }
 
 export const getRecordString = async (base: string, table: string, id: string) =>
@@ -37,7 +38,7 @@ const findAirtablePrice = (data: Record<string, any>) => {
 
   let price = manualPrice ? manualPrice : calculatedBuyNow ? calculatedBuyNow : dealerPrice
 
-  if (!price) return 'N/A'
+  if (!price) return ''
   if (price?.toString()?.endsWith('.00')) {
     price = price?.toString()?.replace('.00', '')
   }
