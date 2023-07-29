@@ -1,6 +1,7 @@
 import { formatMoney } from '@/utils'
 import { states, timeMonths, timeYears } from './categories'
 import { zipReg } from './patterns'
+import moment from 'moment'
 
 export const creditApps = [
   {
@@ -321,6 +322,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            minDate: moment().subtract(3, 'months').toDate(),
           },
         ],
       },
@@ -816,6 +818,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            minDate: moment().subtract(3, 'months').toDate(),
           },
         ],
       },

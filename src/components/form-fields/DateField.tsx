@@ -15,10 +15,12 @@ interface DateFieldProps {
   variant: string
   errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined
   placeholder?: string
+  minDate?: Date
+  maxDate?: Date
 }
 
 export default function DateField(props: any) {
-  const { name, label, variant, errormsg, placeholder } = props as DateFieldProps
+  const { name, label, variant, errormsg, placeholder, minDate, maxDate } = props as DateFieldProps
   const [date, setDate] = useState<Date | null>(null)
   const method = useController(props)
 
@@ -34,8 +36,7 @@ export default function DateField(props: any) {
     }
   }, [method.formState.isSubmitted])
 
-  const minDate = moment().subtract(500, 'years')
-  const maxDate = moment().subtract(18, 'years')
+
 
   return (
     <div className={cn('relative col-span-6 min-w-full', variant)}>
@@ -61,8 +62,8 @@ export default function DateField(props: any) {
           scrollableYearDropdown
           yearDropdownItemNumber={100}
           selected={date}
-          minDate={minDate.toDate()}
-          maxDate={maxDate.toDate()}
+          minDate={minDate}
+          maxDate={maxDate}
           showDisabledMonthNavigation
         />
         <div className='pointer-events-none absolute inset-y-0 right-0 z-50 flex items-center pr-3'>

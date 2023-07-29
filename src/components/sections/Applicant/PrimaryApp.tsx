@@ -3,6 +3,7 @@ import InputField from '@/components/form-fields/InputField'
 import PhoneField from '@/components/form-fields/PhoneField'
 import { emailReg } from '@/lib/patterns'
 import { formatSSN, isAtLeast18 } from '@/utils'
+import moment from 'moment'
 
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -14,6 +15,9 @@ const PrimaryApp = () => {
     register,
     formState: { errors },
   } = methods
+
+    const minDate = moment().subtract(500, 'years')
+    const maxDate = moment().subtract(18, 'years')
 
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
@@ -89,6 +93,8 @@ const PrimaryApp = () => {
             control={control}
             name='dateOfBirth'
             placeholder='Must be 18yo or older'
+            minDate={moment().subtract(500, 'years').toDate()}
+            maxDate={moment().subtract(18, 'years').toDate()}
           />
           <InputField
             {...register('ssn', {

@@ -3,6 +3,7 @@ import InputField from '@/components/form-fields/InputField'
 import PhoneField from '@/components/form-fields/PhoneField'
 import { emailReg } from '@/lib/patterns'
 import { formatSSN, isAtLeast18 } from '@/utils'
+import moment from 'moment'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -88,6 +89,8 @@ const JointApp = () => {
             control={control}
             name='co_dateOfBirth'
             placeholder='05/15/1980'
+            minDate={moment().subtract(500, 'years').toDate()}
+            maxDate={moment().subtract(18, 'years').toDate()}
           />
           <InputField
             {...register('co_ssn', {
