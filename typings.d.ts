@@ -1,10 +1,11 @@
 export interface VehicleOfInterest {
-  ModelYear: string
-  Make: string
-  Model: string
-  Price: string
-  Mileage: string
-  Vin: string
+  modelYear: string
+  make: string
+  model: string
+  price: string
+  mileage: string
+  vin: string
+  cashDown: string
 }
 export interface PrimaryApplicant {
   employedPrimary: string

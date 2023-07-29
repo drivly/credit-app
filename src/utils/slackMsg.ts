@@ -199,7 +199,7 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Vehicle of Interest*\n*VIN:* ${data.vehicle.Vin}\n*Year:* ${data.vehicle.ModelYear}\n*Make:* ${data.vehicle.Make}\n*Model:* ${data.vehicle.Model}\n*Odometer:* ${data.vehicle.Mileage}\n*Price:* ${data.vehicle.Price}`,
+          text: `*Vehicle of Interest*\n*Cash Down:* ${data.vehicle.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.modelYear}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
         },
       })
     }
