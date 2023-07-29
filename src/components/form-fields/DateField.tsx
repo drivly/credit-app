@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FieldError, FieldErrorsImpl, Merge, useController } from 'react-hook-form'
 import { AlertCircle } from 'lucide-react'
+import moment from 'moment'
 
 interface DateFieldProps {
   name: string
@@ -33,6 +34,9 @@ export default function DateField(props: any) {
     }
   }, [method.formState.isSubmitted])
 
+  const minDate = moment().subtract(500, 'years')
+  const maxDate = moment().subtract(18, 'years')
+
   return (
     <div className={cn('relative col-span-6 min-w-full', variant)}>
       <label
@@ -49,6 +53,7 @@ export default function DateField(props: any) {
                 errormsg,
             }
           )}
+          placeholderText={placeholder}
           name={name}
           onChange={onChange}
           isClearable
@@ -56,7 +61,9 @@ export default function DateField(props: any) {
           scrollableYearDropdown
           yearDropdownItemNumber={100}
           selected={date}
-          placeholderText={placeholder}
+          minDate={minDate.toDate()}
+          maxDate={maxDate.toDate()}
+          showDisabledMonthNavigation
         />
         <div className='pointer-events-none absolute inset-y-0 right-0 z-50 flex items-center pr-3'>
           {errormsg && <AlertCircle className='z-50 h-5 w-5 text-red-500' aria-hidden='true' />}
