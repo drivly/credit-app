@@ -185,8 +185,8 @@ export const creditApps = [
           {
             component: 'InputField',
             name: 'rentMortgagePaymentAmount',
-            label: 'Monthly Pmt / Rent*',
-            placeholder: 'Enter $0, if no Pmt/Rent',
+            label: 'Monthly Payment*',
+            placeholder: 'Enter $0, if no Payment/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
             type: 'text',
             rules: {
@@ -269,8 +269,8 @@ export const creditApps = [
           {
             component: 'InputField',
             name: 'prevRentMortgagePaymentAmount',
-            label: 'Monthly Pmt / Rent*',
-            placeholder: 'Enter $0, if no Pmt/Rent',
+            label: 'Monthly Payment*',
+            placeholder: 'Enter $0, if no Payment/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
             type: 'text',
             rules: {
@@ -315,7 +315,7 @@ export const creditApps = [
             component: 'DateField',
             name: 'licenseExp',
             label: 'License Exp*',
-            placeholder: '09/30/2026',
+            placeholder: 'Not more than 3mo expired',
             variant: 'sm:col-span-2 whitespace-nowrap',
             control: true,
             rules: {
@@ -681,8 +681,8 @@ export const creditApps = [
           {
             component: 'InputField',
             name: 'co_rentMortgagePaymentAmount',
-            label: 'Monthly Pmt / Rent*',
-            placeholder: 'Enter $0, if no Pmt/Rent',
+            label: 'Monthly Payment*',
+            placeholder: 'Enter $0, if no Payment/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
             type: 'text',
             rules: {
@@ -765,8 +765,8 @@ export const creditApps = [
           {
             component: 'InputField',
             name: 'co_prevRentMortgagePaymentAmount',
-            label: 'Monthly Pmt / Rent*',
-            placeholder: 'Enter $0, if no Pmt/Rent',
+            label: 'Monthly Payment*',
+            placeholder: 'Enter $0, if no Payment/Rent',
             variant: 'sm:col-span-2 whitespace-nowrap',
             type: 'text',
             rules: {
@@ -811,7 +811,7 @@ export const creditApps = [
             component: 'DateField',
             name: 'co_licenseExp',
             label: 'License Exp*',
-            placeholder: '09/30/2026',
+            placeholder: 'Not more than 3mo expired',
             variant: 'sm:col-span-2 whitespace-nowrap',
             control: true,
             rules: {

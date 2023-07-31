@@ -41,7 +41,7 @@ export default function PhoneField({
             {
               'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
                 errormsg,
-                'pl-20': children
+                'pl-[85px] sm:pl-20': children
             }
           )}
           name={name}
