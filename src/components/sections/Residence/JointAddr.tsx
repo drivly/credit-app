@@ -1,5 +1,7 @@
 import FieldMap from '@/components/FieldMap'
+import Checkbox from '@/components/form-fields/Checkbox'
 import RadioButton from '@/components/form-fields/RadioButton'
+import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export default function JointAddr({ section }: any) {
@@ -13,24 +15,41 @@ export default function JointAddr({ section }: any) {
     formState: { errors },
   } = methods
   const jointAddrYrs = watch('co_addressYears')
-  const liveWithOthers = watch('co_residenceTypeCode')
-  console.log('liveWithOthers', liveWithOthers)
+  const sameAddress = watch('sameAddress')
+
+  useEffect(() => {
+    if (sameAddress) {
+      currentFields.forEach((field: Record<string, any>) => {
+        methods.setValue('co_residenceTypeCode', methods.getValues('residenceTypeCode'))
+        methods.setValue(field.name, methods.getValues(field.name.replace('co_', '')))
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sameAddress])
 
   return (
     <>
-      <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
+      <Checkbox
+        {...register('sameAddress')}
+        name='sameAddress'
+        label='Same as above'
+        className='px-5 pb-1.5 sm:px-0'
+      />
+      <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 md:col-start-2'>
         <div className='px-5 py-6 sm:p-8'>
           <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>
             <div className='flex w-full items-center justify-start gap-x-8'>
               <RadioButton
                 {...register('co_residenceTypeCode', { required: 'Required' })}
                 name='co_residenceTypeCode'
+                errormsg={errors?.co_residenceTypeCode?.message!}
                 label='Own'
                 id='coOwn'
                 value='1'
               />
               <RadioButton
                 {...register('co_residenceTypeCode', { required: 'Required' })}
+                errormsg={errors?.co_residenceTypeCode?.message!}
                 name='co_residenceTypeCode'
                 label='Rent'
                 id='coRent'
@@ -38,6 +57,7 @@ export default function JointAddr({ section }: any) {
               />
               <RadioButton
                 {...register('co_residenceTypeCode', { required: 'Required' })}
+                errormsg={errors?.co_residenceTypeCode?.message!}
                 name='co_residenceTypeCode'
                 label='Live with Others'
                 id='coLiveWithOthers'

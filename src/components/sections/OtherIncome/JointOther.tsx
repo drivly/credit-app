@@ -24,12 +24,14 @@ const JointOther = ({ section }: { section: any }) => {
           <div className='flex w-full items-center justify-start gap-x-8'>
             <RadioButton
               {...register('co_otherIncomeSourceCode', { required: 'Required' })}
+              errormsg={errors?.co_otherIncomeSourceCode?.message!}
               label='Yes, I have other income'
               id='co_otherIncome'
               value='OTHCSTM'
             />
             <RadioButton
               {...register('co_otherIncomeSourceCode', { required: 'Required' })}
+              errormsg={errors?.co_otherIncomeSourceCode?.message!}
               label='No, I do not have other income'
               id='co_noOtherIncome'
               value='NO'

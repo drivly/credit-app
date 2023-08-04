@@ -24,12 +24,14 @@ const PrimaryOther = ({ section }: { section: any }) => {
           <div className='flex w-full items-center justify-start gap-x-8'>
             <RadioButton
               {...register('otherIncomeSourceCode', { required: 'Required' })}
+              errormsg={errors?.otherIncomeSourceCode?.message!}
               label='Yes, I have other income'
               id='otherIncome'
               value='OTHCSTM'
             />
             <RadioButton
               {...register('otherIncomeSourceCode', { required: 'Required' })}
+              errormsg={errors?.otherIncomeSourceCode?.message!}
               label='No, I do not have other income'
               id='noOtherIncome'
               value=''

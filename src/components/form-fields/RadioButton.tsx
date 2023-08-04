@@ -1,8 +1,11 @@
+import { cn } from '@drivly/ui'
 import React from 'react'
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
 
 interface RadioProps {
   label: string
-  errormsg?: string
+  errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>
+  variant?: string
 }
 
 type InputProps = React.DetailedHTMLProps<
@@ -11,33 +14,32 @@ type InputProps = React.DetailedHTMLProps<
 >
 
 const RadioButton = React.forwardRef<HTMLInputElement, InputProps & RadioProps>((props, ref) => {
-  const { errormsg, label, id } = props
+  const { errormsg, variant, label, id } = props
   return (
-    <div className='relative flex items-center w-fit'>
+    <div className='relative flex w-fit items-center'>
       <label
         htmlFor={id}
-        className='flex cursor-pointer items-center text-base sm:text-sm font-medium leading-6 text-gray-900'>
+        className={cn(
+          'flex cursor-pointer items-center text-base font-medium leading-6 text-gray-900 sm:text-sm',
+          variant
+        )}>
         <input
           ref={ref}
           type='radio'
-          className='mr-4 h-5 w-5 border-gray-300 text-gray-600 focus:ring-DRIVLY sm:h-4 sm:w-4'
+          className={cn(
+            'mr-4 h-5 w-5 border-gray-300 text-gray-600 focus:ring-DRIVLY sm:h-4 sm:w-4',
+            {
+              'border-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500': errormsg,
+            }
+          )}
           id={id}
           {...props}
         />
         {label}
       </label>
-      {errormsg && (
-        <p
-          className='absolute left-0 mt-20 text-sm text-red-400'
-          id={errormsg ? `${id}-error` : id}>
-          {errormsg.toString()}
-        </p>
-      )}
     </div>
   )
 })
 
 export default RadioButton
 RadioButton.displayName = 'RadioButton'
-
-

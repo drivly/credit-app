@@ -24,12 +24,14 @@ export default function PrimaryAddr({ section }: any) {
               <RadioButton
                 {...register('residenceTypeCode', { required: 'Required' })}
                 name='residenceTypeCode'
+                errormsg={errors?.residenceTypeCode?.message!}
                 label='Own'
                 id='own'
                 value='1'
               />
               <RadioButton
                 {...register('residenceTypeCode', { required: 'Required' })}
+                errormsg={errors?.residenceTypeCode?.message!}
                 name='residenceTypeCode'
                 label='Rent'
                 id='rent'
@@ -37,6 +39,7 @@ export default function PrimaryAddr({ section }: any) {
               />
               <RadioButton
                 {...register('residenceTypeCode', { required: 'Required' })}
+                errormsg={errors?.residenceTypeCode?.message!}
                 name='residenceTypeCode'
                 label='Live With Others'
                 id='liveWithOthers'

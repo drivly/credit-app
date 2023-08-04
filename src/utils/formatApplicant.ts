@@ -18,6 +18,7 @@ export const formatApplicant = (applicant: Record<string, any>) => {
 
   const pCounty = zcta.find({ zip: applicant.zipCode })
 
+  console.log('pCounty', pCounty)
   const currentAddressMonths = addressYears * 12 + addressMonths
   const previousAddressMonths = prevAddressYears * 12 + prevAddressMonths
   const currentJobMonths = timeOnJobYears * 12 + timeOnJobMonths

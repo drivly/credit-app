@@ -51,7 +51,6 @@ export default function Form({ vdp }: Props) {
       vehicleVin: vdp?.vin,
     },
   })
-  console.log(vdp)
 
   const {
     register,
@@ -107,8 +106,9 @@ export default function Form({ vdp }: Props) {
       setError(true)
       return
     }
+    const { sameAddress, ...rest } = data
     const toastId = toast.loading('Submitting your application...')
-    const formData = formatRequest(data)
+    const formData = formatRequest(rest)
     try {
       console.log('request', formData)
       const request = await fetch('/api/credit-app', {
