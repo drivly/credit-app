@@ -23,33 +23,33 @@ const JointApp = () => {
         </p>
         <div className='my-8 flex w-full flex-wrap items-center justify-start gap-x-8 gap-y-6'>
           <RadioButton
-            {...register('co_buyerRelationshipCode', { required: 'Required' })}
+            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
             errormsg={errors?.residenceTypeCode?.message!}
-            name='co_buyerRelationshipCode'
+            name='co_coBuyerRelationshipCode'
             label='Spouse'
             id='spouse'
             value='4'
             variant='w-20'
           />
           <RadioButton
-            {...register('co_buyerRelationshipCode', { required: 'Required' })}
+            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
             errormsg={errors?.residenceTypeCode?.message!}
-            name='co_buyerRelationshipCode'
+            name='co_coBuyerRelationshipCode'
             label='Parent/Child'
             id='parent'
             value='2'
           />
           <RadioButton
-            {...register('co_buyerRelationshipCode', { required: 'Required' })}
+            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
             errormsg={errors?.residenceTypeCode?.message!}
-            name='co_buyerRelationshipCode'
+            name='co_coBuyerRelationshipCode'
             label='Other'
             id='other'
             value='3'
           />
           <RadioButton
-            {...register('co_buyerRelationshipCode', { required: 'Required' })}
-            name='co_buyerRelationshipCode'
+            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
+            name='co_coBuyerRelationshipCode'
             errormsg={errors?.residenceTypeCode?.message!}
             label='Lives with'
             id='livesWith'

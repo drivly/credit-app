@@ -30,11 +30,13 @@ export async function POST(request: Request) {
       headers: { 'Content-Type': 'application/json' },
     })
 
+    const text = await response.text()
+    console.log('text', text)
     const json = await response.json()
-    console.log('application', json)
+    console.log('jsonapplication', json)
 
     if (!response.ok) {
-      throw new Error(json)
+      throw new Error(text)
     }
 
     return NextResponse.json({ status: 200, data: json })
