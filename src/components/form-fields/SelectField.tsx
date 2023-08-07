@@ -31,6 +31,7 @@ export default function SelectField(props: any) {
       <div className='relative mt-2 h-full w-full'>
         <select
           {...method.field}
+          defaultValue=''
           name={name}
           className={cn(
             'block w-full rounded-md border-0 px-3 text-left text-base text-gray-900 outline-none ring-1 ring-inset  ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:max-w-xs sm:text-sm',

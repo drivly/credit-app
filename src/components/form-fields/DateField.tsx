@@ -67,6 +67,7 @@ console.log('method.formState.isSubmitted', method.formState.isSubmitted)
           minDate={minDate}
           maxDate={maxDate}
           showDisabledMonthNavigation
+          value={date ? moment(date).format('MM/DD/YYYY') : ''}
         />
         <div className='pointer-events-none absolute inset-y-0 right-0 z-50 flex items-center pr-3'>
           {errormsg && <AlertCircle className='z-50 h-5 w-5 text-red-500' aria-hidden='true' />}
