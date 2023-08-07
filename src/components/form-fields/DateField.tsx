@@ -37,7 +37,8 @@ export default function DateField(props: any) {
   }, [method.formState.isSubmitted])
 
 
-
+console.log('method.formState.isSubmitted', method.formState.isSubmitted)
+  
   return (
     <div className={cn('relative col-span-6 min-w-full', variant)}>
       <label
@@ -47,6 +48,7 @@ export default function DateField(props: any) {
       </label>
       <div className='relative mt-2'>
         <DatePicker
+          {...method.field}
           className={cn(
             'block w-full rounded-md border-0 px-3  text-base text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm ',
             {

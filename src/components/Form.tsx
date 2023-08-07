@@ -61,6 +61,7 @@ export default function Form({ vdp }: Props) {
     formState: { errors, isSubmitting },
   } = methods
 
+
   const watchJoint = watch('joint')
 
   useEffect(() => {
@@ -110,7 +111,6 @@ export default function Form({ vdp }: Props) {
     const toastId = toast.loading('Submitting your application...')
     const formData = formatRequest(rest)
     try {
-      console.log('request', formData)
       const request = await fetch('/api/credit-app', {
         method: 'POST',
         headers: {
@@ -118,6 +118,7 @@ export default function Form({ vdp }: Props) {
         },
         body: JSON.stringify(formData),
       }).then((res) => res.json())
+      console.log('request', request)
 
       if (request?.status !== 200)
         throw new Error(`${request?.error}` || 'Error submitting credit app')

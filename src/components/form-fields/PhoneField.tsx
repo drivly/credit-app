@@ -1,5 +1,5 @@
 import { cn } from '@/utils'
-import { Control, FieldError, FieldErrorsImpl, FieldValues, Merge } from 'react-hook-form'
+import { Control, FieldError, FieldErrorsImpl, FieldValues, Merge, useController } from 'react-hook-form'
 import { isPossiblePhoneNumber } from 'react-phone-number-input'
 import PhoneInput from 'react-phone-number-input/react-hook-form-input'
 import { AlertCircle } from 'lucide-react'
@@ -17,15 +17,9 @@ type PhoneFieldProps = {
 
 const telType = ['phone', 'co_phone']
 
-export default function PhoneField({
-  label,
-  name,
-  placeholder,
-  control,
-  errormsg,
-  variant,
-  children,
-}: PhoneFieldProps) {
+export default function PhoneField(props: PhoneFieldProps) {
+  const { label, name, placeholder, control, errormsg, variant, children } = props
+   const method = useController(props)
   return (
     <div className={cn('rrelative col-span-6 h-fit w-full sm:col-span-3', variant)}>
       <label
@@ -36,6 +30,7 @@ export default function PhoneField({
       <div className='relative mt-2 rounded-md shadow-sm'>
         {telType?.includes(name) && children}
         <PhoneInput
+          {...method.field}
           className={cn(
             'block w-full rounded-md border-0 px-3 text-base text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm',
             {

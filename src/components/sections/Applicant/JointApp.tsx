@@ -23,34 +23,34 @@ const JointApp = () => {
         </p>
         <div className='my-8 flex w-full flex-wrap items-center justify-start gap-x-8 gap-y-6'>
           <RadioButton
-            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
-            errormsg={errors?.residenceTypeCode?.message!}
-            name='co_coBuyerRelationshipCode'
+            {...register('co_buyerRelationship', { required: 'Required' })}
+            errormsg={errors?.co_buyerRelationship?.message!}
+            name='co_buyerRelationship'
             label='Spouse'
             id='spouse'
             value='4'
             variant='w-20'
           />
           <RadioButton
-            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
-            errormsg={errors?.residenceTypeCode?.message!}
-            name='co_coBuyerRelationshipCode'
+            {...register('co_buyerRelationship', { required: 'Required' })}
+            errormsg={errors?.co_buyerRelationship?.message!}
+            name='co_buyerRelationship'
             label='Parent/Child'
             id='parent'
             value='2'
           />
           <RadioButton
-            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
-            errormsg={errors?.residenceTypeCode?.message!}
-            name='co_coBuyerRelationshipCode'
+            {...register('co_buyerRelationship', { required: 'Required' })}
+            errormsg={errors?.co_buyerRelationship?.message!}
+            name='co_buyerRelationship'
             label='Other'
             id='other'
             value='3'
           />
           <RadioButton
-            {...register('co_coBuyerRelationshipCode', { required: 'Required' })}
-            name='co_coBuyerRelationshipCode'
-            errormsg={errors?.residenceTypeCode?.message!}
+            {...register('co_buyerRelationship', { required: 'Required' })}
+            name='co_buyerRelationship'
+            errormsg={errors?.co_buyerRelationship?.message!}
             label='Lives with'
             id='livesWith'
             value='1'

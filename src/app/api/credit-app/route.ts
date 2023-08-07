@@ -28,18 +28,16 @@ export async function POST(request: Request) {
       method: 'POST',
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
-    })
+    }).then((res) => res.json())
+    console.log('response', response)
 
-    const text = await response.text()
-    console.log('text', text)
-    const json = await response.json()
-    console.log('jsonapplication', json)
+    console.log('jsonapplication', response)
 
-    if (!response.ok) {
-      throw new Error(text)
+    if (!response.success) {
+      throw new Error(response)
     }
 
-    return NextResponse.json({ status: 200, data: json })
+    return NextResponse.json({ status: 200, data: response })
   } catch (error: any) {
     console.log('error', error.message)
     return NextResponse.json({ error: error.message, status: 500 })
