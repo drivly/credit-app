@@ -60,8 +60,7 @@ export default function Form({ vdp }: Props) {
     setValue,
     formState: { errors, isSubmitting },
   } = methods
-
-  console.log('methods', methods.getValues())
+  
   const watchJoint = watch('joint')
 
   useEffect(() => {

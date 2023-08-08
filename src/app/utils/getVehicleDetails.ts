@@ -19,9 +19,8 @@ export async function getVehicleDetails(id: string) {
   if (id?.length !== 17) return
 
   const [listing, fetchedPrice] = await Promise.all([getListing(id), fetchPrice(id)])
+  if (!listing?.vehicle?.year) return
 
-  if (!listing?.year) return
-  
   const { year, make, model } = listing?.vehicle
 
   const wholesale = listing?.wholesaleListing || null
@@ -38,7 +37,6 @@ export async function getVehicleDetails(id: string) {
   if (price?.endsWith('.00')) price = price.replace('.00', '')
 
   const data = vehicleSchema?.parse({ year, make, model, vin: id, price, miles })
-
   return { ...data }
 }
 
@@ -46,7 +44,6 @@ export const fetchPrice = async (id: string) => {
   const data = await fetch(
     `https://camel.case.do/api.airtable.com/v0/app0ha03ugcl45qM1/Vehicles/?cellFormat=string&userLocale=en-us&timeZone=America/Chicago&sort[0][field]=VIN&sort[0][direction]=desc&filterByFormula=AND({VIN}='${id}')&api_key=${process.env.AIRTABLE_KEY}`
   ).then((res) => res.json())
-  console.log('data', data)
 
   if (!data?.records?.length) return null
 
