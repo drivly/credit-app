@@ -6,6 +6,7 @@ const slackUrl = process.env.SLACK_WEBHOOK_URL
 
 export async function POST(request: Request) {
   let secondaryRequest
+  let buyerRelationship
   const data = await request.json()
   const { primary, secondary, vehicle } = data
 
@@ -13,10 +14,13 @@ export async function POST(request: Request) {
 
   if (secondary !== undefined) {
     secondaryRequest = formatApplicant(secondary)
+    buyerRelationship = secondaryRequest?.app?.buyerRelationship
+    delete secondaryRequest?.app.buyerRelationship
   }
 
   const payload = {
     primaryBuyer: primaryRequest.app,
+    buyerRelationship,
     vehicles: [vehicle],
     coBuyer: secondaryRequest?.app,
   }
@@ -30,8 +34,6 @@ export async function POST(request: Request) {
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res.json())
     console.log('response', response)
-
-    console.log('jsonapplication', response)
 
     if (!response.success) {
       throw new Error(response)
