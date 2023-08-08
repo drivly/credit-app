@@ -2,12 +2,11 @@
 
 import { cn } from '@/utils'
 import formatDate from '@/utils/formatDate'
+import { AlertCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FieldError, FieldErrorsImpl, Merge, useController } from 'react-hook-form'
-import { AlertCircle } from 'lucide-react'
-import moment from 'moment'
 
 interface DateFieldProps {
   name: string
@@ -31,14 +30,11 @@ export default function DateField(props: any) {
   }
 
   useEffect(() => {
-    if (method.formState.isSubmitted) {
+    if (method.formState.isSubmitSuccessful) {
       setDate(null)
     }
-  }, [method.formState.isSubmitted])
+  }, [method.formState.isSubmitSuccessful])
 
-
-console.log('method.formState.isSubmitted', method.formState.isSubmitted)
-  
   return (
     <div className={cn('relative col-span-6 min-w-full', variant)}>
       <label
@@ -48,7 +44,6 @@ console.log('method.formState.isSubmitted', method.formState.isSubmitted)
       </label>
       <div className='relative mt-2'>
         <DatePicker
-          {...method.field}
           className={cn(
             'block w-full rounded-md border-0 px-3  text-base text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm ',
             {
@@ -67,7 +62,8 @@ console.log('method.formState.isSubmitted', method.formState.isSubmitted)
           minDate={minDate}
           maxDate={maxDate}
           showDisabledMonthNavigation
-          value={date ? moment(date).format('MM/DD/YYYY') : ''}
+          adjustDateOnChange
+          ref={method.field.ref}
         />
         <div className='pointer-events-none absolute inset-y-0 right-0 z-50 flex items-center pr-3'>
           {errormsg && <AlertCircle className='z-50 h-5 w-5 text-red-500' aria-hidden='true' />}
@@ -75,12 +71,4 @@ console.log('method.formState.isSubmitted', method.formState.isSubmitted)
       </div>
     </div>
   )
-}
-
-{
-  /* {errormsg && (
-  <p className='absolute mt-2 text-sm text-red-600' id={errormsg ? `${name}-error` : name}>
-    {errormsg.toString()}
-  </p>
-)} */
 }

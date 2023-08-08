@@ -19,6 +19,9 @@ export async function getVehicleDetails(id: string) {
   if (id?.length !== 17) return
 
   const [listing, fetchedPrice] = await Promise.all([getListing(id), fetchPrice(id)])
+
+  if (!listing?.year) return
+  
   const { year, make, model } = listing?.vehicle
 
   const wholesale = listing?.wholesaleListing || null

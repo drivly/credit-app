@@ -29,6 +29,7 @@ export default function PrimaryEmployee({ section }: any) {
                 label='Employment Status*'
                 name='employmentStatusCode'
                 placeholder='Select'
+                defaultValue=''
                 control={control}
                 cats={jobStatus}
                 errormsg={errors['employmentStatusCode']?.message!}

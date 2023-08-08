@@ -61,7 +61,7 @@ export default function Form({ vdp }: Props) {
     formState: { errors, isSubmitting },
   } = methods
 
-
+  console.log('methods', methods.getValues())
   const watchJoint = watch('joint')
 
   useEffect(() => {
@@ -86,6 +86,9 @@ export default function Form({ vdp }: Props) {
           })
           setLoading(false)
           toast.success('Vehicle information updated successfully!', { id: toastId })
+        } else {
+          toast.error('Error loading vehicle information', { id: toastId })
+          setLoading(false)
         }
       }
       fetchVehicle()
@@ -96,7 +99,7 @@ export default function Form({ vdp }: Props) {
         vehicleModel: '',
         vehiclePrice: '',
         vehicleMileage: '',
-      })
+      }) 
       resetCustomer()
     }
   }, [reset, setValue, customer?.vin, vdp?.vin, setCustomer, resetCustomer])

@@ -15,6 +15,7 @@ const JointApp = () => {
     register,
     formState: { errors },
   } = methods
+
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 md:col-start-2'>
       <div className='px-5 py-6 sm:p-8'>

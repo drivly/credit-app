@@ -31,7 +31,6 @@ export default function SelectField(props: any) {
       <div className='relative mt-2 h-full w-full'>
         <select
           {...method.field}
-          defaultValue=''
           name={name}
           className={cn(
             'block w-full rounded-md border-0 px-3 text-left text-base text-gray-900 outline-none ring-1 ring-inset  ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:max-w-xs sm:text-sm',
@@ -40,8 +39,7 @@ export default function SelectField(props: any) {
                 errormsg,
               'text-gray-500': method.field.value === undefined || cats[0].value === '',
             }
-          )}
-          value={method.field.value ? method.field.value : cats[0].value}>
+          )}>
           {cats.map((cat: any, i: number) => (
             <option key={i} value={cat.value} className='text-base sm:text-sm'>
               {cat.optionName}

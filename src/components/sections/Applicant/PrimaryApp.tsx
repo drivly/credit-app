@@ -16,9 +16,6 @@ const PrimaryApp = () => {
     formState: { errors },
   } = methods
 
-    const minDate = moment().subtract(500, 'years')
-    const maxDate = moment().subtract(18, 'years')
-
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
       <div className='px-5 py-6 sm:p-8'>
@@ -63,6 +60,7 @@ const PrimaryApp = () => {
               </label>
               <select
                 {...register('phoneType', { required: 'Required' })}
+                defaultValue=''
                 autoComplete='phoneType'
                 className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-0 sm:text-sm'>
                 <option value='MOBILE'>Mobile</option>

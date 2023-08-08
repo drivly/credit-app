@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     vehicles: [vehicle],
     coBuyer: secondaryRequest?.app,
   }
-  console.log('payload', payload)
 
   try {
     await slackMsgRequest({ url: slackUrl, data })
