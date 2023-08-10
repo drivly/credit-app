@@ -93,7 +93,7 @@ const TradeInfo = (props: any) => {
       const payload = isSSN
         ? { vin: watchTradeInVin, source: watchLienName, ssn }
         : { vin: watchTradeInVin, source: watchLienName }
-
+      console.log('ssn', ssn)
       if (isSSN && !ssn) {
         toast.error('SSN required for trade-in payoff quote')
         setFocus('ssn')
@@ -128,9 +128,13 @@ const TradeInfo = (props: any) => {
           toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
         }
       }
-      getPayoff()
+      if (isSSN && ssn.length === 11) {
+        getPayoff()
+      } else if (!isSSN) {
+        getPayoff()
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchLienName, ssn])
 
   const lenderCats = lenders
