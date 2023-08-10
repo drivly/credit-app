@@ -1,7 +1,6 @@
 import useCustomer from '@/app/store'
 import { getBuild } from '@/app/utils/getBuild'
 import { getPayoffQuote } from '@/app/utils/getPayoffQuote'
-import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
 import InputField from '@/components/form-fields/InputField'
 import RadioButton from '@/components/form-fields/RadioButton'
 import SelectField from '@/components/form-fields/SelectField'
@@ -98,7 +97,7 @@ const TradeInfo = (props: any) => {
         toast.error('SSN required for trade-in payoff quote')
         setFocus('ssn')
       }
-      
+
       const getPayoff = async () => {
         const toastId = toast.loading('Getting payoff quote')
         try {
@@ -134,7 +133,7 @@ const TradeInfo = (props: any) => {
         getPayoff()
       }
     }
-   
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchLienName, ssn])
 
   const lenderCats = lenders
@@ -278,9 +277,7 @@ const TradeInfo = (props: any) => {
                 {isLienOther && (
                   <InputField
                     {...register('tradeInOtherLienHoldername', {
-                      onChange: (e: any) => {
-                        e.target.value = formatMoney(e.target.value)
-                      },
+                      required: 'Required',
                     })}
                     errormsg={errors.tradeInOtherLienHoldername?.message!}
                     placeholder='Enter Lender Name'
