@@ -11,8 +11,6 @@ interface SelectFieldProps {
   cats: CategoryType[]
 }
 
-const defaultCats = ['Select', 'Years', 'Months']
-
 export default function SelectField(props: any) {
   const method = useController(props)
   const { name, label, cats, variant } = props as SelectFieldProps

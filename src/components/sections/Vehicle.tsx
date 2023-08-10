@@ -28,17 +28,6 @@ export default function Vehicle(props: any) {
         <div className='px-5 py-6 sm:p-8'>
           <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
             <InputField
-              {...register('vehicleCashDown', {
-                onChange: (e: any) => {
-                  e.target.value = formatMoney(e.target.value)
-                },
-              })}
-              errormsg={errors.cashDown?.message!}
-              placeholder='Enter $0, if no Cash Down'
-              variant='sm:col-span-5'
-              label='Cash Down*'
-            />
-            <InputField
               {...register('vehicleVin', {
                 validate: (value: string) => vinChecksum(value) || 'Invalid VIN',
                 onChange: (e) => {
@@ -52,6 +41,17 @@ export default function Vehicle(props: any) {
               variant='sm:col-span-5'
               label='VIN*'
             />
+              <InputField
+                {...register('vehicleCashDown', {
+                  onChange: (e: any) => {
+                    e.target.value = formatMoney(e.target.value)
+                  },
+                })}
+                errormsg={errors.cashDown?.message!}
+                placeholder='Enter $0, if no Cash Down'
+                variant='sm:col-span-5'
+                label='Cash Down*'
+              />
             <InputField
               {...register('vehicleYear', {
                 onChange: (event) =>

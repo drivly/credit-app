@@ -9,7 +9,7 @@ const GlobalNav = () => {
   return (
     <nav className='sticky top-0 z-20 flex h-[65px] border-b border-zinc-200 bg-white'>
       <div className='mx-auto block h-full w-screen max-w-[1200px]'>
-        <div className='flex h-full items-center justify-between px-0 md:px-10'>
+        <div className='flex h-full items-center justify-between px-0 md:px-6'>
           <Link
             href='/'
             className='focus-visible:ring-primary ml-4 w-fit cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-100 md:ml-0'>

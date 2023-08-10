@@ -20,9 +20,11 @@ export default function CreditApp({ type, app, vin }: CreditAppProps) {
       {type === 'Primary' ? (
         <header className='px-5 sm:px-0 md:mt-0'>
           <h1 className='mt-10 text-[28px] font-bold tracking-[0.02em] sm:text-2xl'>
-            Primary Applicant
+            Primary Credit Applicant
           </h1>
-          {vin && <p className='extralight pt-2 text-xl sm:text-lg text-gray-600 tracking-wide'>{vin}</p>}
+          {vin && (
+            <p className='extralight pt-2 text-xl tracking-wide text-gray-600 sm:text-lg'>{vin}</p>
+          )}
         </header>
       ) : null}
 

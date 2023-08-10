@@ -29,3 +29,8 @@
   }
   /* Define a new theme with different colors */
 }
+
+
+/* .react-datepicker__close-icon::after, .react-datepicker__day--selected {
+  background-color: #060611 !important;
+} */
