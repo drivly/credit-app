@@ -10,6 +10,7 @@ type Customer = {
   applicationId?: string
   vehiclePrice?: string
   vehicleMileage?: string
+  tradeInfo?: any
 }
 
 type AppStore = {
@@ -24,6 +25,7 @@ type AppStore = {
     vehicleModel?: string
     vehicleMileage?: string
     vehiclePrice?: string
+    tradeInfo?: any
   }) => void
   resetCustomer: () => void
 }

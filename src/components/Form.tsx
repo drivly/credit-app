@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 import CreditApp from './CreditApp'
 import CheckBox from './form-fields/Checkbox'
 import Agreement from './sections/Agreement'
+import TradeInfo from './sections/TradeInfo'
 import Vehicle from './sections/Vehicle'
 
 const defaultValues = {
@@ -60,7 +61,7 @@ export default function Form({ vdp }: Props) {
     setValue,
     formState: { errors, isSubmitting },
   } = methods
-  
+
   const watchJoint = watch('joint')
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export default function Form({ vdp }: Props) {
         vehicleModel: '',
         vehiclePrice: '',
         vehicleMileage: '',
-      }) 
+      })
       resetCustomer()
     }
   }, [reset, setValue, customer?.vin, vdp?.vin, setCustomer, resetCustomer])
@@ -109,9 +110,26 @@ export default function Form({ vdp }: Props) {
       setError(true)
       return
     }
+
+    let trade: Record<string, any> = {}
     const { sameAddress, ...rest } = data
     const toastId = toast.loading('Submitting your application...')
-    const formData = formatRequest(rest)
+    let formData = formatRequest(rest)
+
+    if (formData?.tradeIn !== null) {
+      const { tradeIn, ...rest } = formData
+
+      trade = customer?.tradeInfo
+      formData = {
+        ...rest,
+        tradeIn: {
+          tradeInAllowance: trade?.tradeInAllowance,
+          id: trade?.id,
+          lienholder: trade?.lienholder,
+        },
+      }
+    }
+
     try {
       const request = await fetch('/api/credit-app', {
         method: 'POST',
@@ -120,7 +138,7 @@ export default function Form({ vdp }: Props) {
         },
         body: JSON.stringify(formData),
       }).then((res) => res.json())
-      console.log('request', request)
+      // console.log('request', request)
 
       if (request?.status !== 200)
         throw new Error(`${request?.error}` || 'Error submitting credit app')
@@ -178,11 +196,12 @@ export default function Form({ vdp }: Props) {
             }
           })}
           <Vehicle errors={errors} watchJoint={watchJoint} />
+          <TradeInfo errors={errors} />
           <Agreement isError={isError} onClick={() => setError(false)} />
           <div className='mt-8 grid grid-cols-1 px-5 pt-10 md:ml-3 md:grid-cols-3'>
             <button
               disabled={isSubmitting}
-              className='md:h-[52px] flex w-full items-center justify-center rounded-[5px] bg-DRIVLY py-4 text-lg font-medium tracking-wide text-white sm:text-base md:col-span-2 md:col-start-2'
+              className='flex w-full items-center justify-center rounded-[5px] bg-DRIVLY py-4 text-lg font-medium tracking-wide text-white sm:text-base md:col-span-2 md:col-start-2 md:h-[52px]'
               type='submit'>
               Submit
             </button>

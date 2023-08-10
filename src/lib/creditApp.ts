@@ -125,6 +125,18 @@ export const creditApps = [
               message: 'Required',
             },
           },
+          // {
+          //   component: 'InputField',
+          //   name: 'addressLine1',
+          //  variant: '-pt-4',
+          //   placeholder: 'APT, Suite, PO Box',
+          //   maxLength: { value: 200, message: 'Max 200 chars' },
+          //   type: 'text',
+          //   rules: {
+          //     value: true,
+          //     message: 'Required',
+          //   },
+          // },
           {
             component: 'InputField',
             name: 'city',

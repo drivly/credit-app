@@ -7,6 +7,11 @@ interface SlackMsgRequest {
     primary: PrimaryApplicant
     secondary: PrimaryApplicant
     vehicle: VehicleOfInterest
+    tradeIn: {
+      id: string
+      lienholder: string
+      tradeInAllowance: number
+    }
   }
 }
 
@@ -110,7 +115,7 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           text: `*Other Incomet*\n*Description:* ${data.primary?.otherIncomeSourceDescription}\n*Monthly Amount:* ${data.primary?.otherIncomeAmount}\n`,
         },
       })
-    } else if (key === 'secondary') {
+    } else if (data?.secondary !== null && key === 'secondary') {
       blocks.push({
         type: 'divider',
       })
@@ -200,6 +205,17 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         text: {
           type: 'mrkdwn',
           text: `*Vehicle of Interest*\n*Cash Down:* ${data.vehicle.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.modelYear}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
+        },
+      })
+    } else if (key === 'tradeIn') {
+      blocks.push({
+        type: 'divider',
+      })
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Vehicle of Interest*\n*Record Id:* ${data.tradeIn.id}\n*Lender:* ${data.tradeIn.lienholder}\n*Trade In Allowance:* ${data.tradeIn.tradeInAllowance}\n`,
         },
       })
     }

@@ -17,6 +17,9 @@ export default function PrimaryAddr({ section }: any) {
 
   return (
     <>
+      <h2 className=' font-mont flex justify-start gap-x-14 px-5 text-lg font-semibold leading-7 text-gray-900 sm:px-0 sm:text-base'>
+        {section.title}
+      </h2>
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-5 py-6 sm:p-8'>
           <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>

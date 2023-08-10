@@ -5,24 +5,24 @@ import { NextResponse } from 'next/server'
 const slackUrl = process.env.SLACK_WEBHOOK_URL
 
 export async function POST(request: Request) {
-  let secondaryRequest
-  let buyerRelationship
+  let payload: Record<string, any> = {}
   const data = await request.json()
-  const { primary, secondary, vehicle } = data
+  const { primary, secondary, vehicle, tradeIn } = data
 
   const primaryRequest = formatApplicant(primary)
+  payload['primaryBuyer'] = primaryRequest?.app
+  payload['vehicles'] = [vehicle]
 
-  if (secondary !== undefined) {
-    secondaryRequest = formatApplicant(secondary)
-    buyerRelationship = secondaryRequest?.app?.buyerRelationship
+  if (secondary !== null) {
+    const secondaryRequest = formatApplicant(secondary)
+    const buyerRelationship = secondaryRequest?.app?.buyerRelationship
     delete secondaryRequest?.app.buyerRelationship
+    payload['coBuyer'] = secondaryRequest?.app
+    payload['buyerRelationship'] = buyerRelationship
   }
 
-  const payload = {
-    primaryBuyer: primaryRequest.app,
-    buyerRelationship,
-    vehicles: [vehicle],
-    coBuyer: secondaryRequest?.app,
+  if (tradeIn !== undefined) {
+    payload['trade'] = tradeIn
   }
 
   try {
@@ -32,11 +32,11 @@ export async function POST(request: Request) {
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res.json())
-    console.log('response', response)
+    // console.log('response', response)
 
-    if (!response.success) {
-      throw new Error(response)
-    }
+    // if (!response.success) {
+    //   throw new Error(response)
+    // }
 
     return NextResponse.json({ status: 200, data: response })
   } catch (error: any) {
