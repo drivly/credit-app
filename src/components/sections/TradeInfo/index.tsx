@@ -98,7 +98,7 @@ const TradeInfo = (props: any) => {
         toast.error('SSN required for trade-in payoff quote')
         setFocus('ssn')
       }
-
+      
       const getPayoff = async () => {
         const toastId = toast.loading('Getting payoff quote')
         try {
@@ -134,7 +134,7 @@ const TradeInfo = (props: any) => {
         getPayoff()
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [watchLienName, ssn])
 
   const lenderCats = lenders

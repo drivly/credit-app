@@ -215,7 +215,7 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Vehicle of Interest*\n*Record Id:* ${data.tradeIn.id}\n*Lender:* ${data.tradeIn.lienholder}\n*Trade In Allowance:* ${data.tradeIn.tradeInAllowance}\n`,
+          text: `*Trade Information*\n*Record Id:* ${data.tradeIn.id}\n*Lender:* ${data.tradeIn.lienholder}\n*Trade In Allowance:* ${data.tradeIn.tradeInAllowance}\n`,
         },
       })
     }
