@@ -47,10 +47,13 @@ const findAirtablePrice = (data: Record<string, any>) => {
 
 const cleanObject = (data: Record<string, any>): Record<string, any> => {
   const cleanedData: Record<string, any> = {}
-  for (const [key, value] of Object.entries(data)) {
-    const trimmedValue = value?.toString().trimStart()?.trimEnd()
-    const cleanedValue = trimmedValue.replaceAll(/^"(.*)"$/g, '$1')
-    cleanedData[key] = cleanedValue
+  if (typeof data === 'object') {
+    for (const [key, value] of Object.entries(data)) {
+      const trimmedValue = value?.toString().trimStart()?.trimEnd()
+      const cleanedValue = trimmedValue.replaceAll(/^"(.*)"$/g, '$1')
+      cleanedData[key] = cleanedValue
+    }
+    return cleanedData
   }
-  return cleanedData
+  return data
 }
