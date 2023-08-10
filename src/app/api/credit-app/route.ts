@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     payload['buyerRelationship'] = buyerRelationship
   }
 
-  if (tradeIn !== undefined) {
+  if (tradeIn !== null) {
     payload['trade'] = tradeIn
   }
   console.log('payload', payload)
