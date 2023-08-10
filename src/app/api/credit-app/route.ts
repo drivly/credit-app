@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   if (tradeIn !== undefined) {
     payload['trade'] = tradeIn
   }
-
+  console.log('payload', payload)
   try {
     await slackMsgRequest({ url: slackUrl, data })
     const response = await fetch('https://credit.api.driv.ly/applications', {
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res.json())
-    // console.log('response', response)
+    console.log('response', response)
 
     // if (!response.success) {
     //   throw new Error(response)
