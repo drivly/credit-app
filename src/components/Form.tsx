@@ -138,7 +138,7 @@ export default function Form({ vdp }: Props) {
         },
         body: JSON.stringify(formData),
       }).then((res) => res.json())
-      // console.log('request', request)
+      console.log('request', request)
 
       if (request?.status !== 200)
         throw new Error(`${request?.error}` || 'Error submitting credit app')
