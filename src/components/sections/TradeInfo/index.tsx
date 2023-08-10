@@ -115,6 +115,7 @@ const TradeInfo = (props: any) => {
                 ...customer?.tradeInfo,
                 lienholder: lenderString,
                 tradeInAllowance: response?.allowance,
+                grossPayOffAmount: response?.quote?.grossPayOffAmount,
                 id: response?.id,
               },
             })
