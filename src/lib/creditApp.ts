@@ -478,6 +478,7 @@ export const creditApps = [
             },
           },
 
+
           {
             component: 'InputField',
             name: 'co_prevCity',

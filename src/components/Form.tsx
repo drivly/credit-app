@@ -52,7 +52,7 @@ export default function Form({ vdp }: Props) {
   const jointRef = useRef<HTMLDivElement>(null)
 
   const methods = useForm({
-    mode: 'all',
+    mode: 'onSubmit',
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
