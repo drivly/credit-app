@@ -15,6 +15,7 @@ const TradeInfo = (props: any) => {
   const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const isPayoffRef = React.useRef(false)
+  const tradeRef = React.useRef<HTMLDivElement>(null)
 
   console.log('customer', customer)
 
@@ -31,15 +32,12 @@ const TradeInfo = (props: any) => {
   const watchLienName = watch('tradeInLienHoldername')
   const isLienOther = watchLienName === 'other' || watchLienName === 'idk'
 
-
-
   console.log('watchLienName', watchLienName)
   console.log('isLienOther', isLienOther)
   const ssn = watch('ssn')
 
   useEffect(() => {
     if (!isTradeIn) {
-
       reset({
         tradeInAllowance: '',
         tradeInVin: '',
@@ -66,11 +64,10 @@ const TradeInfo = (props: any) => {
 
   useEffect(() => {
     if (watchTradeInVin) {
-      if (!isPayoffRef.current) {
+      if (!customer?.tradeInfo?.vin) {
         const getTradeInfo = async () => {
           try {
             const data = await getBuild(watchTradeInVin)
-
             if (data) {
               setValue('tradeInYear', data?.year)
               setValue('tradeInMake', data?.make)
@@ -85,7 +82,6 @@ const TradeInfo = (props: any) => {
               })
               toast.success('Vehicle Found')
             }
-            isPayoffRef.current = true
           } catch (error: any) {
             toast.error(error.message)
           }
@@ -107,7 +103,7 @@ const TradeInfo = (props: any) => {
         },
       })
     }
-  }, [reset, setCustomer, setValue, watchTradeInVin])
+  }, [customer?.tradeInfo?.vin, reset, setCustomer, setValue, watchTradeInVin])
 
   useEffect(() => {
     if (watchLienName && !isLienOther) {
@@ -118,47 +114,58 @@ const TradeInfo = (props: any) => {
       const payload = isSSN
         ? { vin: watchTradeInVin, source: watchLienName, ssn }
         : { vin: watchTradeInVin, source: watchLienName }
-      console.log('ssn', ssn)
+
       if (isSSN && !ssn) {
         toast.error('SSN required for trade-in payoff quote')
         setFocus('ssn')
       }
 
-      const getPayoff = async () => {
-        const toastId = toast.loading('Getting payoff quote')
-        try {
-          const response = await getPayoffQuote(payload)
+      if (!isPayoffRef.current) {
+        const getPayoff = async () => {
+          const toastId = toast.loading('Getting payoff quote')
+          try {
+            const response = await getPayoffQuote(payload)
 
-          if (response) {
-            const lenderString = lenders.find((item) => item.fsId === watchLienName)?.fsName
-            toast.success('Payoff Quote Found', { id: toastId })
-            setValue('tradeInAllowance', response?.allowance)
-            setValue('tradeInGrossPayOffAmount', response?.quote?.grossPayOffAmount)
-            setCustomer({
-              ...customer,
-              tradeInfo: {
-                ...customer?.tradeInfo,
-                fsId: watchLienName,
-                lienholder: lenderString,
-                tradeInAllowance: response?.allowance,
-                grossPayOffAmount: response?.quote?.grossPayOffAmount,
-                id: response?.id,
-              },
-            })
-            console.log('req', response)
-          } else {
-            toast.error('Failed to get payoff quote', { id: toastId })
+            if (response) {
+              const lenderString = lenders.find((item) => item.fsId === watchLienName)?.fsName
+              toast.success('Payoff Quote Found', { id: toastId })
+              setValue('tradeInAllowance', response?.allowance)
+              setValue('tradeInGrossPayOffAmount', response?.quote?.grossPayOffAmount)
+              setCustomer({
+                ...customer,
+                tradeInfo: {
+                  ...customer?.tradeInfo,
+                  fsId: watchLienName,
+                  lienholder: lenderString,
+                  tradeInAllowance: response?.allowance,
+                  grossPayOffAmount: response?.quote?.grossPayOffAmount,
+                  id: response?.id,
+                },
+              })
+              isPayoffRef.current = true
+              console.log('req', response)
+            } else {
+              toast.error('Failed to get payoff quote', { id: toastId })
+            }
+          } catch (error: any) {
+            console.error('error', error)
+            toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
           }
-        } catch (error: any) {
-          console.error('error', error)
-          toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
+        }
+        if (isSSN && ssn.length === 11) {
+          setTimeout(
+            () => tradeRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+            150
+          )
+          getPayoff()
+        } else if (!isSSN) {
+          getPayoff()
         }
       }
-      if (isSSN && ssn.length === 11) {
-        getPayoff()
-      } else if (!isSSN) {
-        getPayoff()
-      }
+    }
+
+    return () => {
+      isPayoffRef.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchLienName, ssn])
@@ -178,6 +185,7 @@ const TradeInfo = (props: any) => {
 
   return (
     <div
+      ref={tradeRef}
       className={cn(
         'my-10 grid grid-cols-1 gap-x-8 gap-y-8 border-b border-DRIVLY/10 py-10 pb-20 md:grid-cols-3'
       )}>
@@ -268,7 +276,7 @@ const TradeInfo = (props: any) => {
                     disabled={customer?.tradeInfo?.model ? true : false}
                   />
                   <div className='col-span-full grid gap-y-6'>
-                    <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px] font-medium'>
+                    <p className='col-span-full mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
                       Is there an existing loan on your trade-in vehicle?
                     </p>
                     <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
