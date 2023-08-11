@@ -39,10 +39,9 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     incomeIntervalCode: 'MO',
     // otherIncomeSourceCode: otherIncome,
     // form asks for monthly income
-    phoneType: 'MOBILE',
     incomeAmount: Number(applicant?.incomeAmount?.replaceAll(/\$|,/g, '')),
-    phone: applicant?.phone?.slice(2),
-    employerPhone: applicant?.employerPhone?.slice(2),
+    phone: parsePhoneNumber(applicant?.phone),
+    employerPhone: parsePhoneNumber(applicant?.employerPhone),
     ssn: applicant?.ssn?.replaceAll('-', ''),
   }
 
@@ -72,4 +71,8 @@ export const formatApplicant = (applicant: Record<string, any>) => {
   fieldsToDelete.forEach((field) => delete formattedApp[field])
 
   return { app: formattedApp }
+}
+
+const parsePhoneNumber = (formattedPhoneNumber: string) => {
+  return formattedPhoneNumber.replace(/\D/g, '')
 }

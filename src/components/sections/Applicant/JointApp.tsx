@@ -1,11 +1,10 @@
 import DateField from '@/components/form-fields/DateField'
 import InputField from '@/components/form-fields/InputField'
-import PhoneField from '@/components/form-fields/PhoneField'
 import RadioButton from '@/components/form-fields/RadioButton'
 import { emailReg } from '@/lib/patterns'
 import { formatSSN, isAtLeast18 } from '@/utils'
+import { formatphone } from '@/utils/formatphone'
 import moment from 'moment'
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 const JointApp = () => {
@@ -87,27 +86,36 @@ const JointApp = () => {
             placeholder='Wick'
             label='Last Name *'
           />
-          <PhoneField
-            label='Phone *'
-            name='co_phone'
+          <InputField
+            {...register('co_phone', {
+              required: 'Required',
+              maxLength: { value: 14, message: 'Must be less than 14' },
+              onChange: (e) => {
+                e.target.value = formatphone(e.target.value)
+              },
+            })}
+            maxLength={14}
             errormsg={errors?.co_phone?.message!}
+            variant='sm:col-span-3'
             placeholder='561-975-6432'
-            variant='sm:col-span-3'>
-            {' '}
-            <div className='absolute inset-y-0 left-0 flex items-center'>
-              <label htmlFor='co_phoneType' className='sr-only'>
-                Country
-              </label>
-              <select
-                {...register('co_phoneType', { required: 'Required' })}
-                autoComplete='co_phoneType'
-                className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-0 sm:text-sm'>
-                <option value='MOBILE'>Mobile</option>
-                <option value='HOME'>Home</option>
-                <option value='WORK'>Work</option>
-              </select>
-            </div>
-          </PhoneField>
+            label='Phone *'
+            comp={
+              <div className='absolute inset-y-0 left-0 flex items-center'>
+                <label htmlFor='phoneType' className='sr-only'>
+                  Phone Type
+                </label>
+                <select
+                  {...register('co_phoneType', { required: 'Required' })}
+                  defaultValue=''
+                  autoComplete='on'
+                  className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-0 sm:text-sm'>
+                  <option value='MOBILE'>Mobile</option>
+                  <option value='HOME'>Home</option>
+                  <option value='WORK'>Work</option>
+                </select>
+              </div>
+            }
+          />
           <InputField
             {...register('co_email', {
               required: 'Email required',

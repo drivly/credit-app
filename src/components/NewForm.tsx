@@ -3,15 +3,13 @@
 import { states, timeMonths, timeYears } from '@/lib/categories'
 import { emailReg, zipReg } from '@/lib/patterns'
 import { formatMoney, formatSSN, isAtLeast18 } from '@/utils'
+import { formatphone } from '@/utils/formatphone'
 import moment from 'moment'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import FieldMap from './FieldMap'
 import DateField from './form-fields/DateField'
 import InputField from './form-fields/InputField'
-import PhoneField from './form-fields/PhoneField'
-import RadioButton from './form-fields/RadioButton'
 import Agreement from './sections/Agreement'
 import PrimaryAddr from './sections/Residence/PrimaryAddr'
 import TradeInfo from './sections/TradeInfo'
@@ -39,7 +37,6 @@ const NewForm = ({ vdp }: any) => {
   const [isLoading, setLoading] = React.useState(false)
   const searchParams = useSearchParams()
   const searchParamValues = Object.fromEntries(searchParams.entries())
-  const router = useRouter()
 
   const methods = useForm({
     mode: 'all',
@@ -124,27 +121,36 @@ const NewForm = ({ vdp }: any) => {
                       label='Last Name *'
                     />
 
-                    <PhoneField
-                      label='Phone *'
-                      name='phone'
+                    <InputField
+                      {...register('phone', {
+                        required: 'Required',
+                        maxLength: { value: 14, message: 'Must be less than 14' },
+                        onChange: (e) => {
+                          e.target.value = formatphone(e.target.value)
+                        },
+                      })}
+                      maxLength={14}
                       errormsg={errors?.phone?.message!}
+                      variant='sm:col-span-3'
                       placeholder='561-975-6432'
-                      variant='sm:col-span-3'>
-                      <div className='absolute inset-y-0 left-0 flex items-center'>
-                        <label htmlFor='phoneType' className='sr-only'>
-                          Phone type
-                        </label>
-                        <select
-                          {...register('phoneType', { required: 'Required' })}
-                          defaultValue=''
-                          autoComplete='phoneType'
-                          className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-900 focus:outline-none focus:ring-0 sm:text-sm '>
-                          <option value='MOBILE'>Mobile</option>
-                          <option value='HOME'>Home</option>
-                          <option value='WORK'>Work</option>
-                        </select>
-                      </div>
-                    </PhoneField>
+                      label='Phone *'
+                      comp={
+                        <div className='absolute inset-y-0 left-0 flex items-center'>
+                          <label htmlFor='phoneType' className='sr-only'>
+                            Phone Type
+                          </label>
+                          <select
+                            {...register('phoneType', { required: 'Required' })}
+                            defaultValue=''
+                            autoComplete='phoneType'
+                            className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-0 sm:text-sm'>
+                            <option value='MOBILE'>Mobile</option>
+                            <option value='HOME'>Home</option>
+                            <option value='WORK'>Work</option>
+                          </select>
+                        </div>
+                      }
+                    />
                     <InputField
                       {...register('email', {
                         required: 'Required',
