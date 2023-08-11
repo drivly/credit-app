@@ -42,20 +42,20 @@ const JointApp = () => {
           />
           <RadioButton
             {...register('co_buyerRelationship', { required: 'Required' })}
-            errormsg={errors?.co_buyerRelationship?.message!}
-            name='co_buyerRelationship'
-            label='Other'
-            id='other'
-            value='3'
-            variant='font-normal'
-          />
-          <RadioButton
-            {...register('co_buyerRelationship', { required: 'Required' })}
             name='co_buyerRelationship'
             errormsg={errors?.co_buyerRelationship?.message!}
             label='Lives with'
             id='livesWith'
             value='1'
+            variant='font-normal'
+          />
+          <RadioButton
+            {...register('co_buyerRelationship', { required: 'Required' })}
+            errormsg={errors?.co_buyerRelationship?.message!}
+            name='co_buyerRelationship'
+            label='Other'
+            id='other'
+            value='3'
             variant='font-normal'
           />
         </div>
