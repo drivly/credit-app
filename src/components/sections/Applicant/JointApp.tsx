@@ -19,7 +19,7 @@ const JointApp = () => {
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 md:col-start-2'>
       <div className='px-5 py-6 sm:p-8'>
-        <p className='mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
+        <p className='mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
           Relationship to Primary:
         </p>
         <div className='mb-8 mt-6 flex w-full flex-wrap items-center justify-start gap-x-8 gap-y-6'>
@@ -30,7 +30,7 @@ const JointApp = () => {
             label='Spouse'
             id='spouse'
             value='4'
-            variant='w-20'
+            variant='w-20 font-normal'
           />
           <RadioButton
             {...register('co_buyerRelationship', { required: 'Required' })}
@@ -39,6 +39,7 @@ const JointApp = () => {
             label='Parent/Child'
             id='parent'
             value='2'
+            variant='font-normal'
           />
           <RadioButton
             {...register('co_buyerRelationship', { required: 'Required' })}
@@ -47,6 +48,7 @@ const JointApp = () => {
             label='Other'
             id='other'
             value='3'
+            variant='font-normal'
           />
           <RadioButton
             {...register('co_buyerRelationship', { required: 'Required' })}
@@ -55,6 +57,7 @@ const JointApp = () => {
             label='Lives with'
             id='livesWith'
             value='1'
+            variant='font-normal'
           />
         </div>
         <div className='grid max-w-2xl grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6'>

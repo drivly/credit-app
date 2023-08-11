@@ -177,7 +177,7 @@ export const creditApps = [
           {
             component: 'DateField',
             name: 'licenseExp',
-            label: 'License Exp*',
+            label: 'License Expiration*',
             placeholder: 'Not more than 3mo expired',
             variant: 'sm:col-span-2 whitespace-nowrap',
             control: true,
@@ -447,7 +447,7 @@ export const creditApps = [
               e.target.value = formatMoney(e.target.value)
             },
           },
-          
+
           {
             component: 'InputField',
             name: 'co_prevCity',
@@ -545,7 +545,7 @@ export const creditApps = [
           {
             component: 'DateField',
             name: 'co_licenseExp',
-            label: 'License Exp*',
+            label: 'License Expiration*',
             placeholder: 'Not more than 3mo expired',
             variant: 'sm:col-span-2 whitespace-nowrap',
             rules: {

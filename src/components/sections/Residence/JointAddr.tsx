@@ -39,7 +39,7 @@ export default function JointAddr({ section }: any) {
           {...register('sameAddress')}
           name='sameAddress'
           label='Same as above'
-          className='px-5 sm:px-0'
+          className='px-5 sm:px-0 font-medium'
         />
       </h2>
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 md:col-start-2'>

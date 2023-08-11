@@ -28,7 +28,7 @@ const TradeInfo = (props: any) => {
   const islien = watchLien === 'Y'
 
   const watchLienName = watch('tradeInLienHoldername')
-  const isLienOther = watchLienName === 'other'
+  const isLienOther = watchLienName === 'other' || watchLienName === 'idk'
 
   console.log('watchLienName', watchLienName)
   console.log('isLienOther', isLienOther)
@@ -147,7 +147,11 @@ const TradeInfo = (props: any) => {
       optionName: item.fsName,
     }))
 
-  lenderCats.unshift({ value: '', optionName: 'Select' }, { value: 'other', optionName: 'Other' })
+  lenderCats.unshift(
+    { value: '', optionName: 'Select' },
+    { value: 'idk', optionName: "I don't know" },
+    { value: 'other', optionName: 'Other' }
+  )
 
   return (
     <div
@@ -162,7 +166,7 @@ const TradeInfo = (props: any) => {
         <div className='px-5 py-6 sm:p-8'>
           <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
             <div className='col-span-full grid gap-y-6'>
-              <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
+              <p className='col-span-full mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
                 Do you have a trade-in vehicle to be considered?
               </p>
               <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
@@ -171,12 +175,14 @@ const TradeInfo = (props: any) => {
                   label='Yes, I have a trade'
                   id='yesTradeIn'
                   value='Y'
+                  variant='font-normal'
                 />
                 <RadioButton
                   {...register('tradeInVehicleIndicator')}
                   label='No, I do not have a trade'
                   id='noTradeIn'
                   value='N'
+                  variant='font-normal'
                 />
               </div>
             </div>
@@ -239,7 +245,7 @@ const TradeInfo = (props: any) => {
                     disabled={customer?.tradeInfo?.model ? true : false}
                   />
                   <div className='col-span-full grid gap-y-6'>
-                    <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
+                    <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px] font-medium'>
                       Is there an existing loan on your trade-in vehicle?
                     </p>
                     <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
@@ -249,6 +255,7 @@ const TradeInfo = (props: any) => {
                         label='Yes'
                         id='yesLien'
                         value='Y'
+                        variant='font-normal'
                       />
                       <RadioButton
                         {...register('tradeInLienIndicator', { required: 'Required' })}
@@ -256,6 +263,7 @@ const TradeInfo = (props: any) => {
                         label='No'
                         id='noLien'
                         value='N'
+                        variant='font-normal'
                       />
                     </div>
                   </div>

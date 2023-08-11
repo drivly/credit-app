@@ -189,11 +189,11 @@ export default function Form({ vdp }: Props) {
                       watchJoint ? 'border-t pt-20' : 'border-y py-20'
                     } mb-10 mt-20 flex flex-col justify-between border-DRIVLY/10  px-5 transition-all duration-200 ease-out`}>
                     <CheckBox {...register('joint')} name='joint' label='Joint Credit Applicant' />
-                    {watchJoint && (
+                    {/* {watchJoint && (
                       <h1 className='mt-10 text-[28px] font-bold tracking-[0.02em] sm:text-2xl'>
                         Joint Applicant
                       </h1>
-                    )}
+                    )} */}
                   </div>
                 </React.Fragment>
               )
