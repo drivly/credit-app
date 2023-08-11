@@ -34,10 +34,6 @@ export async function POST(request: Request) {
     }).then((res) => res.json())
     console.log('response', response)
 
-    // if (!response.success) {
-    //   throw new Error(response)
-    // }
-
     return NextResponse.json({ status: 200, data: response })
   } catch (error: any) {
     console.log('error', error.message)

@@ -204,7 +204,7 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Vehicle of Interest*\n*Cash Down:* ${data.vehicle.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.modelYear}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
+          text: `*Vehicle of Interest*\n*Cash Down:* ${data.vehicle.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.year}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
         },
       })
     } else if (key === 'tradeIn') {

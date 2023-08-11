@@ -52,7 +52,6 @@ const PrimaryApp = () => {
             name='phone'
             errormsg={errors?.phone?.message!}
             placeholder='561-975-6432'
-            control={control}
             variant='sm:col-span-3'>
             <div className='absolute inset-y-0 left-0 flex items-center'>
               <label htmlFor='phoneType' className='sr-only'>
@@ -81,7 +80,6 @@ const PrimaryApp = () => {
           />
           <DateField
             rules={{
-              value: true,
               required: 'Required',
               validate: (value: any) => isAtLeast18(value) || '18yo or older',
             }}
@@ -118,5 +116,3 @@ const PrimaryApp = () => {
 }
 
 export default PrimaryApp
-
-

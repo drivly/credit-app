@@ -9,7 +9,7 @@ export default function JointEmployee({ section }: any) {
 
   const methods = useFormContext()
   const {
-    control,
+    register,
     watch,
     formState: { errors },
   } = methods
@@ -18,6 +18,8 @@ export default function JointEmployee({ section }: any) {
   const watchJobStatus = watch('co_employmentStatusCode')
   const jobless = watchJobStatus === 'Not Applicable' || watchJobStatus === ''
 
+  console.log('methods', methods.getValues())
+
   return (
     <>
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
@@ -25,14 +27,14 @@ export default function JointEmployee({ section }: any) {
           <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>
             <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
               <SelectField
+                {...register('co_employmentStatusCode', { required: 'Required' })}
                 variant='w-full sm:col-span-3'
                 label='Employment Status*'
                 name='co_employmentStatusCode'
                 placeholder='Select'
-                control={control}
+                defaultValue='Full Time'
                 cats={jobStatus}
-                errormsg={errors['co_employmentStatusCode']?.message!}
-                rules={{ required: 'Required' }}
+                errormsg={errors.co_employmentStatusCode?.message!}
               />
             </div>
             <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>

@@ -3,10 +3,12 @@
 import React from 'react'
 import useCustomer from '../store'
 
-const SuccessPage = () => {
+const SuccessPage = ({ searchParams }: { searchParams: any }) => {
+  console.log('searchParams', searchParams)
   const customer = useCustomer((s) => s.customer)
+
   return (
-    <div className='mx-auto flex justify-center min-h-full h-svh -mt-[65px] flex-1 max-w-2xl w-full flex-col items-center rounded-md px-4 sm:px-8 py-4'>
+    <div className='mx-auto -mt-[65px] flex h-svh min-h-full w-full max-w-2xl flex-1 flex-col items-center justify-center rounded-md px-4 py-4 sm:px-8'>
       <svg
         width='51'
         height='50'
@@ -39,17 +41,17 @@ const SuccessPage = () => {
         </defs>
       </svg>
       <header className='mb-8 mt-6 text-gray-900'>
-        <h2 className='flex flex-col items-center space-x-1 font-semibold leading-[42px] text-[28px]'>
+        <h2 className='flex flex-col items-center space-x-1 text-[28px] font-semibold leading-[42px]'>
           Thanks, {customer?.name}!
         </h2>
-        <p className='font-medium leading-7 text-lg text-center'>
+        <p className='text-center text-lg font-medium leading-7'>
           Your Credit Application has been successfully submitted.
         </p>
       </header>
 
       <div className='inline-flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-6 py-4 shadow'>
-        <span className='text-lg sm:text-base font-medium leading-relaxed tracking-tight text-gray-900'>
-          Your application ID: {customer?.applicationId}
+        <span className='text-lg font-medium leading-relaxed tracking-tight text-gray-900 sm:text-base'>
+          Your application ID: {customer?.applicationId ?? searchParams?.id}
         </span>
       </div>
     </div>

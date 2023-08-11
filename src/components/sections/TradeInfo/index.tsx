@@ -29,6 +29,9 @@ const TradeInfo = (props: any) => {
 
   const watchLienName = watch('tradeInLienHoldername')
   const isLienOther = watchLienName === 'other'
+
+  console.log('watchLienName', watchLienName)
+  console.log('isLienOther', isLienOther)
   const ssn = watch('ssn')
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const TradeInfo = (props: any) => {
   }, [reset, setCustomer, setValue, watchTradeInVin])
 
   useEffect(() => {
-    if (watchLienName) {
+    if (watchLienName && !isLienOther) {
       const isSSN = lenders
         .find((item) => item.fsId === watchLienName)
         ?.serviceOptions.find((item: any) => item.option === 'SSNTXID')
@@ -112,6 +115,7 @@ const TradeInfo = (props: any) => {
               ...customer,
               tradeInfo: {
                 ...customer?.tradeInfo,
+                fsId: watchLienName,
                 lienholder: lenderString,
                 tradeInAllowance: response?.allowance,
                 grossPayOffAmount: response?.quote?.grossPayOffAmount,
@@ -157,22 +161,24 @@ const TradeInfo = (props: any) => {
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-5 py-6 sm:p-8'>
           <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
-            <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
-              Do you have a trade-in vehicle to be considered?
-            </p>
-            <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
-              <RadioButton
-                {...register('tradeInVehicleIndicator')}
-                label='Yes, I have a trade'
-                id='yesTradeIn'
-                value='Y'
-              />
-              <RadioButton
-                {...register('tradeInVehicleIndicator')}
-                label='No, I do not have a trade'
-                id='noTradeIn'
-                value='N'
-              />
+            <div className='col-span-full grid gap-y-6'>
+              <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
+                Do you have a trade-in vehicle to be considered?
+              </p>
+              <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
+                <RadioButton
+                  {...register('tradeInVehicleIndicator')}
+                  label='Yes, I have a trade'
+                  id='yesTradeIn'
+                  value='Y'
+                />
+                <RadioButton
+                  {...register('tradeInVehicleIndicator')}
+                  label='No, I do not have a trade'
+                  id='noTradeIn'
+                  value='N'
+                />
+              </div>
             </div>
             {isTradeIn && (
               <>
@@ -232,24 +238,26 @@ const TradeInfo = (props: any) => {
                     label='Model*'
                     disabled={customer?.tradeInfo?.model ? true : false}
                   />
-                  <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
-                    Is there an existing loan on your trade-in vehicle?
-                  </p>
-                  <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
-                    <RadioButton
-                      {...register('tradeInLienIndicator', { required: 'Required' })}
-                      errormsg={errors?.lienIndicator?.message!}
-                      label='Yes'
-                      id='yesLien'
-                      value='Y'
-                    />
-                    <RadioButton
-                      {...register('tradeInLienIndicator', { required: 'Required' })}
-                      errormsg={errors?.lienIndicator?.message!}
-                      label='No'
-                      id='noLien'
-                      value='N'
-                    />
+                  <div className='col-span-full grid gap-y-6'>
+                    <p className='col-span-full mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
+                      Is there an existing loan on your trade-in vehicle?
+                    </p>
+                    <div className='col-span-full flex w-full items-center justify-start gap-x-8'>
+                      <RadioButton
+                        {...register('tradeInLienIndicator', { required: 'Required' })}
+                        errormsg={errors?.lienIndicator?.message!}
+                        label='Yes'
+                        id='yesLien'
+                        value='Y'
+                      />
+                      <RadioButton
+                        {...register('tradeInLienIndicator', { required: 'Required' })}
+                        errormsg={errors?.lienIndicator?.message!}
+                        label='No'
+                        id='noLien'
+                        value='N'
+                      />
+                    </div>
                   </div>
                 </div>
               </>
@@ -257,21 +265,14 @@ const TradeInfo = (props: any) => {
             {islien && (
               <div className='col-span-full grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
                 <SelectField
+                  {...register('tradeInLienHoldername', {
+                    required: 'Required',
+                  })}
                   variant='w-full sm:col-span-5'
                   label='Lender Name*'
-                  name='tradeInLienHoldername'
                   placeholder='Select'
-                  control={control}
                   cats={lenderCats}
-                  errormsg={errors['tradeInLienHoldername']?.message!}
-                  rules={{
-                    required: 'Required',
-                    onChange: (e: any) => {
-                      e.target.value = setCustomer({
-                        tradeInfo: { ...customer?.tradeInfo, fsId: e.target.value },
-                      })
-                    },
-                  }}
+                  errormsg={errors.tradeInLienHoldername?.message!}
                 />
 
                 {isLienOther && (

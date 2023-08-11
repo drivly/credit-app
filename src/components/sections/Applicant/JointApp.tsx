@@ -22,7 +22,7 @@ const JointApp = () => {
         <p className='mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
           Relationship to Primary:
         </p>
-        <div className='my-8 flex w-full flex-wrap items-center justify-start gap-x-8 gap-y-6'>
+        <div className='mb-8 mt-6 flex w-full flex-wrap items-center justify-start gap-x-8 gap-y-6'>
           <RadioButton
             {...register('co_buyerRelationship', { required: 'Required' })}
             errormsg={errors?.co_buyerRelationship?.message!}
@@ -89,7 +89,6 @@ const JointApp = () => {
             name='co_phone'
             errormsg={errors?.co_phone?.message!}
             placeholder='561-975-6432'
-            control={control}
             variant='sm:col-span-3'>
             {' '}
             <div className='absolute inset-y-0 left-0 flex items-center'>
@@ -129,7 +128,7 @@ const JointApp = () => {
             control={control}
             name='co_dateOfBirth'
             placeholder='05/15/1980'
-            minDate={moment().subtract(500, 'years').toDate()}
+            minDate={moment().subtract(200, 'years').toDate()}
             maxDate={moment().subtract(18, 'years').toDate()}
           />
           <InputField

@@ -9,7 +9,7 @@ export default function PrimaryEmployee({ section }: any) {
 
   const methods = useFormContext()
   const {
-    control,
+    register,
     watch,
     formState: { errors },
   } = methods
@@ -25,15 +25,13 @@ export default function PrimaryEmployee({ section }: any) {
           <div className='flex max-w-2xl flex-col gap-x-4 gap-y-8'>
             <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
               <SelectField
+                {...register('employmentStatusCode', { required: 'Required' })}
                 variant='w-full sm:col-span-3'
                 label='Employment Status*'
                 name='employmentStatusCode'
                 placeholder='Select'
-                defaultValue=''
-                control={control}
                 cats={jobStatus}
                 errormsg={errors['employmentStatusCode']?.message!}
-                rules={{ required: 'Required' }}
               />
             </div>
             <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>

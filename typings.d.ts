@@ -1,5 +1,5 @@
 export interface VehicleOfInterest {
-  modelYear: string
+  year: string
   make: string
   model: string
   price: string
