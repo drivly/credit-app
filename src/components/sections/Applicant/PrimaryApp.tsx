@@ -67,7 +67,7 @@ const PrimaryApp = () => {
                   {...register('phoneType', { required: 'Required' })}
                   defaultValue=''
                   autoComplete='phoneType'
-                  className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-500 focus:outline-none focus:ring-0 sm:text-sm'>
+                  className='h-full rounded-md border-0 bg-transparent py-0 pl-3 pr-7 text-gray-900 focus:outline-none focus:ring-0 sm:text-sm'>
                   <option value='MOBILE'>Mobile</option>
                   <option value='HOME'>Home</option>
                   <option value='WORK'>Work</option>

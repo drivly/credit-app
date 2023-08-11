@@ -21,7 +21,7 @@ const JointOther = ({ section }: { section: any }) => {
           <p className='mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
             {section.description}
           </p>
-          <div className='flex w-full items-center justify-start gap-x-8'>
+          <div className='flex w-full flex-col items-start justify-start gap-x-8 gap-y-6 sm:flex-row sm:items-center md:flex-col md:items-start lg:flex-row'>
             <RadioButton
               {...register('co_otherIncomeSourceCode', { required: 'Required' })}
               errormsg={errors?.co_otherIncomeSourceCode?.message!}
@@ -41,7 +41,7 @@ const JointOther = ({ section }: { section: any }) => {
           </div>
         </div>
         {hasOtherIncome && (
-          <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 pt-8 sm:grid-cols-6'>
+          <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 pt-8 sm:grid-flow-col sm:grid-cols-6'>
             {section.fields.map((field: any, i: number) => (
               <React.Fragment key={i}>
                 <FieldMap key={i} field={field} errors={errors} methods={methods} />

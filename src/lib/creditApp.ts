@@ -366,7 +366,7 @@ export const creditApps = [
             name: 'otherIncomeSourceDescription',
             label: 'Description',
             placeholder: 'I move furniture on the weekends',
-            variant: 'sm:col-span-4 whitespace-nowrap',
+            variant: 'col-span-auto',
           },
         ],
       },
@@ -477,7 +477,6 @@ export const creditApps = [
               e.target.value = formatMoney(e.target.value)
             },
           },
-
 
           {
             component: 'InputField',
@@ -762,7 +761,7 @@ export const creditApps = [
             name: 'co_otherIncomeSourceDescription',
             label: 'Description',
             placeholder: 'I move furniture on the weekends',
-            variant: 'sm:col-span-4 whitespace-nowrap',
+            variant: 'col-span-auto',
           },
         ],
       },

@@ -21,7 +21,7 @@ const PrimaryOther = ({ section }: { section: any }) => {
           <p className='mt-1 text-base leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px] font-medium'>
             {section.description}
           </p>
-          <div className='flex w-full items-center justify-start gap-x-8'>
+          <div className='flex flex-col items-start gap-y-6 w-full sm:items-center sm:flex-row md:flex-col md:items-start lg:flex-row justify-start gap-x-8'>
             <RadioButton
               {...register('otherIncomeSourceCode', { required: 'Required' })}
               errormsg={errors?.otherIncomeSourceCode?.message!}
@@ -41,7 +41,7 @@ const PrimaryOther = ({ section }: { section: any }) => {
           </div>
         </div>
         {hasOtherIncome && (
-          <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 pt-8 sm:grid-cols-6'>
+          <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 pt-8 sm:grid-cols-6 sm:grid-flow-col'>
             {section.fields.map((field: any, i: number) => (
               <React.Fragment key={i}>
                 <FieldMap field={field} errors={errors} methods={methods} />
