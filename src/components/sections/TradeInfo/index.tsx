@@ -14,6 +14,7 @@ const TradeInfo = (props: any) => {
   const { errors } = props
   const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
+  const isPayoffRef = React.useRef(false)
 
   console.log('customer', customer)
 
@@ -30,9 +31,28 @@ const TradeInfo = (props: any) => {
   const watchLienName = watch('tradeInLienHoldername')
   const isLienOther = watchLienName === 'other' || watchLienName === 'idk'
 
+
+
   console.log('watchLienName', watchLienName)
   console.log('isLienOther', isLienOther)
   const ssn = watch('ssn')
+
+  useEffect(() => {
+    if (!isTradeIn) {
+
+      reset({
+        tradeInAllowance: '',
+        tradeInVin: '',
+        tradeInYear: '',
+        tradeInMake: '',
+        tradeInModel: '',
+        tradeInMileage: '',
+        tradeInLienHoldername: '',
+        tradeInGrossPayOffAmount: '',
+      })
+      isPayoffRef.current = false
+    }
+  }, [isTradeIn, reset])
 
   useEffect(() => {
     const getPayoffLenders = async () => {
@@ -46,29 +66,32 @@ const TradeInfo = (props: any) => {
 
   useEffect(() => {
     if (watchTradeInVin) {
-      const getTradeInfo = async () => {
-        try {
-          const data = await getBuild(watchTradeInVin)
+      if (!isPayoffRef.current) {
+        const getTradeInfo = async () => {
+          try {
+            const data = await getBuild(watchTradeInVin)
 
-          if (data) {
-            setValue('tradeInYear', data?.year)
-            setValue('tradeInMake', data?.make)
-            setValue('tradeInModel', data?.model)
-            setCustomer({
-              tradeInfo: {
-                vin: watchTradeInVin,
-                year: data?.year,
-                make: data?.make,
-                model: data?.model,
-              },
-            })
-            toast.success('Vehicle Found')
+            if (data) {
+              setValue('tradeInYear', data?.year)
+              setValue('tradeInMake', data?.make)
+              setValue('tradeInModel', data?.model)
+              setCustomer({
+                tradeInfo: {
+                  vin: watchTradeInVin,
+                  year: data?.year,
+                  make: data?.make,
+                  model: data?.model,
+                },
+              })
+              toast.success('Vehicle Found')
+            }
+            isPayoffRef.current = true
+          } catch (error: any) {
+            toast.error(error.message)
           }
-        } catch (error: any) {
-          toast.error(error.message)
         }
+        getTradeInfo()
       }
-      getTradeInfo()
     } else if (!watchTradeInVin) {
       reset({
         tradeInYear: '',

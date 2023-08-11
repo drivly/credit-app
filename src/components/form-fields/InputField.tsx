@@ -13,10 +13,12 @@ interface IProps {
   errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>
   variant?: string
   message?: string
+  comp?: React.ReactNode
 }
+const telType = ['phone', 'co_phone']
 
 const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((props, ref) => {
-  const { label, name, placeholder, type, errormsg, variant, message } = props
+  const { label, comp, name, placeholder, type, errormsg, variant, message } = props
 
   return (
     <div className={cn('relative col-span-6 h-fit w-full', variant)}>
@@ -26,6 +28,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((prop
         {label}
       </label>
       <div className='relative mt-2'>
+        {telType?.includes(name!) && comp}
         <input
           ref={ref}
           className={cn(
@@ -33,6 +36,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((prop
             {
               'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
                 errormsg,
+              'pl-[85px] sm:pl-20': comp,
             }
           )}
           autoComplete='on'
@@ -48,16 +52,3 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((prop
 
 export default InputField
 InputField.displayName = 'InputField'
-
-{
-  /* {errormsg && (
-  <p className='absolute mt-2 text-sm text-red-600' id={errormsg ? `${name}-error` : name}>
-    {errormsg.toString()}
-  </p>
-)}
-{message && (
-  <span className='absolute -bottom-[18px] left-0.5 text-[12px] font-medium text-gray-600'>
-    <span className='whitespace-nowrap'>{message}</span>
-  </span>
-)} */
-}
