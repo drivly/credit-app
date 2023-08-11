@@ -4,6 +4,7 @@ import useCustomer from '@/app/store'
 import { getVehicleDetails, IVDP } from '@/app/utils/getVehicleDetails'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
+import moment from 'moment'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -15,10 +16,19 @@ import TradeInfo from './sections/TradeInfo'
 import Vehicle from './sections/Vehicle'
 
 const defaultValues = {
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  phoneType: 'MOBILE',
+  dateOfBirth: moment().subtract(18, 'years').format('YYYY-MM-DD'),
+  ssn: '',
+  residenceTypeCode: '',
   employedPrimary: 'YES',
   coEmployedJoint: 'YES',
   employmentStatusCode: 'Full Time',
-  coEmploymentStatusCode: 'Full Time',
+  co_employmentStatusCode: 'Full Time',
   joint: false,
   agree: false,
 }
@@ -40,7 +50,7 @@ export default function Form({ vdp }: Props) {
   const router = useRouter()
 
   const methods = useForm({
-    mode: 'all',
+    mode: 'onSubmit',
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
@@ -93,16 +103,14 @@ export default function Form({ vdp }: Props) {
       }
       fetchVehicle()
     } else if (!vdp?.vin) {
-      reset({
-        vehicleYear: '',
-        vehicleMake: '',
-        vehicleModel: '',
-        vehiclePrice: '',
-        vehicleMileage: '',
-      })
+      setValue('vehicleYear', '')
+      setValue('vehicleMake', '')
+      setValue('vehicleModel', '')
+      setValue('vehiclePrice', '')
+      setValue('vehicleMileage', '')
       resetCustomer()
     }
-  }, [reset, setValue, customer?.vin, vdp?.vin, setCustomer, resetCustomer])
+  }, [setValue, customer?.vin, vdp?.vin, setCustomer, resetCustomer])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     if (!data?.agree) {
@@ -115,6 +123,7 @@ export default function Form({ vdp }: Props) {
     const { sameAddress, ...rest } = data
     const toastId = toast.loading('Submitting your application...')
     let formData = formatRequest(rest)
+    console.log('formData', formData)
 
     if (formData?.tradeIn !== null) {
       const { tradeIn, ...rest } = formData
@@ -169,6 +178,7 @@ export default function Form({ vdp }: Props) {
         <fieldset
           disabled={isSubmitting || isLoading}
           className='group disabled:opacity-50 peer-disabled:cursor-not-allowed'>
+          {/* Primary Applicant */}
           {creditApps.map((app, index) => {
             if (app.main === 'Primary') {
               return (

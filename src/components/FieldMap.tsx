@@ -46,14 +46,14 @@ const FieldMap = ({ field, methods, errors }: FieldMapProps) => {
       {
         Component = (
           <SelectField
-            {...field}
-            name={field.name}
-            cats={field.cats}
-            label={field.label}
-            control={methods.control}
-            variant={field.variant}
+            {...methods.register(field.name, {
+              required: field.rules?.message,
+            })}
             errormsg={errors[field.name]?.message!}
-            rules={{ required: field?.rules?.message }}
+            variant={field?.variant}
+            placeholder={field.placeholder}
+            label={field.label}
+            cats={field.cats}
           />
         )
       }

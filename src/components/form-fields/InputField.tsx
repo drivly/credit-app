@@ -9,7 +9,7 @@ type InputProps = React.DetailedHTMLProps<
 >
 
 interface IProps {
-  label: string
+  label?: string
   errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>
   variant?: string
   message?: string

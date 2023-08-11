@@ -16,11 +16,11 @@ export function formatRequest(data: any) {
     } else if (joint && key.startsWith('co_')) {
       let newKey = key.replace('co_', '')
       secondary[newKey] = data[key]
-    } else if (key.includes('vehicle') && data[key].length > 0) {
+    } else if (key.includes('vehicle') && data[key]?.length > 0) {
       let newKey = key.replace('vehicle', '')
       newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
       vehicle[newKey] = data[key]
-    } else if (key.includes('tradeIn') && data[key].length > 0) {
+    } else if (key.includes('tradeIn') && data[key]?.length > 0) {
       let newKey = key.replace('tradeIn', '')
       newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
       tradeIn[newKey] = data[key]
