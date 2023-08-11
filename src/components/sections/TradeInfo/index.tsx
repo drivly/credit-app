@@ -7,18 +7,20 @@ import SelectField from '@/components/form-fields/SelectField'
 import { formatMoney, vinChecksum } from '@/utils'
 import { cn } from '@drivly/ui'
 import React, { useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { FieldErrors, useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-const TradeInfo = (props: any) => {
-  const { errors } = props
+type TradeInfoProps = {
+  errors: FieldErrors
+  toggleLoading: () => void
+}
+
+const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
   const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const isPayoffRef = React.useRef(false)
   const tradeRef = React.useRef<HTMLDivElement>(null)
   const [isTrade, setTrade] = React.useState(false)
-
-
 
   const methods = useFormContext()
   const { register, watch, control, setValue, reset, setFocus } = methods
@@ -119,6 +121,7 @@ const TradeInfo = (props: any) => {
       if (!isPayoffRef.current) {
         const getPayoff = async () => {
           const toastId = toast.loading('Getting payoff quote')
+          toggleLoading()
           try {
             const response = await getPayoffQuote(payload)
 
@@ -146,6 +149,8 @@ const TradeInfo = (props: any) => {
           } catch (error: any) {
             console.error('error', error)
             toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
+          } finally {
+            toggleLoading()
           }
         }
         if (isSSN && ssn.length === 11) {
