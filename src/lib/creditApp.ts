@@ -2,13 +2,14 @@ import { formatMoney } from '@/utils'
 import { states, timeMonths, timeYears } from './categories'
 import { zipReg } from './patterns'
 import moment from 'moment'
+import { formatphone } from '@/utils/formatphone'
 
 export const creditApps = [
   {
     main: 'Primary',
     sections: [
       {
-        title: 'Personal Information',
+        title: 'Applicant Information',
         description: 'Personal information about the primary applicant',
       },
       {
@@ -21,11 +22,12 @@ export const creditApps = [
             label: 'City*',
             placeholder: 'New York',
             variant: 'sm:col-span-2',
-            maxLength: { value: 30, message: 'Max 30 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 30, message: 'Max 30 chars' },
             },
+            maxLength: 30,
           },
           {
             component: 'SelectField',
@@ -47,6 +49,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            maxLength: 5,
             pattern: { value: zipReg, message: 'Invalid Zip' },
           },
           {
@@ -86,11 +89,12 @@ export const creditApps = [
             label: 'City*',
             placeholder: 'New York',
             variant: 'sm:col-span-2',
-            maxLength: { value: 30, message: 'Max 30 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 30, message: 'Max 30 chars' },
             },
+            maxLength: 30,
           },
           {
             component: 'SelectField',
@@ -113,6 +117,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            maxLength: 5,
             pattern: { value: zipReg, message: 'Invalid Zip' },
           },
           {
@@ -198,20 +203,30 @@ export const creditApps = [
             name: 'employerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             variant: 'sm:col-span-6 whitespace-nowrap',
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 50, message: 'Max 50 chars' },
             },
+            maxLength: 50,
           },
           {
-            component: 'PhoneField',
+            component: 'InputField',
             name: 'employerPhone',
             label: 'Employer Phone*',
             placeholder: 'If unemployed, use your phone.',
             variant: 'sm:col-span-3',
             errors: true,
+            maxLength: 14,
+            rules: {
+              value: true,
+              message: 'Required',
+              maxLength: { value: 14, message: 'Must be less than 14' },
+            },
+            onChange: (e: any) => {
+              e.target.value = formatphone(e.target.value)
+            },
           },
           {
             component: 'InputField',
@@ -219,11 +234,12 @@ export const creditApps = [
             label: 'Occupation*',
             placeholder: 'Sales Manager',
             variant: 'sm:col-span-3',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 20, message: 'Max 20 chars' },
             },
+            maxLength: 20,
           },
           {
             component: 'SelectField',
@@ -261,20 +277,29 @@ export const creditApps = [
             name: 'previousEmployerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 50, message: 'Max 50 chars' },
             },
+            maxLength: 50,
           },
           {
-            component: 'PhoneField',
+            component: 'InputField',
             name: 'prevEmployerPhone',
             label: 'Employer Phone*',
             placeholder: '713-555-2541',
             variant: 'sm:col-span-3',
-            message: 'If unemployed, use your phone.',
             errors: true,
+            rules: {
+              value: true,
+              message: 'Required',
+              maxLength: { value: 14, message: 'Must be less than 14' },
+              max: 14,
+            },
+            onChange: (e: any) => {
+              e.target.value = formatphone(e.target.value)
+            },
           },
           {
             component: 'InputField',
@@ -282,11 +307,12 @@ export const creditApps = [
             label: 'Occupation*',
             placeholder: 'Sales Manager',
             variant: 'sm:col-span-3',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 20, message: 'Max 50 chars' },
             },
+            maxLength: 20,
           },
           {
             component: 'SelectField',
@@ -351,7 +377,7 @@ export const creditApps = [
     main: 'Joint',
     sections: [
       {
-        title: 'Personal Information',
+        title: 'Applicant Information',
         description: 'Personal information about the joint applicant',
       },
       {
@@ -363,22 +389,24 @@ export const creditApps = [
             name: 'co_addressLine1',
             label: 'Street Address*',
             placeholder: '321 Main Ave',
-            maxLength: { value: 200, message: 'Max 200 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 200, message: 'Max 200 chars' },
             },
+            maxLength: 200,
           },
           {
             component: 'InputField',
             name: 'co_addressLine2',
             label: 'Street Address*',
             placeholder: '321 Main Ave',
-            maxLength: { value: 200, message: 'Max 200 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 200, message: 'Max 200 chars' },
             },
+            maxLength: 200,
           },
           {
             component: 'InputField',
@@ -386,11 +414,12 @@ export const creditApps = [
             label: 'City*',
             placeholder: 'Miami',
             variant: 'sm:col-span-2',
-            maxLength: { value: 30, message: 'Max 30 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 30, message: 'Max 30 chars' },
             },
+            maxLength: 30,
           },
           {
             component: 'SelectField',
@@ -414,6 +443,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            maxLength: 5,
             pattern: { value: zipReg, message: 'Invalid Zip' },
           },
           {
@@ -454,11 +484,12 @@ export const creditApps = [
             label: 'City*',
             placeholder: 'Miami',
             variant: 'sm:col-span-2',
-            maxLength: { value: 30, message: 'Max 30 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 30, message: 'Max 30 chars' },
             },
+            maxLength: 30,
           },
           {
             component: 'SelectField',
@@ -481,6 +512,7 @@ export const creditApps = [
               value: true,
               message: 'Required',
             },
+            maxLength: 5,
             pattern: { value: zipReg, message: 'Invalid Zip' },
           },
           {
@@ -565,20 +597,29 @@ export const creditApps = [
             name: 'co_employerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 50, message: 'Max 50 chars' },
             },
+            maxLength: 50,
           },
           {
-            component: 'PhoneField',
+            component: 'InputField',
             name: 'co_employerPhone',
             label: 'Employer Phone*',
-            placeholder: '713-555-2541',
+            placeholder: 'If unemployed, use your phone.',
             variant: 'sm:col-span-3',
-            message: 'If unemployed, use your contact number.',
             errors: true,
+            maxLength: 14,
+            rules: {
+              value: true,
+              message: 'Required',
+              maxLength: { value: 14, message: 'Must be less than 14' },
+            },
+            onChange: (e: any) => {
+              e.target.value = formatphone(e.target.value)
+            },
           },
           {
             component: 'InputField',
@@ -586,11 +627,12 @@ export const creditApps = [
             label: 'Occupation*',
             placeholder: 'Sales Associate',
             variant: 'sm:col-span-3',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 20, message: 'Max 20 chars' },
             },
+            maxLength: 20,
           },
           {
             component: 'SelectField',
@@ -628,32 +670,44 @@ export const creditApps = [
             name: 'co_previousEmployerName',
             label: 'Employer Name*',
             placeholder: 'ABC Company',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 50, message: 'Max 50 chars' },
             },
+            maxLength: 50,
           },
+
           {
-            component: 'PhoneField',
+            component: 'InputField',
             name: 'co_prevEmployerPhone',
             label: 'Employer Phone*',
-            placeholder: '713-555-2541',
+            placeholder: 'If unemployed, use your phone.',
             variant: 'sm:col-span-3',
-            message: 'If unemployed, use your phone.',
             errors: true,
+            maxLength: 14,
+            rules: {
+              value: true,
+              message: 'Required',
+              maxLength: { value: 14, message: 'Must be less than 14' },
+            },
+            onChange: (e: any) => {
+              e.target.value = formatphone(e.target.value)
+            },
           },
+
           {
             component: 'InputField',
             name: 'co_prevEmploymentTitle',
             label: 'Occupation*',
             placeholder: 'Sales Associate',
             variant: 'sm:col-span-3',
-            maxLength: { value: 50, message: 'Max 50 chars' },
             rules: {
               value: true,
               message: 'Required',
+              maxLength: { value: 20, message: 'Max 20 chars' },
             },
+            maxLength: 20,
           },
           {
             component: 'SelectField',

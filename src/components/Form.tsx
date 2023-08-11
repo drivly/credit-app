@@ -4,9 +4,10 @@ import useCustomer from '@/app/store'
 import { getVehicleDetails, IVDP } from '@/app/utils/getVehicleDetails'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
+import { cn } from '@drivly/ui'
 import moment from 'moment'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import CreditApp from './CreditApp'
@@ -48,9 +49,10 @@ export default function Form({ vdp }: Props) {
   const searchParams = useSearchParams()
   const searchParamValues = Object.fromEntries(searchParams.entries())
   const router = useRouter()
+  const jointRef = useRef<HTMLDivElement>(null)
 
   const methods = useForm({
-    mode: 'onSubmit',
+    mode: 'all',
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
@@ -172,6 +174,15 @@ export default function Form({ vdp }: Props) {
     }
   }
 
+  useEffect(() => {
+    if (watchJoint) {
+      setTimeout(
+        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        150
+      )
+    }
+  }, [watchJoint])
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='relative w-full'>
@@ -185,22 +196,25 @@ export default function Form({ vdp }: Props) {
                 <React.Fragment key={index}>
                   <CreditApp key={index} type={app.main} app={app} vin={vdp?.vin} />
                   <div
+                    ref={jointRef}
                     className={`${
                       watchJoint ? 'border-t pt-20' : 'border-y py-20'
                     } mb-10 mt-20 flex flex-col justify-between border-DRIVLY/10  px-5 transition-all duration-200 ease-out`}>
-                    <CheckBox {...register('joint')} name='joint' label='Joint Credit Applicant' />
-                    {/* {watchJoint && (
-                      <h1 className='mt-10 text-[28px] font-bold tracking-[0.02em] sm:text-2xl'>
-                        Joint Applicant
-                      </h1>
-                    )} */}
+                    <CheckBox
+                      {...register('joint')}
+                      name='joint'
+                      label='Joint Credit Applicant'
+                      variant={cn('text-[28px] font-bold tracking-[0.02em] sm:text-2xl', {
+                        'text-DRIVLY/10': watchJoint === true,
+                      })}
+                    />
                   </div>
                 </React.Fragment>
               )
-            } else if (app.main === 'Joint' && watchJoint) {
+            } else if (app.main === 'Joint') {
               return (
                 <div className='space-y-10' key={index}>
-                  <CreditApp key={index} type={app.main} app={app} />
+                  {watchJoint && <CreditApp key={index} type={app.main} app={app} />}
                 </div>
               )
             }

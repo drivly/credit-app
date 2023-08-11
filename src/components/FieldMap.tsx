@@ -1,7 +1,6 @@
 import { FieldErrors, FieldValues, UseFormReturn } from 'react-hook-form'
 import DateField from './form-fields/DateField'
 import InputField from './form-fields/InputField'
-import PhoneField from './form-fields/PhoneField'
 import SelectField from './form-fields/SelectField'
 
 interface FieldMapProps {
@@ -38,6 +37,7 @@ const FieldMap = ({ field, methods, errors }: FieldMapProps) => {
             variant={field?.variant}
             placeholder={field.placeholder}
             label={field.label}
+            maxLength={field?.maxLength}
           />
         )
       }
@@ -67,19 +67,6 @@ const FieldMap = ({ field, methods, errors }: FieldMapProps) => {
             errormsg={errors[field.name]?.message!}
             control={methods.control}
             variant={field.variant}
-          />
-        )
-      }
-      break
-    case 'PhoneField':
-      {
-        Component = (
-          <PhoneField
-            {...field}
-            errormsg={errors[field.name]?.message!}
-            variant={field.variant}
-            control={methods.control}
-            message={field?.message}
           />
         )
       }

@@ -1,11 +1,18 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import useCustomer from '../store'
 
 const SuccessPage = ({ searchParams }: { searchParams: any }) => {
-  console.log('searchParams', searchParams)
-  const customer = useCustomer((s) => s.customer)
+  const [user, setUser] = React.useState({ name: '', appId: '' })
+  const [customer, resetCustomer] = useCustomer((s) => [s.customer, s.resetCustomer])
+
+  useEffect(() => {
+    if (customer) {
+      setUser({ name: customer?.name!, appId: customer?.applicationId! })
+      resetCustomer()
+    }
+  }, [customer, resetCustomer])
 
   return (
     <div className='mx-auto -mt-[65px] flex h-svh min-h-full w-full max-w-2xl flex-1 flex-col items-center justify-center rounded-md px-4 py-4 sm:px-8'>
@@ -42,7 +49,7 @@ const SuccessPage = ({ searchParams }: { searchParams: any }) => {
       </svg>
       <header className='mb-8 mt-6 text-gray-900'>
         <h2 className='flex flex-col items-center space-x-1 text-[28px] font-semibold leading-[42px]'>
-          Thanks, {customer?.name}!
+          Thanks, {user.name}!
         </h2>
         <p className='text-center text-lg font-medium leading-7'>
           Your Credit Application has been successfully submitted.
@@ -51,7 +58,7 @@ const SuccessPage = ({ searchParams }: { searchParams: any }) => {
 
       <div className='inline-flex items-center justify-center gap-2 rounded-md border border-gray-200 bg-white px-6 py-4 shadow'>
         <span className='text-lg font-medium leading-relaxed tracking-tight text-gray-900 sm:text-base'>
-          Your application ID: {customer?.applicationId ?? searchParams?.id}
+          Your application ID: {user?.appId ?? searchParams?.id}
         </span>
       </div>
     </div>
