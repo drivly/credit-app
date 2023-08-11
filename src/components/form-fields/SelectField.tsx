@@ -2,7 +2,7 @@ import { CategoryType } from '@/lib/categories'
 import { cn } from '@/utils'
 import { AlertCircle } from 'lucide-react'
 import React from 'react'
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form'
+import { FieldError, FieldErrorsImpl, Merge, useFormContext } from 'react-hook-form'
 
 type InputProps = React.DetailedHTMLProps<
   React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -18,6 +18,9 @@ interface SelectFieldProps extends InputProps {
 
 const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(
   ({ name, label, cats, variant, errormsg, onChange, onBlur, defaultValue, ...props }, ref) => {
+    const method = useFormContext()
+    const selectedOption = method.watch(name)
+
     return (
       <div
         className={cn(
@@ -42,15 +45,15 @@ const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(
             id={name}
             defaultValue={defaultValue}
             className={cn(
-              'block w-full rounded-md border-0 px-3 text-left text-base text-gray-900 outline-none ring-1 ring-inset  ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:max-w-xs sm:text-sm',
+              'block w-full rounded-md border-0 px-3 text-left text-base text-gray-500 outline-none ring-1 ring-inset  ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:max-w-xs sm:text-sm',
               {
                 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500':
                   errormsg,
-                'text-gray-500': defaultValue === undefined || cats[0].value === '',
+                'text-gray-900': selectedOption,
               }
             )}>
             {cats.map((cat: any, i: number) => (
-              <option key={i} value={cat.value} className='text-base sm:text-sm'>
+              <option key={i} value={cat.value} className={cn('text-base sm:text-sm', {})}>
                 {cat.optionName}
               </option>
             ))}

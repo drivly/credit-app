@@ -203,7 +203,7 @@ export default function Form({ vdp }: Props) {
                     <CheckBox
                       {...register('joint')}
                       name='joint'
-                      label='Joint Credit Applicant'
+                      label='Joint Application'
                       variant={cn('text-[28px] font-bold tracking-[0.02em] sm:text-2xl', {
                         'text-DRIVLY/10': watchJoint === true,
                       })}

@@ -3,8 +3,6 @@ export interface CategoryType {
   optionName: string
 }
 
-const defaultCats = ['Select', 'Years', 'Months']
-
 export const states: CategoryType[] = [
   {
     value: '',
@@ -331,4 +329,3 @@ export const otherIncomeSources: CategoryType[] = [
     optionName: "Workman's Compensation",
   },
 ]
-let con = 'Customer Other Income Source'
