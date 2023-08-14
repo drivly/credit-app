@@ -1,16 +1,66 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import InputField from '../form-fields/InputField'
 import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
 import { useFormContext } from 'react-hook-form'
 import { useParams } from 'next/navigation'
 import useCustomer from '@/app/store'
+import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
+import { useQuery } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast'
 
 export default function Vehicle(props: any) {
+  const params = useParams()
   const { errors, watchJoint } = props
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
-  const params = useParams()
+  const vin = params?.vin?.toString() || customer?.vin
+
   const methods = useFormContext()
-  const { register } = methods
+  const { register, setValue } = methods
+
+  const { data: car, isFetching, isSuccess, isError } = useQuery(
+    ['vehicle', vin],
+    async () => await getVehicleDetails(vin!),
+    {
+      enabled: vin?.length === 17,
+      onSuccess: (data) => {
+        if (data) {
+          toast.success('Vehicle found!')
+          setCustomer({
+            vehicleMileage: data?.miles,
+            vehiclePrice: data?.price,
+            vehicleYear: data?.year,
+            vehicleMake: data?.make,
+            vehicleModel: data?.model,
+          })
+          setValue('vehicleYear', data?.year)
+          setValue('vehicleMake', data?.make)
+          setValue('vehicleModel', data?.model)
+          setValue('vehiclePrice', data?.price)
+          setValue('vehicleMileage', data?.miles)
+          setValue('vehicleVin', data?.vin)
+        } else if (!data) {
+          toast.error('Vehicle not found!')
+        }
+      },
+    }
+  )
+
+  useEffect(() => {
+    if (!vin) {
+      setValue('vehicleYear', '')
+      setValue('vehicleMake', '')
+      setValue('vehicleModel', '')
+      setValue('vehiclePrice', '')
+      setValue('vehicleMileage', '')
+      setCustomer({
+        vehicleMileage: '',
+        vehiclePrice: '',
+        vehicleYear: '',
+        vehicleMake: '',
+        vehicleModel: '',
+      })
+    }
+  }, [setCustomer, setValue, vin])
 
   return (
     <div
@@ -26,7 +76,9 @@ export default function Vehicle(props: any) {
 
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-5 py-6 sm:p-8'>
-          <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
+          <fieldset
+            disabled={isFetching}
+            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-50 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
             <InputField
               {...register('vehicleVin', {
                 validate: (value: string) => vinChecksum(value) || 'Invalid VIN',
@@ -41,17 +93,17 @@ export default function Vehicle(props: any) {
               variant='sm:col-span-5'
               label='VIN*'
             />
-              <InputField
-                {...register('vehicleCashDown', {
-                  onChange: (e: any) => {
-                    e.target.value = formatMoney(e.target.value)
-                  },
-                })}
-                errormsg={errors.cashDown?.message!}
-                placeholder='Enter $0, if no Cash Down'
-                variant='sm:col-span-5'
-                label='Cash Down*'
-              />
+            <InputField
+              {...register('vehicleCashDown', {
+                onChange: (e: any) => {
+                  e.target.value = formatMoney(e.target.value)
+                },
+              })}
+              errormsg={errors.cashDown?.message!}
+              placeholder='Enter $0, if no Cash Down'
+              variant='sm:col-span-5'
+              label='Cash Down*'
+            />
             <InputField
               {...register('vehicleYear', {
                 onChange: (event) =>
@@ -109,7 +161,7 @@ export default function Vehicle(props: any) {
               variant='sm:col-span-5'
               label='Mileage*'
             />
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>

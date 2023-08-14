@@ -12,10 +12,10 @@ import toast from 'react-hot-toast'
 
 type TradeInfoProps = {
   errors: FieldErrors
-  toggleLoading: () => void
 }
 
-const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
+const TradeInfo = ({ errors }: TradeInfoProps) => {
+  const [isLoading, setLoading] = React.useState(false)
   const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const isPayoffRef = React.useRef(false)
@@ -121,7 +121,7 @@ const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
       if (!isPayoffRef.current) {
         const getPayoff = async () => {
           const toastId = toast.loading('Getting payoff quote')
-          toggleLoading()
+          setLoading(true)
           try {
             const response = await getPayoffQuote(payload)
 
@@ -150,7 +150,7 @@ const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
             console.error('error', error)
             toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
           } finally {
-            toggleLoading()
+            setLoading(false)
           }
         }
         if (isSSN && ssn.length === 11) {
@@ -190,7 +190,9 @@ const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
 
       <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
         <div className='px-5 py-6 sm:p-8'>
-          <div className='grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-10'>
+          <fieldset
+            disabled={isLoading}
+            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-50 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
             <div className='col-span-full grid gap-y-6'>
               <p className='col-span-full mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
                 Do you have a trade-in vehicle to be considered?
@@ -336,7 +338,7 @@ const TradeInfo = ({ errors, toggleLoading }: TradeInfoProps) => {
                 )}
               </div>
             )}
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>

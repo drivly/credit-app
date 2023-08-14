@@ -27,11 +27,14 @@ export async function POST(request: Request) {
   console.log('payload', payload)
   try {
     await slackMsgRequest({ url: slackUrl, data })
-    const response = await fetch('https://credit.api.driv.ly/applications', {
+    const d = await fetch('https://credit.api.driv.ly/applications', {
       method: 'POST',
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
-    }).then((res) => res.json())
+    })
+
+    console.log('d', d.ok)
+    const response = await d.json()
     console.log('response', response)
 
     return NextResponse.json({ status: 200, data: response })
