@@ -56,9 +56,7 @@ const NewForm = ({ vdp }: any) => {
     control,
     register,
     handleSubmit,
-    reset,
     watch,
-    setValue,
     formState: { errors, isSubmitting },
   } = methods
 
@@ -205,7 +203,7 @@ const NewForm = ({ vdp }: any) => {
 
           {/* Joint Applicant */}
           <Vehicle errors={errors} watchJoint={watchJoint} />
-          <TradeInfo errors={errors} toggleLoading={() => setLoading((prev) => !prev)} />
+          <TradeInfo errors={errors} />
           <Agreement isError={isError} onClick={() => setError(false)} />
           <div className='mt-8 grid grid-cols-1 px-5 pt-10 md:ml-3 md:grid-cols-3'>
             <button
