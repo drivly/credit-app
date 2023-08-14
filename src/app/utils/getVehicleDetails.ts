@@ -16,10 +16,11 @@ const vehicleSchema = z.object({
 export type IVDP = z.infer<typeof vehicleSchema>
 
 export async function getVehicleDetails(id: string) {
+  'use server'
   if (id?.length !== 17) return
 
   const [listing, fetchedPrice] = await Promise.all([getListing(id), fetchPrice(id)])
-  if (!listing?.vehicle?.year) return
+  if (!listing?.vehicle?.year) return null
 
   const { year, make, model } = listing?.vehicle
 
@@ -37,6 +38,9 @@ export async function getVehicleDetails(id: string) {
   if (price?.endsWith('.00')) price = price.replace('.00', '')
 
   const data = vehicleSchema?.parse({ year, make, model, vin: id, price, miles })
+
+  if (!data) return null
+
   return { ...data }
 }
 

@@ -86,26 +86,26 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           text: `*Employment History*\n*Employer name:* ${
             data.primary.employerName
           }\n*Employment Status:* ${data.primary.employmentStatusCode}\n*Employer phone:* ${
-            data.primary.employerPhone
-          }\n*Occupation:* ${data.primary.employmentTitle}\n*Time on job:* ${
-            data.primary.timeOnJobYears
+            data.primary?.employerPhone
+          }\n*Occupation:* ${data.primary?.employmentTitle}\n*Time on job:* ${
+            data.primary?.timeOnJobYears
           } yrs ${
-            data.primary.timeOnJobMonths ? data.primary.timeOnJobMonths + 'mo' : ''
-          }\n*Monthly income:* ${data.primary.incomeAmount}`,
+            data.primary?.timeOnJobMonths ? data.primary?.timeOnJobMonths + 'mo' : ''
+          }\n*Monthly income:* ${data.primary?.incomeAmount}`,
         },
       })
-      Number(data.primary.timeOnJobYears) < 2 &&
+      Number(data.primary?.timeOnJobYears) < 2 &&
         blocks.push({
           type: 'section',
           text: {
             type: 'mrkdwn',
             text: `*Previous Employment*\n*Employer name:* ${
-              data.primary.previousEmployerName
-            }\n*Employer phone:* ${data.primary.prevEmployerPhone}\n*Occupation:* ${
-              data.primary.prevEmploymentTitle
-            }\n*Time on job:* ${data.primary.prevTimeOnJobYears} yrs ${
-              data.primary.prevTimeOnJobMonths ? data.primary.prevTimeOnJobMonths + 'mo' : ''
-            }\n*Monthly income:* ${data.primary.prevIncomeAmount}`,
+              data.primary?.previousEmployerName
+            }\n*Employer phone:* ${data.primary?.prevEmployerPhone}\n*Occupation:* ${
+              data.primary?.prevEmploymentTitle
+            }\n*Time on job:* ${data.primary?.prevTimeOnJobYears} yrs ${
+              data.primary?.prevTimeOnJobMonths ? data.primary?.prevTimeOnJobMonths + 'mo' : ''
+            }\n*Monthly income:* ${data.primary?.prevIncomeAmount}`,
           },
         })
       blocks.push({
@@ -165,14 +165,14 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         text: {
           type: 'mrkdwn',
           text: `*Employment History*\n*Employer name:* ${
-            data.secondary.employerName
-          }\n*Employment Status:* ${data.secondary.employmentStatusCode}\n*Employer phone:* ${
-            data.secondary.employerPhone
-          }\n*Occupation:* ${data.secondary.employmentTitle}\n*Time on job:* ${
-            data.secondary.timeOnJobYears
+            data?.secondary?.employerName
+          }\n*Employment Status:* ${data?.secondary?.employmentStatusCode}\n*Employer phone:* ${
+            data?.secondary?.employerPhone
+          }\n*Occupation:* ${data?.secondary?.employmentTitle}\n*Time on job:* ${
+            data?.secondary?.timeOnJobYears
           } yrs ${
-            data.secondary.timeOnJobMonths ? data.secondary.timeOnJobMonths + 'mo' : ''
-          }\n*Monthly income:* ${data.secondary.incomeAmount}`,
+            data?.secondary?.timeOnJobMonths ? data?.secondary?.timeOnJobMonths + 'mo' : ''
+          }\n*Monthly income:* ${data?.secondary?.incomeAmount}`,
         },
       })
       Number(data.secondary.timeOnJobYears) < 2 &&
@@ -181,12 +181,12 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
           text: {
             type: 'mrkdwn',
             text: `*Previous Employment*\n*Employer name:* ${
-              data.secondary.previousEmployerName
-            }\n*Employer phone:* ${data.secondary.prevEmployerPhone}\n*Occupation:* ${
-              data.secondary.prevEmploymentTitle
-            }\n*Time on job:* ${data.secondary.prevTimeOnJobYears} yrs ${
-              data.secondary.prevTimeOnJobMonths ? data.secondary.prevTimeOnJobMonths + 'mo' : ''
-            }\n*Monthly income:* ${data.secondary.prevIncomeAmount}`,
+              data?.secondary?.previousEmployerName
+            }\n*Employer phone:* ${data?.secondary?.prevEmployerPhone}\n*Occupation:* ${
+              data?.secondary?.prevEmploymentTitle
+            }\n*Time on job:* ${data?.secondary?.prevTimeOnJobYears} yrs ${
+              data?.secondary?.prevTimeOnJobMonths ? data?.secondary?.prevTimeOnJobMonths + 'mo' : ''
+            }\n*Monthly income:* ${data?.secondary?.prevIncomeAmount}`,
           },
         })
       blocks.push({
@@ -204,10 +204,10 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Vehicle of Interest*\n*Cash Down:* ${data.vehicle.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.year}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
+          text: `*Vehicle of Interest*\n*Cash Down:* ${data?.vehicle?.cashDown}\n*VIN:* ${data.vehicle.vin}\n*Year:* ${data.vehicle.year}\n*Make:* ${data.vehicle.make}\n*Model:* ${data.vehicle.model}\n*Odometer:* ${data.vehicle.mileage}\n*Price:* ${data.vehicle.price}`,
         },
       })
-    } else if (key === 'tradeIn') {
+    } else if (data?.tradeIn && key === 'tradeIn') {
       blocks.push({
         type: 'divider',
       })
@@ -215,7 +215,7 @@ export async function slackMsgRequest({ url, data }: SlackMsgRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Trade Information*\n*Record Id:* ${data.tradeIn.id}\n*Lender:* ${data.tradeIn.lienholder}\n*Trade In Allowance:* ${data.tradeIn.tradeInAllowance}\n`,
+          text: `*Trade Information*\n*Record Id:* ${data?.tradeIn?.id}\n*Lender:* ${data.tradeIn.lienholder}\n*Trade In Allowance:* ${data.tradeIn.tradeInAllowance}\n`,
         },
       })
     }

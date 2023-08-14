@@ -70,49 +70,10 @@ export default function Form({ vdp }: Props) {
     handleSubmit,
     reset,
     watch,
-    setValue,
     formState: { errors, isSubmitting },
   } = methods
 
   const watchJoint = watch('joint')
-
-  useEffect(() => {
-    if (customer?.vin?.length === 17) {
-      const fetchVehicle = async () => {
-        const toastId = toast.loading('Loading vehicle information...')
-        setLoading(true)
-        const data = await getVehicleDetails(customer.vin!)
-        if (data) {
-          setValue('vehicleYear', data?.year)
-          setValue('vehicleMake', data?.make)
-          setValue('vehicleModel', data?.model)
-          setValue('vehiclePrice', data?.price)
-          setValue('vehicleMileage', data?.miles)
-          setValue('vehicleVin', data?.vin)
-          setCustomer({
-            vehiclePrice: data?.price || '',
-            vehicleMileage: data?.miles || '',
-            vehicleYear: data?.year,
-            vehicleMake: data?.make,
-            vehicleModel: data?.model,
-          })
-          setLoading(false)
-          toast.success('Vehicle information updated successfully!', { id: toastId })
-        } else {
-          toast.error('Error loading vehicle information', { id: toastId })
-          setLoading(false)
-        }
-      }
-      fetchVehicle()
-    } else if (!vdp?.vin) {
-      setValue('vehicleYear', '')
-      setValue('vehicleMake', '')
-      setValue('vehicleModel', '')
-      setValue('vehiclePrice', '')
-      setValue('vehicleMileage', '')
-      resetCustomer()
-    }
-  }, [setValue, customer?.vin, vdp?.vin, setCustomer, resetCustomer])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     if (!data?.agree) {
@@ -220,7 +181,7 @@ export default function Form({ vdp }: Props) {
             }
           })}
           <Vehicle errors={errors} watchJoint={watchJoint} />
-          <TradeInfo errors={errors} toggleLoading={() => setLoading((prev) => !prev)} />
+          <TradeInfo errors={errors} />
           <Agreement isError={isError} onClick={() => setError(false)} />
           <div className='mt-8 grid grid-cols-1 px-5 pt-10 md:ml-3 md:grid-cols-3'>
             <button
