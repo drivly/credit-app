@@ -4,6 +4,7 @@ import { toastOptions } from '@drivly/ui'
 import GlobalNav from './GlobalNav'
 import Providers from './Providers'
 import { HighlightInit } from '@highlight-run/next/client'
+import { CONSTANTS } from './constants'
 
 export const metadata = {
   title: 'Credit App',
@@ -14,12 +15,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <HighlightInit
-        projectId={'4g86jld5'}
+        projectId={CONSTANTS.NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID}
         tracingOrigins
         networkRecording={{
           enabled: true,
           recordHeadersAndBody: true,
-          urlBlocklist: ['http://localhost:3001/', 'http://localhost:3000/'],
+          urlBlocklist: [],
         }}
       />
       <html lang='en'>

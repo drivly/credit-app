@@ -246,7 +246,7 @@
     "@opentelemetry/semantic-conventions" "1.15.1"
     highlight.run "7.4.0"
 
-"@highlight-run/react@3.2.1":
+"@highlight-run/react@3.2.1", "@highlight-run/react@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@highlight-run/react/-/react-3.2.1.tgz#2c92347b5a7427a856e00d7b436435f40acd7ac7"
   integrity sha512-jjnXsr0T4pXX4D6Etrw081J45ruBrxi2378cVKAqtevgBGu2mQV51/bq14nwi10hrCU/qVr1IhXLHB2y8PY2ug==
@@ -3332,7 +3332,7 @@ hexer@^1.5.0:
     process "^0.10.0"
     xtend "^4.0.0"
 
-highlight.run@7.4.0:
+highlight.run@7.4.0, highlight.run@^7.4.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/highlight.run/-/highlight.run-7.4.0.tgz#1fd90b3ab7d4642d8c75fd8b32e31db97cf771d9"
   integrity sha512-jH39VXdIhVYoWny14+Se2/8SENbvHF2mbgmH51+3dO8GhwR3UZNT+bA2V6N7fmgt6ef7M9thRTrh59aKM2rpqQ==
@@ -3933,6 +3933,11 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
+
+next-build-id@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/next-build-id/-/next-build-id-3.0.0.tgz#bfb7a1e2df03882688758f0a4a67e6e837043f42"
+  integrity sha512-B3JCsL/9Z/wkmo3EySukQHCgx89Aw0i4LPi2MEhCboQBJ6wpkYTIu1z6hOYKuw/S1Wy8ZRqCEq0dVY/ST6jGqg==
 
 next@^13.4.12:
   version "13.4.12"
