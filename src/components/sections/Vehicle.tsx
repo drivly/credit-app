@@ -35,8 +35,8 @@ export default function Vehicle(props: any) {
           setValue('vehicleYear', data?.year)
           setValue('vehicleMake', data?.make)
           setValue('vehicleModel', data?.model)
-          setValue('vehiclePrice', data?.price)
-          setValue('vehicleMileage', data?.miles)
+          setValue('vehiclePrice', formatMoney(data?.price))
+          setValue('vehicleMileage', formatMiles(data?.miles))
           setValue('vehicleVin', data?.vin)
         } else if (!data) {
           toast.error('Vehicle not found!')

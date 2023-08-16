@@ -9,7 +9,7 @@ type InputProps = React.DetailedHTMLProps<
   HTMLSelectElement
 >
 interface SelectFieldProps extends InputProps {
-  label: string
+  label?: string
   name: string
   variant: string
   errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined

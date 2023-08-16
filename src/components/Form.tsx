@@ -1,7 +1,7 @@
 'use client'
 
 import useCustomer from '@/app/store'
-import { getVehicleDetails, IVDP } from '@/app/utils/getVehicleDetails'
+import { IVDP } from '@/app/utils/getVehicleDetails'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
 import { cn } from '@drivly/ui'
@@ -23,13 +23,14 @@ const defaultValues = {
   phone: '',
   email: '',
   phoneType: 'MOBILE',
-  dateOfBirth: moment().subtract(18, 'years').format('YYYY-MM-DD'),
+  dateOfBirth: moment().subtract(18, 'years').format('DD/MM/YYYY'),
   ssn: '',
   residenceTypeCode: '',
   employedPrimary: 'YES',
   coEmployedJoint: 'YES',
   employmentStatusCode: 'Full Time',
   co_employmentStatusCode: 'Full Time',
+  co_timeOnJobYears: '3',
   joint: false,
   agree: false,
 }
@@ -39,11 +40,7 @@ type Props = {
 }
 
 export default function Form({ vdp }: Props) {
-  const [customer, setCustomer, resetCustomer] = useCustomer((s) => [
-    s.customer,
-    s.setCustomer,
-    s.resetCustomer,
-  ])
+  const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const [isError, setError] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const searchParams = useSearchParams()
@@ -52,7 +49,7 @@ export default function Form({ vdp }: Props) {
   const jointRef = useRef<HTMLDivElement>(null)
 
   const methods = useForm({
-    mode: 'onSubmit',
+    mode: 'all',
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
@@ -130,9 +127,10 @@ export default function Form({ vdp }: Props) {
         id: toastId,
         duration: 5000,
       })
-    } finally {
-      reset()
     }
+    // finally {
+    //   reset()
+    // }
   }
 
   useEffect(() => {

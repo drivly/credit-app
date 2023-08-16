@@ -8,12 +8,11 @@ import moment from 'moment'
 import { useFormContext } from 'react-hook-form'
 
 const JointApp = () => {
-  const methods = useFormContext()
   const {
     control,
     register,
     formState: { errors },
-  } = methods
+  } = useFormContext()
 
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 md:col-start-2'>
@@ -65,7 +64,7 @@ const JointApp = () => {
             errormsg={errors?.co_firstName?.message!}
             variant='sm:col-span-2'
             placeholder='John'
-            label='First Name *'
+            label='First Name*'
           />
           <InputField
             {...register('co_middleName', {
@@ -84,7 +83,7 @@ const JointApp = () => {
             errormsg={errors?.co_lastName?.message!}
             variant='sm:col-span-3'
             placeholder='Wick'
-            label='Last Name *'
+            label='Last Name*'
           />
           <InputField
             {...register('co_phone', {
@@ -98,7 +97,7 @@ const JointApp = () => {
             errormsg={errors?.co_phone?.message!}
             variant='sm:col-span-3'
             placeholder='561-975-6432'
-            label='Phone *'
+            label='Phone*'
             comp={
               <div className='absolute inset-y-0 left-0 flex items-center'>
                 <label htmlFor='phoneType' className='sr-only'>
@@ -124,7 +123,7 @@ const JointApp = () => {
             errormsg={errors?.co_email?.message!}
             placeholder='johnwsmith@gmail.com'
             variant='sm:col-span-3'
-            label='Email *'
+            label='Email*'
           />
 
           <DateField
@@ -135,8 +134,7 @@ const JointApp = () => {
             }}
             errormsg={errors?.co_dateOfBirth?.message!}
             variant='col-span-1 sm:col-span-2'
-            label='Date of Birth *'
-            control={control}
+            label='Date of Birth*'
             name='co_dateOfBirth'
             placeholder='05/15/1980'
             minDate={moment().subtract(200, 'years').toDate()}
@@ -157,7 +155,7 @@ const JointApp = () => {
             errormsg={errors?.co_ssn?.message!}
             variant='sm:col-span-2'
             placeholder='123-45-6789'
-            label='SSN *'
+            label='SSN*'
           />
         </div>
       </div>
