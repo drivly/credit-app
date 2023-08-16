@@ -1,3 +1,4 @@
+import useCustomer from '@/app/store'
 import DateField from '@/components/form-fields/DateField'
 import InputField from '@/components/form-fields/InputField'
 import { emailReg } from '@/lib/patterns'
@@ -8,6 +9,7 @@ import moment from 'moment'
 import { useFormContext } from 'react-hook-form'
 
 const PrimaryApp = () => {
+  const setCustomer = useCustomer((s) => s.setCustomer)
   const {
     control,
     register,
@@ -19,7 +21,13 @@ const PrimaryApp = () => {
       <div className='px-5 py-6 sm:p-8'>
         <div className='grid max-w-3xl grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6'>
           <InputField
-            {...register('firstName', { required: 'Required' })}
+            {...register('firstName', {
+              required: 'Required',
+              onChange: (e) => {
+                let value = e.target.value
+                setCustomer({ name: value })
+              },
+            })}
             errormsg={errors?.firstName?.message!}
             variant='sm:col-span-2'
             placeholder='John'
@@ -49,7 +57,6 @@ const PrimaryApp = () => {
               required: 'Required',
               maxLength: { value: 15, message: 'Must be less than 14' },
               onChange: (e) => {
-
                 e.target.value = formatphone(e.target.value)
               },
             })}
@@ -80,6 +87,10 @@ const PrimaryApp = () => {
             {...register('email', {
               required: 'Required',
               pattern: { value: emailReg, message: 'Invalid Email' },
+              onChange: (e) => {
+                let value = e.target.value
+                setCustomer({ email: value })
+              },
             })}
             errormsg={errors?.email?.message!}
             placeholder='johnwsmith@gmail.com'

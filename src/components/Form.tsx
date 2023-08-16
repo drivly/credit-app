@@ -15,6 +15,7 @@ import CheckBox from './form-fields/Checkbox'
 import Agreement from './sections/Agreement'
 import TradeInfo from './sections/TradeInfo'
 import Vehicle from './sections/Vehicle'
+import { H } from '@highlight-run/next/client'
 
 const defaultValues = {
   firstName: '',
@@ -41,6 +42,8 @@ type Props = {
 
 export default function Form({ vdp }: Props) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
+
+  console.log('customer', customer)
   const [isError, setError] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
   const searchParams = useSearchParams()
@@ -71,6 +74,23 @@ export default function Form({ vdp }: Props) {
   } = methods
 
   const watchJoint = watch('joint')
+
+  useEffect(() => {
+    if (watchJoint) {
+      setTimeout(
+        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        150
+      )
+    }
+  }, [watchJoint])
+
+  useEffect(() => {
+    if (customer?.email && customer?.name) {
+      H.identify(customer.email, {
+        name: customer.name,
+      })
+    }
+  }, [customer?.email, customer?.name])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     if (!data?.agree) {
@@ -127,20 +147,10 @@ export default function Form({ vdp }: Props) {
         id: toastId,
         duration: 5000,
       })
+    } finally {
+      reset()
     }
-    // finally {
-    //   reset()
-    // }
   }
-
-  useEffect(() => {
-    if (watchJoint) {
-      setTimeout(
-        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
-        150
-      )
-    }
-  }, [watchJoint])
 
   return (
     <FormProvider {...methods}>
