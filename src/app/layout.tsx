@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         networkRecording={{
           enabled: true,
           recordHeadersAndBody: true,
-          urlBlocklist: [],
+          urlBlocklist: ['http://localhost:3001/', 'http://localhost:3000/'],
         }}
       />
       <html lang='en'>
