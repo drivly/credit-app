@@ -211,7 +211,7 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
                   {...register('tradeInVehicleIndicator')}
                   label='No, I do not have a trade'
                   id='noTradeIn'
-                  value='N'
+                  value=''
                   variant='font-normal'
                 />
               </div>

@@ -152,6 +152,15 @@ export default function Form({ vdp }: Props) {
     }
   }
 
+  useEffect(() => {
+    if (watchJoint) {
+      setTimeout(
+        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        150
+      )
+    }
+  }, [watchJoint])
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='relative w-full'>
