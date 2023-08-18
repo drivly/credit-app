@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import InputField from '../form-fields/InputField'
 import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
 import { useFormContext } from 'react-hook-form'
@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast'
 
 export default function Vehicle(props: any) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
+  const hasMounted = useRef(false)
   const { register, setValue } = useFormContext()
   const params = useParams()
   const vin = params?.vin?.toString() || customer?.vin
@@ -44,6 +45,14 @@ export default function Vehicle(props: any) {
   )
 
   useEffect(() => {
+    hasMounted.current = true
+
+    return () => {
+      hasMounted.current = false
+    }
+  },[])
+
+  useEffect(() => {
     if (!vin) {
       setValue('vehicleYear', '')
       setValue('vehicleMake', '')
@@ -59,6 +68,8 @@ export default function Vehicle(props: any) {
       })
     }
   }, [setCustomer, setValue, vin])
+
+  if (!hasMounted.current) return null
 
   return (
     <div
