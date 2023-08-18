@@ -23,7 +23,6 @@ export async function getVehicleDetails(id: string) {
   if (!listing?.vehicle?.year) return null
 
   const { year, make, model } = listing?.vehicle
-
   const wholesale = listing?.wholesaleListing || null
   const retail = listing?.retailListing || null
 
@@ -51,15 +50,67 @@ export const fetchPrice = async (id: string) => {
 
   if (!data?.records?.length) return null
 
-  const record = data?.records.find((record: any) => record.fields.vin === id)
-
-  const salesPrice = record?.fields?.salesPrice?.replace(/[$\,]/g, '') || ''
-  const buyNow = record?.fields?.buyNow?.replace(/[$\,]/g, '') || ''
-  const retailPrice = record?.fields?.retailPrice?.replace(/[$\,]/g, '') || ''
+  const highestPricedRecord = findHighestPricedRecord(data?.records)
+  const salesPrice = highestPricedRecord?.fields?.salesPrice?.replace(/[$\,]/g, '') || ''
+  const buyNow = highestPricedRecord?.fields?.buyNow?.replace(/[$\,]/g, '') || ''
+  const retailPrice = highestPricedRecord?.fields?.retailPrice?.replace(/[$\,]/g, '') || ''
   const price = salesPrice
     ? salesPrice
     : buyNow
     ? Number(buyNow) * 0.01 + 2000 + Number(buyNow)
     : retailPrice
   return price
+}
+
+interface Record {
+  fields: {
+    vin: string
+    year: string
+    make: string
+    model: string
+    bodyStyle: string
+    mileage: string
+    status: string
+    search: string
+    retailPrice: string
+    retailVdp: string
+    trim: string
+    updateRequested: string
+    enrichedDataApi: string
+    betaListingApi: string
+    windowSticker: string
+    created: string
+    createdBy: string
+    lastModified: string
+    lastModifiedBy: string
+    listing: string
+    listingApi: string
+    lead: string
+    vdp: string
+    leadZipcode: string
+    carfax: string
+    vdpCloudMotors: string
+    salesPrice?: string
+    buyNow?: string
+  }
+}
+
+function findHighestPricedRecord(records: Record[]): Record | null {
+  let highestPriceRecord: Record | null = null
+  let highestPrice = Number.NEGATIVE_INFINITY
+
+  records.forEach((record) => {
+    const salesPrice = parseFloat(record.fields?.salesPrice?.replace(/[$\,]/g, '') || '')
+    const buyNowPrice = parseFloat(record.fields?.buyNow?.replace(/[$\,]/g, '') || '')
+    const retailPrice = parseFloat(record.fields?.retailPrice?.replace(/[$\,]/g, '') || '')
+
+    const currentPrice = salesPrice || buyNowPrice || retailPrice
+
+    if (currentPrice > highestPrice) {
+      highestPrice = currentPrice
+      highestPriceRecord = record
+    }
+  })
+
+  return highestPriceRecord
 }

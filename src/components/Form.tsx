@@ -42,10 +42,7 @@ type Props = {
 
 export default function Form({ vdp }: Props) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
-
-  console.log('customer', customer)
   const [isError, setError] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
   const searchParams = useSearchParams()
   const searchParamValues = Object.fromEntries(searchParams.entries())
   const router = useRouter()
@@ -165,7 +162,7 @@ export default function Form({ vdp }: Props) {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='relative w-full'>
         <fieldset
-          disabled={isSubmitting || isLoading}
+          disabled={isSubmitting}
           className='group disabled:opacity-50 peer-disabled:cursor-not-allowed'>
           {/* Primary Applicant */}
           {creditApps.map((app, index) => {

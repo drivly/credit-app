@@ -9,15 +9,13 @@ import { useQuery } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
 export default function Vehicle(props: any) {
-  const params = useParams()
-  const { errors, watchJoint } = props
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
+  const { register, setValue } = useFormContext()
+  const params = useParams()
   const vin = params?.vin?.toString() || customer?.vin
+  const { errors, watchJoint } = props
 
-  const methods = useFormContext()
-  const { register, setValue } = methods
-
-  const { data: car, isFetching, isSuccess, isError } = useQuery(
+  const { data, isFetching } = useQuery(
     ['vehicle', vin],
     async () => await getVehicleDetails(vin!),
     {
@@ -35,8 +33,8 @@ export default function Vehicle(props: any) {
           setValue('vehicleYear', data?.year)
           setValue('vehicleMake', data?.make)
           setValue('vehicleModel', data?.model)
-          setValue('vehiclePrice', formatMoney(data?.price))
-          setValue('vehicleMileage', formatMiles(data?.miles))
+          setValue('vehiclePrice', data?.price)
+          setValue('vehicleMileage', data?.miles)
           setValue('vehicleVin', data?.vin)
         } else if (!data) {
           toast.error('Vehicle not found!')
@@ -135,7 +133,7 @@ export default function Vehicle(props: any) {
 
             <InputField
               {...register('vehiclePrice', {
-                required: 'Required',
+                // required: 'Required',
                 maxLength: { value: 8, message: 'Invalid Price' },
                 onChange(event) {
                   event.target.value = formatMoney(event.target.value)
@@ -150,7 +148,7 @@ export default function Vehicle(props: any) {
 
             <InputField
               {...register('vehicleMileage', {
-                required: 'Required',
+                // required: 'Required',
                 onChange(event) {
                   event.target.value = formatMiles(event.target.value)
                 },
@@ -160,6 +158,7 @@ export default function Vehicle(props: any) {
               placeholder='28,052'
               variant='sm:col-span-5'
               label='Mileage*'
+              required={customer?.vehicleMileage ? true : false}
             />
           </fieldset>
         </div>

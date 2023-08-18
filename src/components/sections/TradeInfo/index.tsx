@@ -57,8 +57,10 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
       const sortedLenders = sortByFsName(lenders)
       setLenders(sortedLenders)
     }
-    getPayoffLenders()
-  }, [])
+    if (isTrade) {
+      getPayoffLenders()
+    }
+  }, [isTrade])
 
   useEffect(() => {
     if (watchTradeInVin) {
