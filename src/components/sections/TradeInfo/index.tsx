@@ -36,19 +36,17 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
 
   useEffect(() => {
     if (!isTrade) {
-      reset({
-        tradeInAllowance: '',
-        tradeInVin: '',
-        tradeInYear: '',
-        tradeInMake: '',
-        tradeInModel: '',
-        tradeInMileage: '',
-        tradeInLienHoldername: '',
-        tradeInGrossPayOffAmount: '',
-      })
-      isPayoffRef.current = false
+      setValue('tradeInAllowance', '')
+      setValue('tradeInVin', '')
+      setValue('tradeInYear', '')
+      setValue('tradeInMake', '')
+      setValue('tradeInModel', '')
+      setValue('tradeInMileage', '')
+      setValue('tradeInLienHoldername', '')
+      setValue('tradeInGrossPayOffAmount', '')
+     isPayoffRef.current = false
     }
-  }, [isTrade, reset])
+  }, [isTrade, setValue])
 
   useEffect(() => {
     const getPayoffLenders = async () => {
@@ -89,11 +87,10 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
         getTradeInfo()
       }
     } else if (!watchTradeInVin) {
-      reset({
-        tradeInYear: '',
-        tradeInMake: '',
-        tradeInModel: '',
-      })
+      setValue('tradeInYear', '')
+      setValue('tradeInMake', '')
+      setValue('tradeInModel', '')
+
       setCustomer({
         tradeInfo: {
           vin: '',
@@ -103,7 +100,7 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
         },
       })
     }
-  }, [customer?.tradeInfo?.vin, reset, setCustomer, setValue, watchTradeInVin])
+  }, [customer?.tradeInfo?.vin, setCustomer, setValue, watchTradeInVin])
 
   useEffect(() => {
     if (watchLienName && !isLienOther) {
