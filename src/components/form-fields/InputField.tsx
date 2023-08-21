@@ -18,7 +18,7 @@ interface IProps {
 const telType = ['phone', 'co_phone']
 
 const InputField = React.forwardRef<HTMLInputElement, InputProps & IProps>((props, ref) => {
-  const { label, comp, name, placeholder, type, errormsg, variant, message } = props
+  const { label, comp, name, errormsg, variant } = props
 
   return (
     <div className={cn('relative col-span-6 h-fit w-full', variant)}>

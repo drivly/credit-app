@@ -1,7 +1,7 @@
 'use client'
 
 import useCustomer from '@/app/store'
-import { getVehicleDetails, IVDP } from '@/app/utils/getVehicleDetails'
+import { IVDP } from '@/app/utils/getVehicleDetails'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
 import { cn } from '@drivly/ui'
@@ -15,6 +15,7 @@ import CheckBox from './form-fields/Checkbox'
 import Agreement from './sections/Agreement'
 import TradeInfo from './sections/TradeInfo'
 import Vehicle from './sections/Vehicle'
+import { H } from '@highlight-run/next/client'
 
 const defaultValues = {
   firstName: '',
@@ -23,13 +24,14 @@ const defaultValues = {
   phone: '',
   email: '',
   phoneType: 'MOBILE',
-  dateOfBirth: moment().subtract(18, 'years').format('YYYY-MM-DD'),
+  dateOfBirth: moment().subtract(18, 'years').format('DD/MM/YYYY'),
   ssn: '',
   residenceTypeCode: '',
   employedPrimary: 'YES',
   coEmployedJoint: 'YES',
   employmentStatusCode: 'Full Time',
   co_employmentStatusCode: 'Full Time',
+  co_timeOnJobYears: '3',
   joint: false,
   agree: false,
 }
@@ -39,20 +41,15 @@ type Props = {
 }
 
 export default function Form({ vdp }: Props) {
-  const [customer, setCustomer, resetCustomer] = useCustomer((s) => [
-    s.customer,
-    s.setCustomer,
-    s.resetCustomer,
-  ])
+  const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const [isError, setError] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
   const searchParams = useSearchParams()
   const searchParamValues = Object.fromEntries(searchParams.entries())
   const router = useRouter()
   const jointRef = useRef<HTMLDivElement>(null)
 
   const methods = useForm({
-    mode: 'onSubmit',
+    mode: 'all',
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
@@ -74,6 +71,23 @@ export default function Form({ vdp }: Props) {
   } = methods
 
   const watchJoint = watch('joint')
+
+  useEffect(() => {
+    if (watchJoint) {
+      setTimeout(
+        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+        150
+      )
+    }
+  }, [watchJoint])
+
+  useEffect(() => {
+    if (customer?.email && customer?.name) {
+      H.identify(customer.email, {
+        name: customer.name,
+      })
+    }
+  }, [customer?.email, customer?.name])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     if (!data?.agree) {
@@ -148,7 +162,7 @@ export default function Form({ vdp }: Props) {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='relative w-full'>
         <fieldset
-          disabled={isSubmitting || isLoading}
+          disabled={isSubmitting}
           className='group disabled:opacity-50 peer-disabled:cursor-not-allowed'>
           {/* Primary Applicant */}
           {creditApps.map((app, index) => {

@@ -1,6 +1,6 @@
-import FieldMap from '@/components/FieldMap'
+import InputField from '@/components/form-fields/InputField'
 import RadioButton from '@/components/form-fields/RadioButton'
-import React from 'react'
+import { formatMoney } from '@/utils'
 import { useFormContext } from 'react-hook-form'
 
 const JointOther = ({ section }: { section: any }) => {
@@ -42,12 +42,32 @@ const JointOther = ({ section }: { section: any }) => {
         </div>
         {hasOtherIncome && (
           <div className='grid w-full grid-cols-1 gap-x-6 gap-y-8 pt-8 sm:grid-flow-col sm:grid-cols-6'>
-            {section.fields.map((field: any, i: number) => (
-              <React.Fragment key={i}>
-                <FieldMap key={i} field={field} errors={errors} methods={methods} />
-                <input {...register('co_otherIncomeIntervalCode')} type='hidden' value='MO' />
-              </React.Fragment>
-            ))}
+            <InputField
+              {...register('co_otherIncomeAmount', {
+                required: 'Required',
+                onChange: (e: any) => {
+                  e.target.value = formatMoney(e.target.value)
+                },
+              })}
+              errormsg={errors?.co_otherIncomeAmount?.message!}
+              variant='sm:col-span-2 whitespace-nowrap'
+              placeholder='$2000'
+              label='Monthly Amount*'
+            />
+            <InputField
+              {...register('co_otherIncomeSourceDescription', {
+                required: 'Required',
+                maxLength: { value: 30, message: 'Must be less than 30' },
+                onChange: (e) => {
+                  e.target.value = e.target.value.toUpperCase()
+                },
+              })}
+              errormsg={errors?.co_otherIncomeSourceDescription?.message!}
+              variant='col-span-auto'
+              placeholder='I move furniture on the weekends'
+              label='Description*'
+            />
+            <input {...register('co_otherIncomeIntervalCode')} type='hidden' value='MO' />
           </div>
         )}
       </div>

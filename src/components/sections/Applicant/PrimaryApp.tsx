@@ -1,3 +1,4 @@
+import useCustomer from '@/app/store'
 import DateField from '@/components/form-fields/DateField'
 import InputField from '@/components/form-fields/InputField'
 import { emailReg } from '@/lib/patterns'
@@ -8,23 +9,29 @@ import moment from 'moment'
 import { useFormContext } from 'react-hook-form'
 
 const PrimaryApp = () => {
-  const methods = useFormContext()
+  const setCustomer = useCustomer((s) => s.setCustomer)
   const {
     control,
     register,
     formState: { errors },
-  } = methods
+  } = useFormContext()
 
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
       <div className='px-5 py-6 sm:p-8'>
         <div className='grid max-w-3xl grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-6'>
           <InputField
-            {...register('firstName', { required: 'Required' })}
+            {...register('firstName', {
+              required: 'Required',
+              onChange: (e) => {
+                let value = e.target.value
+                setCustomer({ name: value })
+              },
+            })}
             errormsg={errors?.firstName?.message!}
             variant='sm:col-span-2'
             placeholder='John'
-            label='First Name *'
+            label='First Name*'
           />
           <InputField
             {...register('middleName', {
@@ -43,21 +50,21 @@ const PrimaryApp = () => {
             errormsg={errors?.lastName?.message!}
             variant='sm:col-span-3'
             placeholder='Wick'
-            label='Last Name *'
+            label='Last Name*'
           />
           <InputField
             {...register('phone', {
               required: 'Required',
-              maxLength: { value: 14, message: 'Must be less than 14' },
+              maxLength: { value: 15, message: 'Must be less than 14' },
               onChange: (e) => {
                 e.target.value = formatphone(e.target.value)
               },
             })}
-            maxLength={14}
+            maxLength={15}
             errormsg={errors?.phone?.message!}
             variant='sm:col-span-3'
             placeholder='561-975-6432'
-            label='Phone *'
+            label='Phone*'
             comp={
               <div className='absolute inset-y-0 left-0 flex items-center'>
                 <label htmlFor='phoneType' className='sr-only'>
@@ -80,11 +87,15 @@ const PrimaryApp = () => {
             {...register('email', {
               required: 'Required',
               pattern: { value: emailReg, message: 'Invalid Email' },
+              onChange: (e) => {
+                let value = e.target.value
+                setCustomer({ email: value })
+              },
             })}
             errormsg={errors?.email?.message!}
             placeholder='johnwsmith@gmail.com'
             variant='sm:col-span-3'
-            label='Email *'
+            label='Email*'
           />
           <DateField
             rules={{
@@ -93,11 +104,10 @@ const PrimaryApp = () => {
             }}
             errormsg={errors?.dateOfBirth?.message!}
             variant='col-span-1 sm:col-span-2'
-            label='Date of Birth *'
-            control={control}
+            label='Date of Birth*'
             name='dateOfBirth'
             placeholder='Must be 18yo or older'
-            minDate={moment().subtract(500, 'years').toDate()}
+            minDate={moment().subtract(200, 'years').toDate()}
             maxDate={moment().subtract(18, 'years').toDate()}
           />
           <InputField
@@ -115,7 +125,7 @@ const PrimaryApp = () => {
             placeholder='123-45-6789'
             errormsg={errors?.ssn?.message!}
             variant='sm:col-span-2'
-            label='SSN *'
+            label='SSN*'
           />
         </div>
       </div>
