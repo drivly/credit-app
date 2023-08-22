@@ -53,20 +53,18 @@ export const formatApplicant = (applicant: Record<string, any>) => {
   }
 
   const fieldsToDelete = [
-    'monthlyIncome',
-    'middleInitial',
     'addressYears',
     'addressMonths',
     'prevAddressMonths',
     'prevAddressYears',
     'timeOnJobYears',
     'timeOnJobMonths',
+    'prevTimeOnJobYears',
+    'prevTimeOnJobMonths',
     'agree',
     // 'licenseNumber',
     // 'licenseState',
     // 'licenseExp',
-    'prevTimeOnJobYears',
-    'prevTimeOnJobMonths',
     // 'prevEmployerPhone',
     // 'prevIncomeAmount',
     'coEmployedJoint',
