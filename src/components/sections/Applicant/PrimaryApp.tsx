@@ -55,12 +55,12 @@ const PrimaryApp = () => {
           <InputField
             {...register('phone', {
               required: 'Required',
-              maxLength: { value: 15, message: 'Must be less than 14' },
+              maxLength: { value: 14, message: 'Must be less than 14' },
               onChange: (e) => {
                 e.target.value = formatphone(e.target.value)
               },
             })}
-            maxLength={15}
+            maxLength={14}
             errormsg={errors?.phone?.message!}
             variant='sm:col-span-3'
             placeholder='561-975-6432'

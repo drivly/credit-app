@@ -87,7 +87,7 @@ export default function Vehicle(props: any) {
         <div className='px-5 py-6 sm:p-8'>
           <fieldset
             disabled={isFetching}
-            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-50 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
+            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-80 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
             <InputField
               {...register('vehicleVin', {
                 validate: (value: string) => vinChecksum(value) || 'Invalid VIN',

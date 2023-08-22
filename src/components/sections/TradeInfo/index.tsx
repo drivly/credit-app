@@ -191,7 +191,7 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
         <div className='px-5 py-6 sm:p-8'>
           <fieldset
             disabled={isLoading}
-            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-50 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
+            className='group grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 disabled:opacity-80 peer-disabled:cursor-not-allowed sm:grid-cols-10'>
             <div className='col-span-full grid gap-y-6'>
               <p className='col-span-full mt-1 text-base font-medium leading-6 tracking-[0.02em] text-gray-900 sm:text-sm sm:leading-[22px]'>
                 Do you have a trade-in vehicle to be considered?
