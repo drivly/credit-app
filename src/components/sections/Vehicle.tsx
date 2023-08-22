@@ -144,7 +144,7 @@ export default function Vehicle(props: any) {
 
             <InputField
               {...register('vehiclePrice', {
-                // required: 'Required',
+                required: 'Required',
                 maxLength: { value: 8, message: 'Invalid Price' },
                 onChange(event) {
                   event.target.value = formatMoney(event.target.value)
@@ -159,7 +159,7 @@ export default function Vehicle(props: any) {
 
             <InputField
               {...register('vehicleMileage', {
-                // required: 'Required',
+                required: 'Required',
                 onChange(event) {
                   event.target.value = formatMiles(event.target.value)
                 },

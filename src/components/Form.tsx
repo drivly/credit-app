@@ -2,12 +2,14 @@
 
 import useCustomer from '@/app/store'
 import { IVDP } from '@/app/utils/getVehicleDetails'
+import useHasChanged from '@/hooks/useHasChanged'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
 import { cn } from '@drivly/ui'
+import { H } from '@highlight-run/next/client'
 import moment from 'moment'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import CreditApp from './CreditApp'
@@ -15,7 +17,6 @@ import CheckBox from './form-fields/Checkbox'
 import Agreement from './sections/Agreement'
 import TradeInfo from './sections/TradeInfo'
 import Vehicle from './sections/Vehicle'
-import { H } from '@highlight-run/next/client'
 
 const defaultValues = {
   firstName: '',
@@ -31,7 +32,6 @@ const defaultValues = {
   coEmployedJoint: 'YES',
   employmentStatusCode: 'Full Time',
   co_employmentStatusCode: 'Full Time',
-  co_timeOnJobYears: '3',
   joint: false,
   agree: false,
 }
@@ -42,7 +42,8 @@ type Props = {
 
 export default function Form({ vdp }: Props) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
-  const [isError, setError] = React.useState(false)
+  const [isError, setError] = useState(false)
+  const { handleOnChange } = useHasChanged()
   const searchParams = useSearchParams()
   const searchParamValues = Object.fromEntries(searchParams.entries())
   const router = useRouter()
@@ -160,7 +161,7 @@ export default function Form({ vdp }: Props) {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className='relative w-full'>
+      <form onSubmit={handleSubmit(onSubmit)} className='relative w-full' onChange={handleOnChange}>
         <fieldset
           disabled={isSubmitting}
           className='group disabled:opacity-50 peer-disabled:cursor-not-allowed'>
