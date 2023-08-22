@@ -58,9 +58,6 @@ const JointOther = ({ section }: { section: any }) => {
               {...register('co_otherIncomeSourceDescription', {
                 required: 'Required',
                 maxLength: { value: 30, message: 'Must be less than 30' },
-                onChange: (e) => {
-                  e.target.value = e.target.value.toUpperCase()
-                },
               })}
               errormsg={errors?.co_otherIncomeSourceDescription?.message!}
               variant='col-span-auto'

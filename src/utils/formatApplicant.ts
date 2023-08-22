@@ -15,6 +15,10 @@ export const formatApplicant = (applicant: Record<string, any>) => {
   applicant.rentMortgagePaymentAmount = Number(
     applicant?.rentMortgagePaymentAmount?.replaceAll(/\$|,/g, '')
   )
+  applicant.prevRentMortgagePaymentAmount =
+    Number(applicant?.prevRentMortgagePaymentAmount?.replaceAll(/\$|,/g, '')) || 0
+
+  applicant.prevIncomeAmount = Number(applicant?.prevIncomeAmount?.replaceAll(/\$|,/g, '')) || 0
 
   const pCounty = zcta.find({ zip: applicant.zipCode })
 
@@ -31,17 +35,20 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     monthsOnJob: currentJobMonths,
     previousMonthsOnJob: prevJobMonths,
     prevMonthsAtAddress: previousAddressMonths,
-    middleName: applicant?.middleInitial,
+
     county: pCounty?.county,
     countryCode: 'US',
     // residenceTypeCode: '1', added 1 own 2 rent 3 others
-    educationLevelCode: '1',
+    educationLevelCode: '',
     incomeIntervalCode: 'MO',
     // otherIncomeSourceCode: otherIncome,
     // form asks for monthly income
     incomeAmount: Number(applicant?.incomeAmount?.replaceAll(/\$|,/g, '')),
+    otherIncomeAmount: Number(applicant?.otherIncomeAmount?.replaceAll(/\$|,/g, '')),
     phone: parsePhoneNumber(applicant?.phone),
     employerPhone: parsePhoneNumber(applicant?.employerPhone),
+    prevEmployerPhone:
+      (applicant?.prevEmployerPhone && parsePhoneNumber(applicant?.prevEmployerPhone)) || '',
     ssn: applicant?.ssn?.replaceAll('-', ''),
   }
 
@@ -50,17 +57,19 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     'middleInitial',
     'addressYears',
     'addressMonths',
+    'prevAddressMonths',
+    'prevAddressYears',
     'timeOnJobYears',
     'timeOnJobMonths',
     'agree',
     // 'licenseNumber',
     // 'licenseState',
     // 'licenseExp',
-    'prev_timeOnJobYears',
-    'prev_timeOnJobMonths',
-    'prev_employerPhone',
-    'prev_employmentTitle',
-    'prev_monthlyIncome',
+    'prevTimeOnJobYears',
+    'prevTimeOnJobMonths',
+    // 'prevEmployerPhone',
+    // 'prevIncomeAmount',
+    'coEmployedJoint',
     'year',
     'make',
     'model',

@@ -72,6 +72,7 @@ export default function DateField(props: any) {
               yearDropdownItemNumber={100}
               showDisabledMonthNavigation
               adjustDateOnChange
+              dateFormat='MM/dd/yyyy'
             />
           )}
         />
