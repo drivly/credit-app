@@ -13,6 +13,10 @@ export const states: CategoryType[] = [
     optionName: 'AK',
   },
   {
+    value: 'AL',
+    optionName: 'AL',
+  },
+  {
     value: 'AZ',
     optionName: 'AZ',
   },
