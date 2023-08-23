@@ -6,6 +6,7 @@ import RadioButton from '@/components/form-fields/RadioButton'
 import SelectField from '@/components/form-fields/SelectField'
 import { formatMoney, vinChecksum } from '@/utils'
 import { cn } from '@drivly/ui'
+import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { FieldErrors, useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -15,12 +16,14 @@ type TradeInfoProps = {
 }
 
 const TradeInfo = ({ errors }: TradeInfoProps) => {
+  const searchParams = useSearchParams()
+  const tradeWanted = searchParams.get('tradeInVehicleIndicator')?.toString()
   const [isLoading, setLoading] = React.useState(false)
   const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const isPayoffRef = React.useRef(false)
   const tradeRef = React.useRef<HTMLDivElement>(null)
-  const [isTrade, setTrade] = React.useState(false)
+  const [isTrade, setTrade] = React.useState(Boolean(tradeWanted))
 
   const methods = useFormContext()
   const { register, watch, control, setValue, reset, setFocus } = methods

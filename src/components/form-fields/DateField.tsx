@@ -23,14 +23,20 @@ interface DateFieldProps {
 export default function DateField(props: any) {
   const { name, control, label, variant, errormsg, placeholder, minDate, maxDate, defaultValue } =
     props as DateFieldProps
-  const [date, setDate] = useState<Date | null>()
   const method = useController(props)
+  const [date, setDate] = useState<Date | null>()
 
   const onChange = (date: Date | null) => {
     let formattedDate = formatDate(date)
     setDate(date)
     method.field.onChange(formattedDate)
   }
+
+  useEffect(() => {
+    if (defaultValue) {
+      setDate(new Date(defaultValue))
+    }
+  }, [defaultValue])
 
   useEffect(() => {
     if (method.formState.isSubmitSuccessful) {

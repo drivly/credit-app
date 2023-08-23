@@ -5,9 +5,12 @@ import { emailReg } from '@/lib/patterns'
 import { formatSSN, isAtLeast18 } from '@/utils'
 import { formatphone } from '@/utils/formatphone'
 import moment from 'moment'
+import { useSearchParams } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 
 const JointApp = () => {
+    const searchParams = useSearchParams()
+    const defaultValue = searchParams.get('co_dateOfBirth')
   const {
     control,
     register,
@@ -139,6 +142,7 @@ const JointApp = () => {
             placeholder='05/15/1980'
             minDate={moment().subtract(200, 'years').toDate()}
             maxDate={moment().subtract(18, 'years').toDate()}
+            defaultValue={defaultValue}
           />
           <InputField
             {...register('co_ssn', {

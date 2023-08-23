@@ -5,10 +5,13 @@ import { emailReg } from '@/lib/patterns'
 import { formatSSN, isAtLeast18 } from '@/utils'
 import { formatphone } from '@/utils/formatphone'
 import moment from 'moment'
+import { useSearchParams } from 'next/navigation'
 
 import { useFormContext } from 'react-hook-form'
 
 const PrimaryApp = () => {
+  const searchParams = useSearchParams()
+  const defaultValue = searchParams.get('dateOfBirth')
   const setCustomer = useCustomer((s) => s.setCustomer)
   const {
     control,
@@ -109,6 +112,7 @@ const PrimaryApp = () => {
             placeholder='Must be 18yo or older'
             minDate={moment().subtract(200, 'years').toDate()}
             maxDate={moment().subtract(18, 'years').toDate()}
+            defaultValue={defaultValue}
           />
           <InputField
             {...register('ssn', {

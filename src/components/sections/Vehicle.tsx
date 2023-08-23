@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import InputField from '../form-fields/InputField'
 import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
 import { useFormContext } from 'react-hook-form'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import useCustomer from '@/app/store'
 import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
 import { useQuery } from '@tanstack/react-query'
@@ -13,7 +13,8 @@ export default function Vehicle(props: any) {
   const hasMounted = useRef(false)
   const { register, setValue } = useFormContext()
   const params = useParams()
-  const vin = params?.vin?.toString() || customer?.vin
+  const searchParams = useSearchParams()
+  const vin = params?.vin?.toString() || searchParams.get('vehicleVin') || customer?.vin
   const { errors, watchJoint } = props
 
   const { data, isFetching } = useQuery(

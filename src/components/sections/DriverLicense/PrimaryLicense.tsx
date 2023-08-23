@@ -3,10 +3,13 @@ import InputField from '@/components/form-fields/InputField'
 import SelectField from '@/components/form-fields/SelectField'
 import { states } from '@/lib/categories'
 import moment from 'moment'
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 const PrimaryLicense = () => {
+  const searchParams = useSearchParams()
+  const defaultValue = searchParams.get('licenseExp')
   const {
     register,
     control,
@@ -43,6 +46,7 @@ const PrimaryLicense = () => {
             name='licenseExp'
             placeholder='Not more than 3mo expired'
             minDate={moment().subtract(3, 'months').toDate()}
+            defaultValue={defaultValue}
           />
         </div>
       </div>
