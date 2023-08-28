@@ -23,20 +23,20 @@ const PrimaryLicense = () => {
           <InputField
             {...register('licenseNumber', { required: 'Required' })}
             errormsg={errors?.licenseNumber?.message!}
-            variant='sm:col-span-2 whitespace-nowrap'
+            variant='sm:col-span-3 whitespace-nowrap'
             placeholder='123456789'
             label='License Number*'
           />
           <SelectField
             {...register('licenseState', { required: 'Required' })}
-            variant='sm:col-span-2 whitespace-nowrap'
+            variant='sm:col-span-3 whitespace-nowrap'
             label='License State*'
             placeholder='Select'
             defaultValue=''
             cats={states}
             errormsg={errors?.licenseState?.message!}
           />
-          <DateField
+          {/* <DateField
             rules={{
               required: 'Required',
             }}
@@ -47,7 +47,7 @@ const PrimaryLicense = () => {
             placeholder='Not more than 3mo expired'
             minDate={moment().subtract(3, 'months').toDate()}
             defaultValue={defaultValue}
-          />
+          /> */}
         </div>
       </div>
     </div>
