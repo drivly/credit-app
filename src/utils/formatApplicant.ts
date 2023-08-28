@@ -2,13 +2,13 @@ import * as zcta from 'us-zcta-counties'
 
 export const formatApplicant = (applicant: Record<string, any>) => {
   const addressMonths = Number(applicant?.addressMonths) || 0
-  const addressYears = Number(applicant.addressYears) || 0
+  const addressYears = Number(applicant?.addressYears) || 0
 
   const prevAddressMonths = Number(applicant?.prevAddressMonths) || 0
   const prevAddressYears = Number(applicant?.prevAddressYears) || 0
 
   const timeOnJobMonths = Number(applicant?.timeOnJobMonths) || 0
-  const timeOnJobYears = Number(applicant.timeOnJobYears) || 0
+  const timeOnJobYears = Number(applicant?.timeOnJobYears) || 0
   const prevTimeJobYears = Number(applicant?.prevTimeOnJobYears) || 0
   const prevTimeJobMonths = Number(applicant?.prevTimeOnJobMonths) || 0
 
@@ -20,7 +20,7 @@ export const formatApplicant = (applicant: Record<string, any>) => {
 
   applicant.prevIncomeAmount = Number(applicant?.prevIncomeAmount?.replaceAll(/\$|,/g, '')) || 0
 
-  const pCounty = zcta.find({ zip: applicant.zipCode })
+  const pCounty = zcta.find({ zip: applicant?.zipCode })
 
   console.log('pCounty', pCounty)
   const currentAddressMonths = addressYears * 12 + addressMonths
@@ -47,8 +47,9 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     otherIncomeAmount: Number(applicant?.otherIncomeAmount?.replaceAll(/\$|,/g, '')),
     phone: parsePhoneNumber(applicant?.phone),
     employerPhone: parsePhoneNumber(applicant?.employerPhone),
-    prevEmployerPhone:
-      (applicant?.prevEmployerPhone && parsePhoneNumber(applicant?.prevEmployerPhone)) || '',
+    prevEmployerPhone: applicant?.prevEmployerPhone
+      ? parsePhoneNumber(applicant?.prevEmployerPhone)
+      : '',
     ssn: applicant?.ssn?.replaceAll('-', ''),
   }
 

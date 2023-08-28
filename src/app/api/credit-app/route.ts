@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   payload['primaryBuyer'] = primaryRequest?.app
   payload['vehicles'] = [vehicle]
 
-  if (secondary !== null) {
+  if (secondary) {
     const secondaryRequest = formatApplicant(secondary)
     const buyerRelationship = secondaryRequest?.app?.buyerRelationship
     delete secondaryRequest?.app.buyerRelationship
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     payload['buyerRelationship'] = buyerRelationship
   }
 
-  if (tradeIn !== null) {
+  if (tradeIn) {
     payload['trade'] = tradeIn
   }
   console.log('payload', payload)
