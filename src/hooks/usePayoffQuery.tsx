@@ -11,11 +11,13 @@ const usePayoffQuery = ({
   lenders,
   payload,
   setPayload,
+  isSubmitting,
 }: {
   watchTradeInVin: string
   lenders: Record<string, any>[]
   payload: any
   setPayload: Dispatch<any>
+  isSubmitting: boolean
 }) => {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const { setValue, setFocus, watch } = useFormContext()
@@ -55,6 +57,12 @@ const usePayoffQuery = ({
       }
     }
   }, [isLienOther, lenders, setFocus, setPayload, ssn, watchLienName, watchTradeInVin])
+
+  useEffect(() => {
+    if(isSubmitting) {
+      setReady(false)
+    }
+  },[isReady, isSubmitting, setReady])
 
   useEffect(() => {
     if (isReady && isTrade && Object.keys(payload)?.length > 0) {

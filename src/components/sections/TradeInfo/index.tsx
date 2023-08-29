@@ -12,9 +12,10 @@ import { FieldErrors, useFormContext } from 'react-hook-form'
 
 type TradeInfoProps = {
   errors: FieldErrors
+  isSubmitting: boolean
 }
 
-const TradeInfo = ({ errors }: TradeInfoProps) => {
+const TradeInfo = ({ errors, isSubmitting }: TradeInfoProps) => {
   const [payload, setPayload] = useState<any>({})
   const { lenders, lenderCats, isTrade, setTrade } = usePayoffLenders()
   const { watchTradeInVin } = useTradeQuery(setPayload)
@@ -23,6 +24,7 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
     lenders,
     payload,
     setPayload,
+    isSubmitting,
   })
   const customer = useCustomer((s) => s.customer)
   const methods = useFormContext()
