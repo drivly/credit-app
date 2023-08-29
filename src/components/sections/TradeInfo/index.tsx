@@ -7,6 +7,7 @@ import usePayoffQuery from '@/hooks/usePayoffQuery'
 import useTradeQuery from '@/hooks/useTradeQuery'
 import { formatMoney, vinChecksum } from '@/utils'
 import { cn } from '@drivly/ui'
+import { useState } from 'react'
 import { FieldErrors, useFormContext } from 'react-hook-form'
 
 type TradeInfoProps = {
@@ -14,11 +15,14 @@ type TradeInfoProps = {
 }
 
 const TradeInfo = ({ errors }: TradeInfoProps) => {
+  const [payload, setPayload] = useState<any>({})
   const { lenders, lenderCats, isTrade, setTrade } = usePayoffLenders()
-  const { watchTradeInVin } = useTradeQuery()
+  const { watchTradeInVin } = useTradeQuery(setPayload)
   const { tradeRef, isLienOther, isLoading } = usePayoffQuery({
     watchTradeInVin,
     lenders,
+    payload,
+    setPayload,
   })
   const customer = useCustomer((s) => s.customer)
   const methods = useFormContext()

@@ -14,17 +14,18 @@ const usePayoffLenders = () => {
 
   useEffect(() => {
     if (!isTrade) {
-      setValue('tradeInAllowance', '')
       setValue('tradeInVin', '')
+      setValue('tradeInAllowance', '')
       setValue('tradeInYear', '')
       setValue('tradeInMake', '')
       setValue('tradeInModel', '')
-      setValue('tradeInMileage', '')
       setValue('tradeInLienIndicator', '')
       setValue('tradeInLienHoldername', '')
       setValue('tradeInGrossPayOffAmount', '')
+      setValue('tradeInOtherLienHoldername', '')
     }
   }, [isTrade, setValue])
+
   useEffect(() => {
     const getPayoffLenders = async () => {
       const { data } = await fetch('https://credit.api.driv.ly/fields').then((res) => res.json())
@@ -36,6 +37,7 @@ const usePayoffLenders = () => {
       getPayoffLenders()
     }
   }, [isTrade])
+  
   const lenderCats = [
     { value: '', optionName: 'Select' },
     { value: 'idk', optionName: "I don't know" },

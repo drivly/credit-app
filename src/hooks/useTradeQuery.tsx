@@ -3,11 +3,11 @@
 import useCustomer from '@/app/store'
 import { getBuild } from '@/app/utils/getBuild'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { Dispatch, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-const useTradeQuery = () => {
+const useTradeQuery = (setPayload: Dispatch<any>) => {
   const { watch, setValue } = useFormContext()
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const watchTradeInVin = watch('tradeInVin')
@@ -46,13 +46,16 @@ const useTradeQuery = () => {
 
   useEffect(() => {
     if (!watchTradeInVin) {
+      setValue('tradeInVin', '')
+      setValue('tradeInAllowance', '')
       setValue('tradeInYear', '')
       setValue('tradeInMake', '')
       setValue('tradeInModel', '')
-      setValue('tradeInAllowance', '')
       setValue('tradeInLienIndicator', '')
       setValue('tradeInLienHoldername', '')
       setValue('tradeInGrossPayOffAmount', '')
+      setValue('tradeInOtherLienHoldername', '')
+      setPayload({})
       setCustomer({
         tradeInfo: {
           vin: '',
@@ -62,7 +65,7 @@ const useTradeQuery = () => {
         },
       })
     }
-  }, [setCustomer, setValue, watchTradeInVin])
+  }, [setCustomer, setPayload, setValue, watchTradeInVin])
 
   return { watchTradeInVin }
 }

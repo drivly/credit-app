@@ -2,26 +2,31 @@
 
 import useCustomer from '@/app/store'
 import { getPayoffQuote } from '@/app/utils/getPayoffQuote'
-import React, { useEffect } from 'react'
+import React, { Dispatch, useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 const usePayoffQuery = ({
   watchTradeInVin,
   lenders,
+  payload,
+  setPayload,
 }: {
   watchTradeInVin: string
   lenders: Record<string, any>[]
+  payload: any
+  setPayload: Dispatch<any>
 }) => {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const { setValue, setFocus, watch } = useFormContext()
-  const [isReady, setReady] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
-  const [payload, setPayload] = React.useState<any>({})
+  const [isReady, setReady] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+
   const tradeRef = React.useRef<HTMLDivElement>(null)
   const watchLienName = watch('tradeInLienHoldername')
   const isLienOther = watchLienName === 'other' || watchLienName === 'idk'
   const ssn = watch('ssn')
+  const isTrade = watch('tradeInVehicleIndicator')
 
   useEffect(() => {
     if (watchLienName && !isLienOther) {
@@ -49,10 +54,10 @@ const usePayoffQuery = ({
         setPayload(payoffRequest)
       }
     }
-  }, [isLienOther, lenders, setFocus, ssn, watchLienName, watchTradeInVin])
+  }, [isLienOther, lenders, setFocus, setPayload, ssn, watchLienName, watchTradeInVin])
 
   useEffect(() => {
-    if (isReady && payload) {
+    if (isReady && isTrade && Object.keys(payload)?.length > 0) {
       const getPayoff = async () => {
         const toastId = toast.loading('Getting payoff quote')
         setLoading(true)
