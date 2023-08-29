@@ -262,7 +262,7 @@ export const jobStatus: CategoryType[] = [
   { optionName: 'Part Time', value: 'Part Time' },
   { optionName: 'Temporary', value: 'Temporary' },
   { optionName: 'Seasonal', value: 'Seasonal' },
-  { optionName: 'Self Employed', value: 'Self Employed' },
+  { optionName: 'Self-Employed', value: 'Self-Employed' },
   { optionName: 'Retired', value: 'Retired' },
   { optionName: 'Not Applicable', value: 'Not Applicable' },
 ]
