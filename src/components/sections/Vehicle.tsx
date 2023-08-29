@@ -1,74 +1,17 @@
-import React, { useEffect, useRef } from 'react'
-import InputField from '../form-fields/InputField'
-import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
-import { useFormContext } from 'react-hook-form'
-import { useParams, useSearchParams } from 'next/navigation'
 import useCustomer from '@/app/store'
-import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
-import { useQuery } from '@tanstack/react-query'
-import { toast } from 'react-hot-toast'
+import useVehicleQuery from '@/hooks/useVehicleQuery'
+import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
+import { useParams } from 'next/navigation'
+import { useFormContext } from 'react-hook-form'
+import InputField from '../form-fields/InputField'
 
 export default function Vehicle(props: any) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
-  const hasMounted = useRef(false)
-  const { register, setValue } = useFormContext()
+  const { hasMounted, isFetching } = useVehicleQuery()
+  const { register } = useFormContext()
   const params = useParams()
-  const searchParams = useSearchParams()
-  const vin = params?.vin?.toString() || searchParams.get('vehicleVin') || customer?.vin
+
   const { errors, watchJoint } = props
-
-  const { data, isFetching } = useQuery(
-    ['vehicle', vin],
-    async () => await getVehicleDetails(vin!),
-    {
-      enabled: vin?.length === 17,
-      onSuccess: (data) => {
-        if (data) {
-          toast.success('Vehicle found!')
-          setCustomer({
-            vehicleMileage: data?.miles,
-            vehiclePrice: data?.price,
-            vehicleYear: data?.year,
-            vehicleMake: data?.make,
-            vehicleModel: data?.model,
-          })
-          setValue('vehicleYear', data?.year)
-          setValue('vehicleMake', data?.make)
-          setValue('vehicleModel', data?.model)
-          setValue('vehiclePrice', data?.price)
-          setValue('vehicleMileage', data?.miles)
-          setValue('vehicleVin', data?.vin)
-        } else if (!data) {
-          toast.error('Vehicle not found!')
-        }
-      },
-    }
-  )
-
-  useEffect(() => {
-    hasMounted.current = true
-
-    return () => {
-      hasMounted.current = false
-    }
-  },[])
-
-  useEffect(() => {
-    if (!vin) {
-      setValue('vehicleYear', '')
-      setValue('vehicleMake', '')
-      setValue('vehicleModel', '')
-      setValue('vehiclePrice', '')
-      setValue('vehicleMileage', '')
-      setCustomer({
-        vehicleMileage: '',
-        vehiclePrice: '',
-        vehicleYear: '',
-        vehicleMake: '',
-        vehicleModel: '',
-      })
-    }
-  }, [setCustomer, setValue, vin])
 
   if (!hasMounted.current) return null
 

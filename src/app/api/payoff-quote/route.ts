@@ -18,5 +18,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message, status: 500 })
   }
 }
-
-// body vin source ssn

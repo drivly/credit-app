@@ -1,184 +1,30 @@
 import useCustomer from '@/app/store'
-import { getBuild } from '@/app/utils/getBuild'
-import { getPayoffQuote } from '@/app/utils/getPayoffQuote'
 import InputField from '@/components/form-fields/InputField'
 import RadioButton from '@/components/form-fields/RadioButton'
 import SelectField from '@/components/form-fields/SelectField'
+import usePayoffLenders from '@/hooks/usePayoffLenders'
+import usePayoffQuery from '@/hooks/usePayoffQuery'
+import useTradeQuery from '@/hooks/useTradeQuery'
 import { formatMoney, vinChecksum } from '@/utils'
 import { cn } from '@drivly/ui'
-import { useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
 import { FieldErrors, useFormContext } from 'react-hook-form'
-import toast from 'react-hot-toast'
 
 type TradeInfoProps = {
   errors: FieldErrors
 }
 
 const TradeInfo = ({ errors }: TradeInfoProps) => {
-  const searchParams = useSearchParams()
-  const tradeWanted = searchParams.get('tradeInVehicleIndicator')?.toString()
-  const [isLoading, setLoading] = React.useState(false)
-  const [lenders, setLenders] = React.useState<Record<string, any>[]>([])
-  const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
-  const isPayoffRef = React.useRef(false)
-  const tradeRef = React.useRef<HTMLDivElement>(null)
-  const [isTrade, setTrade] = React.useState(Boolean(tradeWanted))
-
+  const { lenders, lenderCats, isTrade, setTrade } = usePayoffLenders()
+  const { watchTradeInVin } = useTradeQuery()
+  const { tradeRef, isLienOther, isLoading } = usePayoffQuery({
+    watchTradeInVin,
+    lenders,
+  })
+  const customer = useCustomer((s) => s.customer)
   const methods = useFormContext()
-  const { register, watch, control, setValue, reset, setFocus } = methods
-
-  const watchTradeInVin = watch('tradeInVin')
-
+  const { register, watch, setValue, setFocus } = methods
   const watchLien = watch('tradeInLienIndicator')
   const islien = watchLien === 'Y'
-
-  const watchLienName = watch('tradeInLienHoldername')
-  const isLienOther = watchLienName === 'other' || watchLienName === 'idk'
-  const ssn = watch('ssn')
-
-  useEffect(() => {
-    if (!isTrade) {
-      setValue('tradeInAllowance', '')
-      setValue('tradeInVin', '')
-      setValue('tradeInYear', '')
-      setValue('tradeInMake', '')
-      setValue('tradeInModel', '')
-      setValue('tradeInMileage', '')
-      setValue('tradeInLienHoldername', '')
-      setValue('tradeInGrossPayOffAmount', '')
-     isPayoffRef.current = false
-    }
-  }, [isTrade, setValue])
-
-  useEffect(() => {
-    const getPayoffLenders = async () => {
-      const { data } = await fetch('https://credit.api.driv.ly/fields').then((res) => res.json())
-      const lenders = await data?.ancillaryServices[0].financeSourceList
-      const sortedLenders = sortByFsName(lenders)
-      setLenders(sortedLenders)
-    }
-    if (isTrade) {
-      getPayoffLenders()
-    }
-  }, [isTrade])
-
-  useEffect(() => {
-    if (watchTradeInVin) {
-      if (!customer?.tradeInfo?.vin) {
-        const getTradeInfo = async () => {
-          try {
-            const data = await getBuild(watchTradeInVin)
-            if (data) {
-              setValue('tradeInYear', data?.year)
-              setValue('tradeInMake', data?.make)
-              setValue('tradeInModel', data?.model)
-              setCustomer({
-                tradeInfo: {
-                  vin: watchTradeInVin,
-                  year: data?.year,
-                  make: data?.make,
-                  model: data?.model,
-                },
-              })
-              toast.success('Vehicle Found')
-            }
-          } catch (error: any) {
-            toast.error(error.message)
-          }
-        }
-        getTradeInfo()
-      }
-    } else if (!watchTradeInVin) {
-      setValue('tradeInYear', '')
-      setValue('tradeInMake', '')
-      setValue('tradeInModel', '')
-
-      setCustomer({
-        tradeInfo: {
-          vin: '',
-          year: '',
-          make: '',
-          model: '',
-        },
-      })
-    }
-  }, [customer?.tradeInfo?.vin, setCustomer, setValue, watchTradeInVin])
-
-  useEffect(() => {
-    if (watchLienName && !isLienOther) {
-      const isSSN = lenders
-        .find((item) => item.fsId === watchLienName)
-        ?.serviceOptions.find((item: any) => item.option === 'SSNTXID')
-
-      const payload = isSSN
-        ? { vin: watchTradeInVin, source: watchLienName, ssn }
-        : { vin: watchTradeInVin, source: watchLienName }
-
-      if (isSSN && !ssn) {
-        toast.error('SSN required for trade-in payoff quote')
-        setFocus('ssn')
-      }
-
-      if (!isPayoffRef.current) {
-        const getPayoff = async () => {
-          const toastId = toast.loading('Getting payoff quote')
-          setLoading(true)
-          try {
-            const response = await getPayoffQuote(payload)
-
-            if (response) {
-              const lenderString = lenders.find((item) => item.fsId === watchLienName)?.fsName
-              toast.success('Payoff Quote Found', { id: toastId })
-              setValue('tradeInAllowance', response?.allowance)
-              setValue('tradeInGrossPayOffAmount', response?.quote?.grossPayOffAmount)
-              setCustomer({
-                ...customer,
-                tradeInfo: {
-                  ...customer?.tradeInfo,
-                  fsId: watchLienName,
-                  lienholder: lenderString,
-                  tradeInAllowance: response?.allowance,
-                  grossPayOffAmount: response?.quote?.grossPayOffAmount,
-                  id: response?.id,
-                },
-              })
-              isPayoffRef.current = true
-              console.log('req', response)
-            } else {
-              toast.error('Failed to get payoff quote', { id: toastId })
-            }
-          } catch (error: any) {
-            console.error('error', error)
-            toast.error(error.message || 'Failed to get payoff quote', { id: toastId })
-          } finally {
-            setLoading(false)
-          }
-        }
-        if (isSSN && ssn.length === 11) {
-          setTimeout(
-            () => tradeRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
-            150
-          )
-          getPayoff()
-        } else if (!isSSN) {
-          getPayoff()
-        }
-      }
-    }
-
-    return () => {
-      isPayoffRef.current = false
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchLienName, ssn])
-
-  const lenderCats = [
-    { value: '', optionName: 'Select' },
-    { value: 'idk', optionName: "I don't know" },
-    { value: 'other', optionName: 'Other' },
-    ...lenders.map((item) => ({ value: item.fsId, optionName: item.fsName })),
-  ]
 
   return (
     <div
@@ -348,7 +194,3 @@ const TradeInfo = ({ errors }: TradeInfoProps) => {
 }
 
 export default TradeInfo
-
-function sortByFsName(arr: Record<string, any>[]) {
-  return arr.slice().sort((a, b) => a.fsName.localeCompare(b.fsName))
-}

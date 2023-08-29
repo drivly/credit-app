@@ -1,7 +1,7 @@
 'use client'
 
 import useCustomer from '@/app/store'
-import { IVDP } from '@/app/utils/getVehicleDetails'
+import { VehicleDetailProps } from '@/app/utils/getVehicleDetails'
 import useHasChanged from '@/hooks/useHasChanged'
 import { creditApps } from '@/lib/creditApp'
 import { formatRequest } from '@/utils/formatRequest'
@@ -37,7 +37,7 @@ const defaultValues = {
 }
 
 type Props = {
-  vdp?: IVDP | null
+  vdp?: VehicleDetailProps | null
 }
 
 export default function Form({ vdp }: Props) {
@@ -149,15 +149,6 @@ export default function Form({ vdp }: Props) {
       reset()
     }
   }
-
-  useEffect(() => {
-    if (watchJoint) {
-      setTimeout(
-        () => jointRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
-        150
-      )
-    }
-  }, [watchJoint])
 
   return (
     <FormProvider {...methods}>

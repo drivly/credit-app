@@ -1,20 +1,14 @@
-import DateField from '@/components/form-fields/DateField'
 import InputField from '@/components/form-fields/InputField'
 import SelectField from '@/components/form-fields/SelectField'
 import { states } from '@/lib/categories'
-import moment from 'moment'
-import { useSearchParams } from 'next/navigation'
-import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 const JointLicense = () => {
-  const searchParams = useSearchParams()
-  const defaultValue = searchParams.get('co_licenseExp')
   const {
     register,
-    control,
     formState: { errors },
   } = useFormContext()
+
   return (
     <div className='bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2'>
       <div className='px-5 py-6 sm:p-8'>

@@ -1,5 +1,7 @@
-export const fromAirtable = async (table: any, id: any) => {
-  const d = await fetch(`https://drivly.airtable.do/commerce/${table}/${id}`, {
+export const conciergeBase = 'app0ha03ugcl45qM1'
+
+export const fromAirtable = async (base: string, table: string, id: string) => {
+  const d = await fetch(`https://drivly.airtable.do/${base}/${table}/${id}`, {
     headers: {
       Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}`,
     },
@@ -10,46 +12,8 @@ export const fromAirtable = async (table: any, id: any) => {
   return (await d.json()).data
 }
 
-const updateAirtable = async (table: any, id: any, data: any) => {
-  const d = await fetch(`https://drivly.airtable.do/commerce/${table}/${id}`, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-
-  if (d.status != 200) {
-    return null
-  }
-
-  return (await d.json()).data
-}
-
-const createAirtable = async (table: any, data: any) => {
-  const d = await fetch(`https://drivly.airtable.do/commerce/${table}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      fields: data,
-      typecast: true,
-    }),
-  })
-
-  if (d.status != 200) {
-    console.log(`MAJOR ERROR: Failed to create ${table} record.`, await d.text())
-    return null
-  }
-
-  return (await d.json()).data
-}
-
-const searchAirtable = async (table: any, query: any) => {
-  const d = await fetch(`https://drivly.airtable.do/commerce/${table}?filterByFormula=${query}`, {
+export const searchAirtable = async (base: string, table: string, query: string) => {
+  const d = await fetch(`https://drivly.airtable.do/${base}/${table}?filterByFormula=${query}`, {
     headers: { Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}` },
   })
 
@@ -59,5 +23,3 @@ const searchAirtable = async (table: any, query: any) => {
 
   return (await d.json()).data
 }
-
-// phoneType

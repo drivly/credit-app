@@ -1,5 +1,5 @@
 import Form from '@/components/Form'
-import { getAirtableVehicle } from '../utils/getAirtableVehicle'
+import { getATVehicleById } from '../utils/getATVehicleById'
 import useCustomer from '../store'
 import StoreInitializer from '../store/StoreInitializer'
 import { getVehicleDetails } from '../utils/getVehicleDetails'
@@ -7,7 +7,7 @@ import { getVehicleDetails } from '../utils/getVehicleDetails'
 export default async function VinPage({ params }: { params: { vin: string } }) {
   const vdp =
     params.vin.length < 17
-      ? await getAirtableVehicle(params.vin)
+      ? await getATVehicleById(params.vin)
       : await getVehicleDetails(params.vin)
 
   useCustomer.setState({

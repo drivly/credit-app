@@ -3,6 +3,7 @@
 import z from 'zod'
 import getListing from '@drivly/ui/dist/lib/getListing'
 import { formatDigits } from '@drivly/ui'
+import { conciergeBase, searchAirtable } from './airtable'
 
 const vehicleSchema = z.object({
   year: z.string(),
@@ -13,7 +14,7 @@ const vehicleSchema = z.object({
   miles: z.coerce.string(),
 })
 
-export type IVDP = z.infer<typeof vehicleSchema>
+export type VehicleDetailProps = z.infer<typeof vehicleSchema>
 
 export async function getVehicleDetails(id: string) {
   'use server'
@@ -30,7 +31,7 @@ export async function getVehicleDetails(id: string) {
     ? Number(wholesale?.buyNowPrice) * 0.01 + 2000 + Number(wholesale?.buyNowPrice)
     : null
   let price = fetchedPrice ? fetchedPrice : wholesalePrice ? wholesalePrice : retail?.price || ''
-  let miles = wholesale ? wholesale?.miles : retail?.miles || ''
+  let miles: number | string = Math.max(wholesale?.miles || 0, retail?.miles || 0)
 
   if (miles) miles = formatDigits(miles)
   if (price) price = formatDigits(price, true)
@@ -44,65 +45,31 @@ export async function getVehicleDetails(id: string) {
 }
 
 export const fetchPrice = async (id: string) => {
-  const data = await fetch(
-    `https://camel.case.do/api.airtable.com/v0/app0ha03ugcl45qM1/Vehicles/?cellFormat=string&userLocale=en-us&timeZone=America/Chicago&sort[0][field]=VIN&sort[0][direction]=desc&filterByFormula=AND({VIN}='${id}')&api_key=${process.env.AIRTABLE_KEY}`
-  ).then((res) => res.json())
-
+  const data = await searchAirtable(conciergeBase, 'Vehicles', `AND({VIN}='${id}')`)
   if (!data?.records?.length) return null
 
   const highestPricedRecord = findHighestPricedRecord(data?.records)
-  const salesPrice = highestPricedRecord?.fields?.salesPrice?.replace(/[$\,]/g, '') || ''
-  const buyNow = highestPricedRecord?.fields?.buyNow?.replace(/[$\,]/g, '') || ''
-  const retailPrice = highestPricedRecord?.fields?.retailPrice?.replace(/[$\,]/g, '') || ''
-  const price = salesPrice
-    ? salesPrice
-    : buyNow
-    ? Number(buyNow) * 0.01 + 2000 + Number(buyNow)
-    : retailPrice
+  const salesPrice = highestPricedRecord?.salesPrice || ''
+  const buyNow = highestPricedRecord?.buyNow || ''
+  const retailPrice = highestPricedRecord?.retailPrice || ''
+  const price = salesPrice ? salesPrice : buyNow ? buyNow * 0.01 + 2000 + buyNow : retailPrice
   return price
 }
 
-interface Record {
-  fields: {
-    vin: string
-    year: string
-    make: string
-    model: string
-    bodyStyle: string
-    mileage: string
-    status: string
-    search: string
-    retailPrice: string
-    retailVdp: string
-    trim: string
-    updateRequested: string
-    enrichedDataApi: string
-    betaListingApi: string
-    windowSticker: string
-    created: string
-    createdBy: string
-    lastModified: string
-    lastModifiedBy: string
-    listing: string
-    listingApi: string
-    lead: string
-    vdp: string
-    leadZipcode: string
-    carfax: string
-    vdpCloudMotors: string
-    salesPrice?: string
-    buyNow?: string
-  }
+interface VehicleRecord {
+  retailPrice?: number
+  salesPrice?: number
+  buyNow?: number
 }
 
-function findHighestPricedRecord(records: Record[]): Record | null {
-  let highestPriceRecord: Record | null = null
+function findHighestPricedRecord(records: VehicleRecord[]) {
+  let highestPriceRecord: VehicleRecord = {}
   let highestPrice = Number.NEGATIVE_INFINITY
 
   records.forEach((record) => {
-    const salesPrice = parseFloat(record.fields?.salesPrice?.replace(/[$\,]/g, '') || '')
-    const buyNowPrice = parseFloat(record.fields?.buyNow?.replace(/[$\,]/g, '') || '')
-    const retailPrice = parseFloat(record.fields?.retailPrice?.replace(/[$\,]/g, '') || '')
+    const salesPrice = record?.salesPrice || 0
+    const buyNowPrice = record?.buyNow || 0
+    const retailPrice = record?.retailPrice || 0
 
     const currentPrice = salesPrice || buyNowPrice || retailPrice
 

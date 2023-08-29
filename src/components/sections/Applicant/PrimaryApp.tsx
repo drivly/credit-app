@@ -14,7 +14,6 @@ const PrimaryApp = () => {
   const defaultValue = searchParams.get('dateOfBirth')
   const setCustomer = useCustomer((s) => s.setCustomer)
   const {
-    control,
     register,
     formState: { errors },
   } = useFormContext()

@@ -4,22 +4,22 @@ type PayoffQuoteRequest = {
   vin: string
   source: string
   ssn?: string
-}
+} | any
 
-// type PayoffQuoteResponse = {
-//   _id: string
-//   nextPaymentAmount: string | number
-//   nextPaymentDate: string | Date
-//   quote: {
-//     grossPayOffAmount: string | number
-//     netPayOffAmount: string | number
-//     goodThrough: string | Date
-//     perDiem: string | number
-//   }
-//   comments: string | string[] | null
-//   productType: string | number
-//   referenceId: string
-// }
+type PayoffQuoteResponse = {
+  id: string
+  nextPaymentAmount: string | number
+  nextPaymentDate: string | Date
+  allowance?: number
+  quote: {
+    grossPayOffAmount?: string | number
+    netPayOffAmount?: string | number
+    goodThrough?: string | Date
+    perDiem?: string | number
+  }
+  comments?: string | string[] | null
+  productType: string | number
+}
 
 export async function getPayoffQuote(request: PayoffQuoteRequest) {
   const res = await fetch(`https://credit.api.driv.ly/payoff`, {
@@ -30,5 +30,5 @@ export async function getPayoffQuote(request: PayoffQuoteRequest) {
 
   const response = await res.json()
 
-  return response
+  return { ...response } as PayoffQuoteResponse
 }

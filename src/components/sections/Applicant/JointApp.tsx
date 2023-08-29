@@ -9,10 +9,9 @@ import { useSearchParams } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 
 const JointApp = () => {
-    const searchParams = useSearchParams()
-    const defaultValue = searchParams.get('co_dateOfBirth')
+  const searchParams = useSearchParams()
+  const defaultValue = searchParams.get('co_dateOfBirth')
   const {
-    control,
     register,
     formState: { errors },
   } = useFormContext()

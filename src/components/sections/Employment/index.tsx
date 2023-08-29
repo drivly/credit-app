@@ -10,9 +10,9 @@ export default function Employment(props: any) {
         {section.title}
       </h2>
 
-      {type === 'Primary' ? <PrimaryEmployee section={section} /> : null}
+      {type === 'Primary' ? <PrimaryEmployee /> : null}
 
-      {type === 'Joint' ? <JointEmployee section={section} /> : null}
+      {type === 'Joint' ? <JointEmployee /> : null}
     </div>
   )
 }

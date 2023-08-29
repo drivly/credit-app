@@ -5,7 +5,7 @@ import { formatMoney } from '@/utils'
 import { formatphone } from '@/utils/formatphone'
 import { useFormContext } from 'react-hook-form'
 
-export default function JointEmployee({ section }: any) {
+export default function JointEmployee() {
   const methods = useFormContext()
   const {
     register,
