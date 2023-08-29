@@ -3,28 +3,26 @@
 import useCustomer from '@/app/store'
 import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
 import { useQuery } from '@tanstack/react-query'
-import { useParams, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
 const useVehicleQuery = () => {
-  const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
+  const { watch } = useFormContext()
+  const setCustomer = useCustomer((s) => s.setCustomer)
   const hasMounted = useRef(false)
   const { setValue } = useFormContext()
-  const params = useParams()
-  const searchParams = useSearchParams()
-  const vin = params?.vin?.toString() || searchParams.get('vehicleVin') || customer?.vin
+  const watchedVin = watch('vehicleVin')
 
   const { data, isFetching } = useQuery(
-    ['vehicle', vin],
+    ['vehicle', watchedVin],
     async () => {
       const toastId = toast.loading('Searching for vehicle...')
-      const details = await getVehicleDetails(vin!)
+      const details = await getVehicleDetails(watchedVin!)
       return { toastId, details }
     },
     {
-      enabled: vin?.length === 17,
+      enabled: watchedVin?.length === 17,
       onSuccess: ({ toastId, details }) => {
         if (details) {
           toast.success('Vehicle found!', { id: toastId })
@@ -57,7 +55,7 @@ const useVehicleQuery = () => {
   }, [])
 
   useEffect(() => {
-    if (!vin) {
+    if (!watchedVin) {
       setValue('vehicleYear', '')
       setValue('vehicleMake', '')
       setValue('vehicleModel', '')
@@ -71,7 +69,8 @@ const useVehicleQuery = () => {
         vehicleModel: '',
       })
     }
-  }, [setCustomer, setValue, vin])
+  }, [setCustomer, setValue, watchedVin])
+
   return { hasMounted, isFetching }
 }
 

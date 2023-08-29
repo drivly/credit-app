@@ -2,7 +2,7 @@
 
 import useCustomer from '@/app/store'
 import { getPayoffQuote } from '@/app/utils/getPayoffQuote'
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
@@ -58,7 +58,6 @@ const usePayoffQuery = ({
         setLoading(true)
         try {
           const response = await getPayoffQuote(payload)
-          console.log('responses trade payoffquote', response)
           if (response) {
             const lenderString = lenders.find((item) => item.fsId === watchLienName)?.fsName
             toast.success('Payoff Quote Found', { id: toastId })
@@ -89,15 +88,10 @@ const usePayoffQuery = ({
       getPayoff()
     }
 
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, lenders, payload, watchLienName])
 
   return { tradeRef, isLienOther, isLoading }
 }
 
 export default usePayoffQuery
-
-
-
-  
-  

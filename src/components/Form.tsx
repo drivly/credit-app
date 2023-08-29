@@ -59,7 +59,7 @@ export default function Form({ vdp }: Props) {
       vehicleModel: vdp?.model,
       vehiclePrice: vdp?.price,
       vehicleMileage: vdp?.miles,
-      vehicleVin: vdp?.vin,
+      vehicleVin: vdp?.vin || searchParamValues?.vehicleVin,
     },
   })
 
