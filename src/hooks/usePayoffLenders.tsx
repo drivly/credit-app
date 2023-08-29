@@ -20,6 +20,7 @@ const usePayoffLenders = () => {
       setValue('tradeInMake', '')
       setValue('tradeInModel', '')
       setValue('tradeInMileage', '')
+      setValue('tradeInLienIndicator', '')
       setValue('tradeInLienHoldername', '')
       setValue('tradeInGrossPayOffAmount', '')
     }

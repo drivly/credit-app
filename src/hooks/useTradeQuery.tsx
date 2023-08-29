@@ -12,6 +12,8 @@ const useTradeQuery = () => {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const watchTradeInVin = watch('tradeInVin')
 
+  console.log('watchTradeInVin', watchTradeInVin, customer)
+
   const { data } = useQuery(
     ['trade', watchTradeInVin],
     async () => {
@@ -44,17 +46,20 @@ const useTradeQuery = () => {
 
   useEffect(() => {
     if (!watchTradeInVin) {
-      setValue('vehicleYear', '')
-      setValue('vehicleMake', '')
-      setValue('vehicleModel', '')
-      setValue('vehiclePrice', '')
-      setValue('vehicleMileage', '')
+      setValue('tradeInYear', '')
+      setValue('tradeInMake', '')
+      setValue('tradeInModel', '')
+      setValue('tradeInAllowance', '')
+      setValue('tradeInLienIndicator', '')
+      setValue('tradeInLienHoldername', '')
+      setValue('tradeInGrossPayOffAmount', '')
       setCustomer({
-        vehicleMileage: '',
-        vehiclePrice: '',
-        vehicleYear: '',
-        vehicleMake: '',
-        vehicleModel: '',
+        tradeInfo: {
+          vin: '',
+          year: '',
+          make: '',
+          model: '',
+        },
       })
     }
   }, [setCustomer, setValue, watchTradeInVin])
