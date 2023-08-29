@@ -33,7 +33,11 @@ export async function getVehicleDetails(id: string) {
   let price = fetchedPrice ? fetchedPrice : wholesalePrice ? wholesalePrice : retail?.price || ''
   let miles: number | string = Math.max(wholesale?.miles || 0, retail?.miles || 0)
 
-  if (miles) miles = formatDigits(miles)
+  if (miles === 0) {
+    miles = ''
+  } else {
+    miles = formatDigits(miles)
+  }
   if (price) price = formatDigits(price, true)
   if (price?.endsWith('.00')) price = price.replace('.00', '')
 

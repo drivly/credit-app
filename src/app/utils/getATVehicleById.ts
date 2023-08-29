@@ -13,7 +13,7 @@ export async function getATVehicleById(id: string) {
     model: data?.model,
     vin: data?.VIN,
     price,
-    miles: formatDigits(data?.mileage) || '0',
+    miles: formatDigits(data?.mileage) || '',
   } as VehicleDetailProps
 }
 
