@@ -237,7 +237,6 @@ export const timeMonths: CategoryType[] = [
     value: '',
     optionName: 'Months',
   },
-  { optionName: 'Less than 1 month', value: '0' },
   { optionName: '1 month', value: '1' },
   { optionName: '2 months', value: '2' },
   { optionName: '3 months', value: '3' },
