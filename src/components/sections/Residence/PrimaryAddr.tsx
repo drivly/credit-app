@@ -42,14 +42,14 @@ export default function PrimaryAddr({ section }: PrimaryAddrProps) {
                 errormsg={errors?.residenceTypeCode?.message!}
                 label='Rent'
                 id='rent'
-                value='2'
+                value='3'
               />
               <RadioButton
                 {...register('residenceTypeCode', { required: 'Required' })}
                 errormsg={errors?.residenceTypeCode?.message!}
                 label='Live With Others'
                 id='liveWithOthers'
-                value='3'
+                value='4'
               />
             </div>
             <div className='col-span-full grid gap-y-3'>

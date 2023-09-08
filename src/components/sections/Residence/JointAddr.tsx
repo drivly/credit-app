@@ -75,7 +75,7 @@ export default function JointAddr({ section }: JointAddrProps) {
                 name='co_residenceTypeCode'
                 label='Rent'
                 id='coRent'
-                value='2'
+                value='3'
               />
               <RadioButton
                 {...register('co_residenceTypeCode', { required: 'Required' })}
@@ -83,7 +83,7 @@ export default function JointAddr({ section }: JointAddrProps) {
                 name='co_residenceTypeCode'
                 label='Live with Others'
                 id='coLiveWithOthers'
-                value='3'
+                value='4'
               />
             </div>
             <div className='col-span-full grid gap-y-3'>
