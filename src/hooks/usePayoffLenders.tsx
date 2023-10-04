@@ -28,7 +28,7 @@ const usePayoffLenders = () => {
 
   useEffect(() => {
     const getPayoffLenders = async () => {
-      const { data } = await fetch('https://credit.api.driv.ly/fields').then((res) => res.json())
+      const { data } = await fetch('https://credit.api.dev.driv.ly/fields').then((res) => res.json())
       const lenders = await data?.ancillaryServices?.[0].financeSourceList
       const sortedLenders = sortByFsName(lenders)
       setLenders(sortedLenders)

@@ -22,7 +22,7 @@ type PayoffQuoteResponse = {
 }
 
 export async function getPayoffQuote(request: PayoffQuoteRequest) {
-  const res = await fetch(`https://credit.api.driv.ly/payoff`, {
+  const res = await fetch(`https://credit.api.dev.driv.ly/payoff`, {
     method: 'POST',
     body: JSON.stringify(request),
     headers: { 'Content-Type': 'application/json' },

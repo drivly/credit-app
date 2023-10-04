@@ -28,7 +28,7 @@ export const POST = withAppRouterHighlight(async(request: Request) => {
   console.log('payload', payload)
   try {
     await slackMsgRequest({ url: slackUrl, data })
-    const d = await fetch('https://credit.api.driv.ly/applications', {
+    const d = await fetch('https://credit.api.dev.driv.ly/applications', {
       method: 'POST',
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
