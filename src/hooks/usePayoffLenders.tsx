@@ -38,12 +38,12 @@ const usePayoffLenders = () => {
     }
   }, [isTrade])
 
-  const lenderCats = lenders?.length > 0 && [
+  const lenderCats = lenders?.length > 0  ? [
     { value: '', optionName: 'Select' },
     { value: 'idk', optionName: "I don't know" },
     { value: 'other', optionName: 'Other' },
     ...lenders?.map((item) => ({ value: item.fsId, optionName: item.fsName })),
-  ]
+  ] : []
 
   return { lenders, lenderCats, isTrade, setTrade }
 }
