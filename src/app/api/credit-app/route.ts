@@ -1,10 +1,11 @@
 import { formatApplicant } from '@/utils/formatApplicant'
 import { slackMsgRequest } from '@/utils/slackMsg'
 import { NextResponse } from 'next/server'
+import { withAppRouterHighlight } from '@/app/utils/withAppRouterHighlight'
 
 const slackUrl = process.env.SLACK_WEBHOOK_URL
 
-export async function POST(request: Request) {
+export const POST = withAppRouterHighlight(async(request: Request) => {
   let payload: Record<string, any> = {}
   const data = await request.json()
   const { primary, secondary, vehicle, tradeIn } = data
@@ -42,4 +43,4 @@ export async function POST(request: Request) {
     console.log('error', error.message)
     return NextResponse.json({ error: error.message, status: 500 })
   }
-}
+})

@@ -29,7 +29,7 @@ const usePayoffLenders = () => {
   useEffect(() => {
     const getPayoffLenders = async () => {
       const { data } = await fetch('https://credit.api.driv.ly/fields').then((res) => res.json())
-      const lenders = await data?.ancillaryServices[0].financeSourceList
+      const lenders = await data?.ancillaryServices?.[0].financeSourceList
       const sortedLenders = sortByFsName(lenders)
       setLenders(sortedLenders)
     }
@@ -37,13 +37,13 @@ const usePayoffLenders = () => {
       getPayoffLenders()
     }
   }, [isTrade])
-  
-  const lenderCats = [
+
+  const lenderCats = lenders?.length > 0  ? [
     { value: '', optionName: 'Select' },
     { value: 'idk', optionName: "I don't know" },
     { value: 'other', optionName: 'Other' },
-    ...lenders.map((item) => ({ value: item.fsId, optionName: item.fsName })),
-  ]
+    ...lenders?.map((item) => ({ value: item.fsId, optionName: item.fsName })),
+  ] : []
 
   return { lenders, lenderCats, isTrade, setTrade }
 }
@@ -51,5 +51,5 @@ const usePayoffLenders = () => {
 export default usePayoffLenders
 
 function sortByFsName(arr: Record<string, any>[]) {
-  return arr.slice().sort((a, b) => a.fsName.localeCompare(b.fsName))
+  return arr?.slice()?.sort((a, b) => a?.fsName?.localeCompare(b?.fsName))
 }
