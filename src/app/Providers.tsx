@@ -3,7 +3,7 @@
 import React from 'react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ErrorBoundary } from '@highlight-run/next/client'
+import { ErrorBoundary as HighlightErrorBoundary } from '@highlight-run/next/client'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = React.useState(
@@ -21,13 +21,15 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     })
   )
 
+  const isLocalhost = typeof window === 'object' && window.location.host === 'localhost'
+
   return (
-    <ErrorBoundary>
+    <HighlightErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         {children}
       </QueryClientProvider>
-    </ErrorBoundary>
+    </HighlightErrorBoundary>
   )
 }
 

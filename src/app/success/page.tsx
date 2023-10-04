@@ -6,7 +6,7 @@ const SuccessPage = ({ searchParams }: { searchParams: any }) => {
   const [customer, resetCustomer] = useCustomer((s) => [s.customer, s.resetCustomer])
 
   return (
-    <div className='mx-auto -mt-[65px] flex h-svh min-h-full w-full max-w-2xl flex-1 flex-col items-center justify-center rounded-md px-4 py-4 sm:px-8'>
+    <div className='mx-auto -mt-[65px] flex h-screen min-h-full w-full max-w-2xl flex-1 flex-col items-center justify-center rounded-md px-4 py-4 sm:px-8'>
       <svg
         width='51'
         height='50'

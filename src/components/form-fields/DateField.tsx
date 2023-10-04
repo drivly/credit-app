@@ -59,6 +59,7 @@ export default function DateField(props: any) {
           rules={{ required: 'Required' }}
           render={() => (
             <DatePicker
+              name={name}
               calendarClassName='absolute z-50 w-full max-w-[300px] mt-0.5 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
               className={cn(
                 'block w-full rounded-md border-0 px-3  text-base text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-[#8E8EA3]/50 focus:ring-2 focus:ring-inset focus:ring-DRIVLY sm:text-sm ',

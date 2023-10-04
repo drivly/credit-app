@@ -12,8 +12,6 @@ const useTradeQuery = (setPayload: Dispatch<any>) => {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const watchTradeInVin = watch('tradeInVin')
 
-  console.log('watchTradeInVin', watchTradeInVin, customer)
-
   const { data } = useQuery(
     ['trade', watchTradeInVin],
     async () => {
