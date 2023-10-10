@@ -1,10 +1,10 @@
-import 'server-only'
 import { formatDigits } from '@drivly/ui'
-import { conciergeBase, fromAirtable } from './airtable'
+import 'server-only'
+import { fromAirtable } from './airtable'
 import { VehicleDetailProps } from './getVehicleDetails'
 
 export async function getATVehicleById(id: string) {
-  const data = await fromAirtable(conciergeBase, 'Vehicles', `rec${id}`)
+  const data = await fromAirtable('CRM', 'Vehicles', `rec${id}`)
   const price = findAirtablePrice(data)
 
   return {
