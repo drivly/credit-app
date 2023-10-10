@@ -25,7 +25,7 @@ export const POST = withAppRouterHighlight(async(request: Request) => {
   if (tradeIn) {
     payload['trade'] = tradeIn
   }
-  console.log('payload', payload)
+
   try {
     await slackMsgRequest({ url: slackUrl, data })
     const d = await fetch('https://credit.api.dev.driv.ly/applications', {
