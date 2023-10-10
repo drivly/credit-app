@@ -49,10 +49,10 @@ export async function getVehicleDetails(id: string) {
 }
 
 export const fetchPrice = async (id: string) => {
-  const data = await searchAirtable(conciergeBase, 'Vehicles', `AND({VIN}='${id}')`)
-  if (!data?.records?.length) return null
+  const data = await searchAirtable('CRM', 'Vehicles', `AND({VIN}='${id}')`)
+  if (!data?.length) return null
 
-  const highestPricedRecord = findHighestPricedRecord(data?.records)
+  const highestPricedRecord = findHighestPricedRecord(data)
   const salesPrice = highestPricedRecord?.salesPrice || ''
   const buyNow = highestPricedRecord?.buyNow || ''
   const retailPrice = highestPricedRecord?.retailPrice || ''

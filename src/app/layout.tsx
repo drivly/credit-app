@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <HighlightInit
-        excludedHostnames={['localhost']}
+        // excludedHostnames={['localhost']}
         projectId={CONSTANTS.NEXT_PUBLIC_HIGHLIGHT_PROJECT_ID}
         serviceName='credit-app'
         tracingOrigins

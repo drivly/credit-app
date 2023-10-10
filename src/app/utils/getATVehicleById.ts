@@ -4,7 +4,7 @@ import { conciergeBase, fromAirtable } from './airtable'
 import { VehicleDetailProps } from './getVehicleDetails'
 
 export async function getATVehicleById(id: string) {
-  const data = await fromAirtable(conciergeBase, 'Vehicles', `rec${id}`)
+  const data = await fromAirtable('CRM', 'Vehicles', `rec${id}`)
   const price = findAirtablePrice(data)
 
   return {

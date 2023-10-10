@@ -1,7 +1,7 @@
 export const conciergeBase = 'app0ha03ugcl45qM1'
 
 export const fromAirtable = async (base: string, table: string, id: string) => {
-  const d = await fetch(`https://drivly.airtable.do/${base}/${table}/${id}`, {
+  const d = await fetch(`https://airtable.vin/${base}/${table}/${id}`, {
     headers: {
       Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}`,
     },
@@ -13,7 +13,7 @@ export const fromAirtable = async (base: string, table: string, id: string) => {
 }
 
 export const searchAirtable = async (base: string, table: string, query: string) => {
-  const d = await fetch(`https://drivly.airtable.do/${base}/${table}?filterByFormula=${query}`, {
+  const d = await fetch(`https://airtable.vin/${base}/${table}?filterByFormula=${query}`, {
     headers: { Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}` },
   })
 

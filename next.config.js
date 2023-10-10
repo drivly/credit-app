@@ -7,9 +7,9 @@ const nextConfig = {
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   experimental: {
     serverActions: true,
-    instrumentationHook: true,
+    // instrumentationHook: true,
   },
-  productionBrowserSourceMaps: true
+  productionBrowserSourceMaps: true,
 }
 
 module.exports = withHighlightConfig(nextConfig)

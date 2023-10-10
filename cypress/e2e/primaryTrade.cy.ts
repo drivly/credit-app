@@ -52,9 +52,9 @@ describe('Primary with Trade Credit App', () => {
 
     // Vehicle of Interest
     cy.getInput('vehicleVin')
-      .type('1G6KF5RS9HU110366')
+      .type('1C4RJFBG2MC686287')
       .then(() => {
-        cy.getInput('vehicleYear').should('have.value', 2017)
+        cy.getInput('vehicleYear').should('have.value', 2021)
       })
     cy.getInput('vehicleCashDown').type('1000')
     cy.getInput('vehiclePrice').type('20000')
