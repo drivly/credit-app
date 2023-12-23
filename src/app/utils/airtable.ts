@@ -13,7 +13,7 @@ export const fromAirtable = async (base: string, table: string, id: string) => {
 }
 
 export const searchAirtable = async (base: string, table: string, query: string) => {
-  const d = await fetch(`https://airtable.vin/${base}/${table}?filterByFormula=${query}`, {
+  const d = await fetch(`https://airtable.vin/${base}/${table}?${query}`, {
     headers: { Authorization: `Bearer ${process.env.VIN_UNIVERSE_KEY}` },
   })
 

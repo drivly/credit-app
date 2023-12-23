@@ -3,7 +3,7 @@
 import z from 'zod'
 import getListing from '@drivly/ui/dist/lib/getListing'
 import { formatDigits } from '@drivly/ui'
-import { conciergeBase, searchAirtable } from './airtable'
+import { searchAirtable } from './airtable'
 
 const vehicleSchema = z.object({
   year: z.string(),
@@ -49,7 +49,7 @@ export async function getVehicleDetails(id: string) {
 }
 
 export const fetchPrice = async (id: string) => {
-  const data = await searchAirtable('CRM', 'Vehicles', `AND({VIN}='${id}')`)
+  const data = await searchAirtable('CRM', 'Vehicles', `vin='${id}`)
   if (!data?.length) return null
 
   const highestPricedRecord = findHighestPricedRecord(data)
