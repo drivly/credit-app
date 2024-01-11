@@ -4,9 +4,12 @@ import { NextResponse } from 'next/server'
 import { withAppRouterHighlight } from '@/app/utils/withAppRouterHighlight'
 
 const slackUrl = process.env.SLACK_WEBHOOK_URL
+const TENANT = process.env.NODE_ENV === 'development' ? 'CLOUD-DEV' : 'CLOUD-PROD'
 
-export const POST = withAppRouterHighlight(async(request: Request) => {
-  let payload: Record<string, any> = {}
+export const POST = withAppRouterHighlight(async (request: Request) => {
+  let payload: Record<string, any> = {
+    tenant: TENANT,
+  }
   const data = await request.json()
   const { primary, secondary, vehicle, tradeIn } = data
 
