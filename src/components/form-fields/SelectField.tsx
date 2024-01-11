@@ -12,8 +12,13 @@ interface SelectFieldProps extends InputProps {
   label?: string
   name: string
   variant: string
-  errormsg?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined
+  errormsg?:
+    | string
+    | FieldError
+    | Merge<FieldError, FieldErrorsImpl<any>>
+    | undefined
   cats: CategoryType[]
+  placeholder?: string
 }
 
 const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(

@@ -229,7 +229,7 @@ export const timeYears: CategoryType[] = [
   { optionName: '7 years', value: '7' },
   { optionName: '8 years', value: '8' },
   { optionName: '9 years', value: '9' },
-  { optionName: '10 years+', value: '10+' },
+  { optionName: '10 years+', value: '10' },
 ]
 
 export const timeMonths: CategoryType[] = [

@@ -5,10 +5,6 @@ const { withHighlightConfig } = require('@highlight-run/next/config')
 const nextConfig = {
   reactStrictMode: true,
   generateBuildId: () => nextBuildId({ dir: __dirname }),
-  experimental: {
-    serverActions: true,
-    // instrumentationHook: true,
-  },
   productionBrowserSourceMaps: true,
 }
 
