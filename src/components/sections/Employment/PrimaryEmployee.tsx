@@ -39,9 +39,9 @@ export default function PrimaryEmployee() {
                   <InputField
                     {...register('employerName', {
                       required: 'Required',
-                      maxLength: { value: 50, message: 'Max 50 chars' },
+                      maxLength: { value: 40, message: 'Max 40 chars' },
                     })}
-                    maxLength={50}
+                    maxLength={40}
                     errormsg={errors?.employerName?.message!}
                     variant='sm:col-span-6 whitespace-nowrap'
                     placeholder='ABC Company'
@@ -113,9 +113,9 @@ export default function PrimaryEmployee() {
                 <InputField
                   {...register('previousEmployerName', {
                     required: 'Required',
-                    maxLength: { value: 50, message: 'Max 50 chars' },
+                    maxLength: { value: 40, message: 'Max 40 chars' },
                   })}
-                  maxLength={50}
+                  maxLength={40}
                   errormsg={errors?.previousEmployerName?.message!}
                   variant='sm:col-span-6 whitespace-nowrap'
                   placeholder='ABC Company'

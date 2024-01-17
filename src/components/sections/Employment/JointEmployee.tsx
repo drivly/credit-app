@@ -40,9 +40,9 @@ export default function JointEmployee() {
                   <InputField
                     {...register('co_employerName', {
                       required: 'Required',
-                      maxLength: { value: 50, message: 'Max 50 chars' },
+                      maxLength: { value: 40, message: 'Max 40 chars' },
                     })}
-                    maxLength={50}
+                    maxLength={40}
                     errormsg={errors?.co_employerName?.message!}
                     variant='sm:col-span-6 whitespace-nowrap'
                     placeholder='ABC Company'
@@ -114,9 +114,9 @@ export default function JointEmployee() {
                 <InputField
                   {...register('co_previousEmployerName', {
                     required: 'Required',
-                    maxLength: { value: 50, message: 'Max 50 chars' },
+                    maxLength: { value: 40, message: 'Max 40 chars' },
                   })}
-                  maxLength={50}
+                  maxLength={40}
                   errormsg={errors?.co_previousEmployerName?.message!}
                   variant='sm:col-span-6 whitespace-nowrap'
                   placeholder='ABC Company'
