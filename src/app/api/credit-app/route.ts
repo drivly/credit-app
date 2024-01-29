@@ -5,6 +5,7 @@ import { withAppRouterHighlight } from '@/app/utils/withAppRouterHighlight'
 
 const slackUrl = process.env.SLACK_WEBHOOK_URL
 const TENANT = process.env.NODE_ENV === 'development' ? 'CLOUD-DEV' : 'CLOUD-PROD'
+export const maxDuration = 300
 
 export const POST = withAppRouterHighlight(async (request: Request) => {
   let payload: Record<string, any> = {
@@ -37,7 +38,6 @@ export const POST = withAppRouterHighlight(async (request: Request) => {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    console.log('d', d.ok)
     const response = await d.json()
     console.log('response', response)
 
