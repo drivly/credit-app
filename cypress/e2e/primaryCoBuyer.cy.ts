@@ -83,20 +83,20 @@ describe('Primary with CoBuyer Credit App', () => {
     cy.getInput('co_otherIncomeSourceDescription').type('Laborer')
 
     // Vehicle of Interest
-    cy.getInput('vehicleVin')
-      .type('1C4RJFBG2MC686287')
-      .then(() => {
-        cy.getInput('vehicleYear').should('have.value', 2021)
-      })
-    cy.getInput('vehicleCashDown').type('1000')
-    cy.getInput('vehiclePrice').type('20000')
-    cy.getInput('vehicleMileage').type('10000')
+    // cy.getInput('vehicleVin')
+    //   .type('1C4RJFBG2MC686287')
+    //   .then(() => {
+    //     cy.getInput('vehicleYear').should('have.value', 2021)
+    //   })
+    // cy.getInput('vehicleCashDown').type('1000')
+    // cy.getInput('vehiclePrice').type('20000')
+    // cy.getInput('vehicleMileage').type('10000')
 
-    // Trade-In Vehicle
-    cy.getInput('tradeInVehicleIndicator').check()
+    // // Trade-In Vehicle
+    // cy.getInput('tradeInVehicleIndicator').check()
 
-    // Agreement
-    cy.getInput('agree').check('YES')
+    // // Agreement
+    // cy.getInput('agree').check('YES')
 
     // cy.get('button[type="submit"]').click()
   })

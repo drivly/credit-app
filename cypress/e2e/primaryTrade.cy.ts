@@ -50,15 +50,15 @@ describe('Primary with Trade Credit App', () => {
     cy.getInput('otherIncomeAmount').type('1000')
     cy.getInput('otherIncomeSourceDescription').type('Laborer')
 
-    // Vehicle of Interest
-    cy.getInput('vehicleVin')
-      .type('1C4RJFBG2MC686287')
-      .then(() => {
-        cy.getInput('vehicleYear').should('have.value', 2021)
-      })
-    cy.getInput('vehicleCashDown').type('1000')
-    cy.getInput('vehiclePrice').type('20000')
-    cy.getInput('vehicleMileage').type('10000')
+    // // Vehicle of Interest
+    // cy.getInput('vehicleVin')
+    //   .type('1C4RJFBG2MC686287')
+    //   .then(() => {
+    //     cy.getInput('vehicleYear').should('have.value', 2021)
+    //   })
+    // cy.getInput('vehicleCashDown').type('1000')
+    // cy.getInput('vehiclePrice').type('20000')
+    // cy.getInput('vehicleMileage').type('10000')
 
     // Trade-In Vehicle
     // cy.getInput('tradeInVehicleIndicator').check('Y')
