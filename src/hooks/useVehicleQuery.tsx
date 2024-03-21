@@ -1,7 +1,7 @@
 'use client'
 
-import useCustomer from '@/app/store'
-import { getVehicleDetails } from '@/app/utils/getVehicleDetails'
+import { getVehicleDetails } from '@/lib/actions/vehicle.action'
+import useCustomer from '@/store'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useFormContext } from 'react-hook-form'

@@ -1,7 +1,7 @@
 'use client'
 
-import useCustomer from '@/app/store'
-import { getBuild } from '@/app/utils/getBuild'
+import { getBuild } from '@/lib/actions/vehicle.action'
+import useCustomer from '@/store'
 import { useQuery } from '@tanstack/react-query'
 import { Dispatch, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -24,13 +24,13 @@ const useTradeQuery = (setPayload: Dispatch<any>) => {
       onSuccess: ({ toastId, details }) => {
         if (details) {
           toast.success('Vehicle Found', { id: toastId })
-          setValue('tradeInYear', details?.year)
+          setValue('tradeInYear', details?.year.toString())
           setValue('tradeInMake', details?.make)
           setValue('tradeInModel', details?.model)
           setCustomer({
             tradeInfo: {
               vin: watchTradeInVin,
-              year: details?.year,
+              year: details?.year.toString(),
               make: details?.make,
               model: details?.model,
             },

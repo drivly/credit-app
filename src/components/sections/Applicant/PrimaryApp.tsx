@@ -1,7 +1,7 @@
-import useCustomer from '@/app/store'
 import DateField from '@/components/form-fields/DateField'
 import InputField from '@/components/form-fields/InputField'
 import { emailReg } from '@/lib/patterns'
+import useCustomer from '@/store'
 import { formatSSN, isAtLeast18 } from '@/utils'
 import { formatphone } from '@/utils/formatphone'
 import moment from 'moment'

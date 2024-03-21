@@ -1,10 +1,10 @@
 import { Toaster } from 'react-hot-toast'
-import '@/styles/globals.css'
+import './globals.css'
 import { toastOptions } from '@drivly/ui'
 import GlobalNav from './GlobalNav'
 import Providers from './Providers'
 import { HighlightInit } from '@highlight-run/next/client'
-import { CONSTANTS } from './constants'
+import { CONSTANTS } from '../lib/constants'
 
 export const metadata = {
   title: 'Credit App',

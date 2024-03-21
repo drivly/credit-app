@@ -1,14 +1,11 @@
 import Form from '@/components/Form'
-import { getATVehicleById } from '../utils/getATVehicleById'
-import useCustomer from '../store'
-import StoreInitializer from '../store/StoreInitializer'
-import { getVehicleDetails } from '../utils/getVehicleDetails'
+import useCustomer from '../../store'
+import StoreInitializer from '../../store/StoreInitializer'
+import { getVehicleById, getVehicleDetails } from '@/lib/actions/vehicle.action'
 
 export default async function VinPage({ params }: { params: { vin: string } }) {
   const vdp =
-    params.vin.length < 17
-      ? await getATVehicleById(params.vin)
-      : await getVehicleDetails(params.vin)
+    params.vin.length < 17 ? await getVehicleById(params.vin) : await getVehicleDetails(params.vin)
 
   useCustomer.setState({
     customer: {

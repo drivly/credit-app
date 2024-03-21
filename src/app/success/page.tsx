@@ -1,6 +1,6 @@
 'use client'
 
-import useCustomer from '../store'
+import useCustomer from '../../store'
 
 const SuccessPage = ({ searchParams }: { searchParams: any }) => {
   const [customer, resetCustomer] = useCustomer((s) => [s.customer, s.resetCustomer])

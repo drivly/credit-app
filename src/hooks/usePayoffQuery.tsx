@@ -1,7 +1,7 @@
 'use client'
 
-import useCustomer from '@/app/store'
-import { getPayoffQuote } from '@/app/utils/getPayoffQuote'
+import { getPayoffQuote } from '@/lib/actions/vehicle.action'
+import useCustomer from '@/store'
 import React, { Dispatch, useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -59,10 +59,10 @@ const usePayoffQuery = ({
   }, [isLienOther, lenders, setFocus, setPayload, ssn, watchLienName, watchTradeInVin])
 
   useEffect(() => {
-    if(isSubmitting) {
+    if (isSubmitting) {
       setReady(false)
     }
-  },[isReady, isSubmitting, setReady])
+  }, [isReady, isSubmitting, setReady])
 
   useEffect(() => {
     if (isReady && isTrade && Object.keys(payload)?.length > 0) {

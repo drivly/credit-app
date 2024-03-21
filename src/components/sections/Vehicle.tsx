@@ -1,5 +1,5 @@
-import useCustomer from '@/app/store'
 import useVehicleQuery from '@/hooks/useVehicleQuery'
+import useCustomer from '@/store'
 import { cn, formatMiles, formatMoney, vinChecksum } from '@/utils'
 import { useParams } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'

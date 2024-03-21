@@ -1,7 +1,7 @@
 import { formatApplicant } from '@/utils/formatApplicant'
 import { slackMsgRequest } from '@/utils/slackMsg'
 import { NextResponse } from 'next/server'
-import { withAppRouterHighlight } from '@/app/utils/withAppRouterHighlight'
+import { withAppRouterHighlight } from '@/utils/withAppRouterHighlight'
 
 const slackUrl = process.env.SLACK_WEBHOOK_URL
 const TENANT = process.env.NODE_ENV === 'development' ? 'CLOUD-DEV' : 'CLOUD-PROD'
@@ -29,17 +29,17 @@ export const POST = withAppRouterHighlight(async (request: Request) => {
   if (tradeIn) {
     payload['trade'] = tradeIn
   }
-  console.log('payload', payload)
+  console.log('🚀 ~ CREDIT_API_DRIVLY ~ payload:', payload)
   try {
     await slackMsgRequest({ url: slackUrl, data })
-    const d = await fetch('https://credit.api.driv.ly/applications', {
+    const d = await fetch(`${process.env.CREDIT_API_DRIVLY}/applications`, {
       method: 'POST',
       body: JSON.stringify({ ...payload }),
       headers: { 'Content-Type': 'application/json' },
     })
 
     const response = await d.json()
-    console.log('response', response)
+    console.log('🚀 ~ CREDIT_API_DRIVLY ~ response:', response)
 
     return NextResponse.json({ status: 200, data: response })
   } catch (error: any) {

@@ -1,9 +1,9 @@
 'use client'
 
-import useCustomer from '@/app/store'
-import { VehicleDetailProps } from '@/app/utils/getVehicleDetails'
 import useHasChanged from '@/hooks/useHasChanged'
 import { creditApps } from '@/lib/creditApp'
+import { VehicleDetailProps } from '@/lib/shared.contracts'
+import useCustomer from '@/store'
 import { formatRequest } from '@/utils/formatRequest'
 import { cn } from '@drivly/ui'
 import { H } from '@highlight-run/next/client'
