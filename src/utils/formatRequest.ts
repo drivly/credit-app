@@ -2,8 +2,6 @@ export function formatRequest(data: any) {
   const { joint } = data
 
   delete data.joint
-  delete data.employedPrimary
-  delete data.employedJoint
 
   let primary: Record<string, any> = {}
   let secondary: Record<string, any> | null = {}
@@ -20,7 +18,7 @@ export function formatRequest(data: any) {
       let newKey = key.replace('vehicle', '')
       newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
       vehicle[newKey] = data[key]
-    } else if (key.includes('tradeIn') && data[key]?.length > 0) {
+    } else if (key.includes('tradeIn') && data[key]) {
       let newKey = key.replace('tradeIn', '')
       newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
       tradeIn[newKey] = data[key]

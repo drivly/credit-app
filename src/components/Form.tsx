@@ -28,8 +28,6 @@ const defaultValues = {
   dateOfBirth: moment().subtract(18, 'years').format('DD/MM/YYYY'),
   ssn: '',
   residenceTypeCode: '',
-  employedPrimary: 'YES',
-  coEmployedJoint: 'YES',
   employmentStatusCode: 'Full Time',
   co_employmentStatusCode: 'Full Time',
   joint: false,
@@ -37,10 +35,11 @@ const defaultValues = {
 }
 
 type Props = {
+  tenant: string
   vdp?: VehicleDetailProps | null
 }
 
-export default function Form({ vdp }: Props) {
+export default function Form({ tenant, vdp }: Props) {
   const [customer, setCustomer] = useCustomer((s) => [s.customer, s.setCustomer])
   const [isError, setError] = useState(false)
   const { handleOnChange } = useHasChanged()
@@ -54,6 +53,8 @@ export default function Form({ vdp }: Props) {
     defaultValues: {
       ...defaultValues,
       ...searchParamValues,
+      joint: searchParamValues?.joint === 'true' ? true : false,
+      sameAddress: searchParamValues?.sameAddress === 'true' ? true : false,
       vehicleYear: vdp?.year,
       vehicleMake: vdp?.make,
       vehicleModel: vdp?.model,
@@ -97,25 +98,9 @@ export default function Form({ vdp }: Props) {
       return
     }
 
-    let trade: Record<string, any> = {}
     const { sameAddress, ...rest } = data
     const toastId = toast.loading('Submitting your application...')
     let formData = formatRequest(rest)
-    console.log('formData', formData)
-
-    if (formData?.tradeIn !== null) {
-      const { tradeIn, ...rest } = formData
-
-      trade = customer?.tradeInfo
-      formData = {
-        ...rest,
-        tradeIn: {
-          tradeInAllowance: trade?.tradeInAllowance,
-          id: trade?.id,
-          lienholder: trade?.lienholder,
-        },
-      }
-    }
 
     try {
       const request = await fetch('/api/credit-app', {
@@ -123,7 +108,7 @@ export default function Form({ vdp }: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ tenant, ...formData }),
       }).then((res) => res.json())
       console.log('request', request)
 

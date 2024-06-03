@@ -3,38 +3,53 @@ import { slackMsgRequest } from '@/utils/slackMsg'
 import { NextResponse } from 'next/server'
 import { withAppRouterHighlight } from '@/utils/withAppRouterHighlight'
 
+type RouteOnePayload = {
+  primaryBuyer: Record<string, any>
+  vehicles: Record<string, any>[]
+  tenant: string
+  buyerRelationship?: string
+  coBuyer?: Record<string, any>
+  trade?: {
+    tradeInAllowance: number
+    id: string
+    lienholder: string
+  }
+}
+
 const slackUrl = process.env.SLACK_WEBHOOK_URL
-const TENANT = process.env.NODE_ENV === 'development' ? 'CLOUD-DEV' : 'CLOUD-PROD'
 export const maxDuration = 300
 
 export const POST = withAppRouterHighlight(async (request: Request) => {
-  let payload: Record<string, any> = {
-    tenant: TENANT,
-  }
   const data = await request.json()
-  const { primary, secondary, vehicle, tradeIn } = data
+  const { primary, secondary, vehicle, tradeIn, tenant } = data
 
-  const primaryRequest = formatApplicant(primary)
-  payload['primaryBuyer'] = primaryRequest?.app
-  payload['vehicles'] = [vehicle]
+  let payload: RouteOnePayload = {
+    primaryBuyer: formatApplicant(primary).app,
+    vehicles: [vehicle],
+    tenant,
+  }
 
   if (secondary) {
-    const secondaryRequest = formatApplicant(secondary)
-    const buyerRelationship = secondaryRequest?.app?.buyerRelationship
-    delete secondaryRequest?.app.buyerRelationship
-    payload['coBuyer'] = secondaryRequest?.app
-    payload['buyerRelationship'] = buyerRelationship
+    payload['buyerRelationship'] = secondary.buyerRelationship
+    delete secondary.buyerRelationship
+    payload['coBuyer'] = formatApplicant(secondary).app
   }
 
   if (tradeIn) {
-    payload['trade'] = tradeIn
+    payload['trade'] = {
+      tradeInAllowance: tradeIn?.allowance,
+      id: tradeIn?.id,
+      lienholder: tradeIn?.lienholder,
+    }
   }
+
   console.log('🚀 ~ CREDIT_API_DRIVLY ~ payload:', payload)
+
   try {
     await slackMsgRequest({ url: slackUrl, data })
     const d = await fetch(`${process.env.CREDIT_API_DRIVLY}/applications`, {
       method: 'POST',
-      body: JSON.stringify({ ...payload }),
+      body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
     })
 

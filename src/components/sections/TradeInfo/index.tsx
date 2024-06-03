@@ -28,7 +28,7 @@ const TradeInfo = ({ errors, isSubmitting }: TradeInfoProps) => {
   })
   const customer = useCustomer((s) => s.customer)
   const methods = useFormContext()
-  const { register, watch, setValue, setFocus } = methods
+  const { register, watch } = methods
   const watchLien = watch('tradeInLienIndicator')
   const islien = watchLien === 'Y'
 

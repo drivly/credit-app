@@ -75,6 +75,8 @@ const usePayoffQuery = ({
             const lenderString = lenders.find((item) => item.fsId === watchLienName)?.fsName
             toast.success('Payoff Quote Found', { id: toastId })
             setValue('tradeInAllowance', response?.allowance)
+            setValue('tradeInLienholder', lenderString)
+            setValue('tradeInId', response?.id)
             setValue('tradeInGrossPayOffAmount', response?.quote?.grossPayOffAmount)
             setCustomer({
               ...customer,

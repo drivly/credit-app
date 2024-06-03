@@ -22,7 +22,6 @@ export const formatApplicant = (applicant: Record<string, any>) => {
 
   const pCounty = zcta.find({ zip: applicant?.zipCode })
 
-  console.log('pCounty', pCounty)
   const currentAddressMonths = addressYears * 12 + addressMonths
   const previousAddressMonths = prevAddressYears * 12 + prevAddressMonths
   const currentJobMonths = timeOnJobYears * 12 + timeOnJobMonths
@@ -35,15 +34,11 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     monthsOnJob: currentJobMonths,
     previousMonthsOnJob: prevJobMonths,
     prevMonthsAtAddress: previousAddressMonths,
-
     county: pCounty?.county,
     countryCode: 'US',
-    // residenceTypeCode: '1', added 1 own 2 rent 3 others
     educationLevelCode: '',
     incomeIntervalCode: 'MO',
-    // otherIncomeSourceCode: otherIncome,
-    // form asks for monthly income
-    incomeAmount: Number(applicant?.incomeAmount?.replaceAll(/\$|,/g, '')),
+    incomeAmount: Number(applicant?.incomeAmount?.replaceAll(/\$|,/g, '')), // form asks for monthly income
     otherIncomeAmount: Number(applicant?.otherIncomeAmount?.replaceAll(/\$|,/g, '')),
     phone: parsePhoneNumber(applicant?.phone),
     employerPhone: parsePhoneNumber(applicant?.employerPhone),
@@ -63,17 +58,6 @@ export const formatApplicant = (applicant: Record<string, any>) => {
     'prevTimeOnJobYears',
     'prevTimeOnJobMonths',
     'agree',
-    // 'licenseNumber',
-    // 'licenseState',
-    // 'licenseExp',
-    // 'prevEmployerPhone',
-    // 'prevIncomeAmount',
-    'coEmployedJoint',
-    'year',
-    'make',
-    'model',
-    'price',
-    'vin',
   ]
 
   fieldsToDelete.forEach((field) => delete formattedApp[field])

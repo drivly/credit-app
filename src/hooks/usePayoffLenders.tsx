@@ -27,6 +27,11 @@ const usePayoffLenders = () => {
   }, [isTrade, setValue])
 
   useEffect(() => {
+    /**
+     * Fetches the payoff lenders from the API and sets the sorted lenders in the state.
+     * 
+     * Test Lender: Ally Test FS
+     */
     const getPayoffLenders = async () => {
       const { data } = await fetch('https://credit.api.driv.ly/fields').then((res) => res.json())
       const lenders = await data?.ancillaryServices?.[0].financeSourceList
