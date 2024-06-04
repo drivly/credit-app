@@ -1,7 +1,7 @@
 import { formatApplicant } from '@/utils/formatApplicant'
-import { slackMsgRequest } from '@/utils/slackMsg'
 import { NextResponse } from 'next/server'
 import { withAppRouterHighlight } from '@/utils/withAppRouterHighlight'
+import { slackMessageCredit } from '@/lib/actions/slack.message'
 
 type RouteOnePayload = {
   primaryBuyer: Record<string, any>
@@ -46,7 +46,7 @@ export const POST = withAppRouterHighlight(async (request: Request) => {
   console.log('🚀 ~ CREDIT_API_DRIVLY ~ payload:', payload)
 
   try {
-    await slackMsgRequest({ url: slackUrl, data })
+    await slackMessageCredit({ url: slackUrl, data })
     const d = await fetch(`${process.env.CREDIT_API_DRIVLY}/applications`, {
       method: 'POST',
       body: JSON.stringify(payload),
