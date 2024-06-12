@@ -24,8 +24,8 @@ export interface CreditApplicant {
   addressYears: string
   addressMonths: string
   rentMortgagePaymentAmount: string
-  licenseNumber: string
-  licenseState: string
+  licenseNumber?: string
+  licenseState?: string
   employerName: string
   employmentStatusCode: string
   employerPhone: string

@@ -46,11 +46,13 @@ export function formatSlackApplicant(applicant: CreditApplicant, role: 'Primary'
       )
     )
   }
-  blocks.push(
-    createSlackSection(
-      `*Drivers License*\n*License number:* ${applicant.licenseNumber}\n*State:* ${applicant.licenseState}`
+  if (applicant.licenseNumber && applicant.licenseState) {
+    blocks.push(
+      createSlackSection(
+        `*Drivers License*\n*License number:* ${applicant.licenseNumber}\n*State:* ${applicant.licenseState}`
+      )
     )
-  )
+  }
   blocks.push(
     createSlackSection(
       `*Employment History*\n*Employer name:* ${applicant.employerName}\n*Employment Status:* ${
